@@ -1,5 +1,6 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter, Routes } from '@angular/router';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PacientesComponent } from './pacientes/listar/pacientes.component';
@@ -8,6 +9,7 @@ import { EdicaoPacienteComponent } from './pacientes/edicao-paciente/edicao-paci
 import { AgendamentosComponent } from './agendamentos/listar/agendamentos.component';
 import { CadastroAgendamentoComponent } from './agendamentos/cadastro-agendamento/cadastro-agendamento.component';
 import { EdicaoAgendamentoComponent } from './agendamentos/edicao-agendamento/edicao-agendamento.component';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -23,5 +25,9 @@ export const routes: Routes = [
 ];
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes)],
+  providers: [
+    provideHttpClient(),
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    provideRouter(routes)
+  ],
 };
