@@ -1,0 +1,39 @@
+<div class="agendamento-container">
+    <header class="agendamento-header">
+      <h2>Agendamentos</h2>
+      <button class="add-button" (click)="addAgendamento()">+ Novo Agendamento</button>
+    </header>
+  
+    <table class="agendamento-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Paciente</th>
+          <th>Profissional</th>
+          <th>Data</th>
+          <th>Hora</th>
+          <th>Tipo</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let agendamento of agendamentos">
+          <td>{{ agendamento.id }}</td>
+          <td>{{ agendamento.paciente }}</td>
+          <td>{{ agendamento.profissional }}</td>
+          <td>{{ agendamento.data }}</td>
+          <td>{{ agendamento.hora }}</td>
+          <td>{{ agendamento.tipo }}</td>
+          <td>
+            <button class="edit" (click)="editarAgendamento(agendamento)">Editar</button>
+            <button class="delete" (click)="excluirAgendamento(agendamento)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="agendamentos.length === 0" class="empty-message">
+      Nenhum agendamento encontrado.
+    </div>
+  </div>
+  

@@ -1,0 +1,91 @@
+.agendamento-container {
+    padding: 32px;
+    background-color: #f4f6f8;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .agendamento-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .agendamento-header h2 {
+    color: #004d40;
+    margin: 0;
+  }
+  
+  .add-button {
+    background-color: #00796b;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  
+  .add-button:hover {
+    background-color: #004d40;
+  }
+  
+  .agendamento-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .agendamento-table th,
+  .agendamento-table td {
+    padding: 14px 18px;
+    text-align: left;
+  }
+  
+  .agendamento-table thead {
+    background-color: #00796b;
+    color: white;
+  }
+  
+  .agendamento-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .agendamento-table button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 8px;
+    font-weight: 500;
+  }
+  
+  .agendamento-table .edit {
+    background-color: #0288d1;
+    color: white;
+  }
+  
+  .agendamento-table .edit:hover {
+    background-color: #0277bd;
+  }
+  
+  .agendamento-table .delete {
+    background-color: #d32f2f;
+    color: white;
+  }
+  
+  .agendamento-table .delete:hover {
+    background-color: #b71c1c;
+  }
+  
+  .empty-message {
+    margin-top: 20px;
+    text-align: center;
+    color: #666;
+  }
+  

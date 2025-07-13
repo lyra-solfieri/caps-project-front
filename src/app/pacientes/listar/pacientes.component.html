@@ -1,0 +1,35 @@
+<div class="pacientes-container">
+    <header class="pacientes-header">
+      <h2>Lista de Pacientes</h2>
+      <button class="add-button" (click)="addPaciente()">+ Novo Paciente</button>
+    </header>
+  
+    <table class="pacientes-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Idade</th>
+          <th>Responsável</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let paciente of pacientes">
+          <td>{{ paciente.id }}</td>
+          <td>{{ paciente.nome }}</td>
+          <td>{{ paciente.idade }}</td>
+          <td>{{ paciente.responsavel }}</td>
+          <td>
+            <button class="edit" (click)="editarPaciente(paciente)">Editar</button>
+            <button class="delete" (click)="excluirPaciente(paciente)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="pacientes.length === 0" class="empty-message">
+      Nenhum paciente cadastrado.
+    </div>
+  </div>
+  

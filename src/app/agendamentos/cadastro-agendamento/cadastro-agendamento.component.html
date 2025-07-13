@@ -1,0 +1,77 @@
+<div class="cadastro-container">
+    <h2>Cadastro de Agendamento</h2>
+  
+    <form #agendamentoForm="ngForm" (ngSubmit)="onSubmit()">
+      <!-- Paciente -->
+      <div class="form-group">
+        <label for="paciente">Paciente</label>
+        <input
+          type="text"
+          id="paciente"
+          name="paciente"
+          required
+          [(ngModel)]="agendamento.paciente"
+          placeholder="Nome do paciente"
+        />
+      </div>
+  
+      <!-- Profissional -->
+      <div class="form-group">
+        <label for="profissional">Profissional</label>
+        <input
+          type="text"
+          id="profissional"
+          name="profissional"
+          required
+          [(ngModel)]="agendamento.profissional"
+          placeholder="Nome do profissional"
+        />
+      </div>
+  
+      <!-- Data -->
+      <div class="form-group">
+        <label for="data">Data</label>
+        <input
+          type="date"
+          id="data"
+          name="data"
+          required
+          [(ngModel)]="agendamento.data"
+        />
+      </div>
+  
+      <!-- Hora -->
+      <div class="form-group">
+        <label for="hora">Hora</label>
+        <input
+          type="time"
+          id="hora"
+          name="hora"
+          required
+          [(ngModel)]="agendamento.hora"
+        />
+      </div>
+  
+      <!-- Tipo de Atendimento -->
+      <div class="form-group">
+        <label for="tipo">Tipo de Atendimento</label>
+        <input
+          type="text"
+          id="tipo"
+          name="tipo"
+          required
+          [(ngModel)]="agendamento.tipo"
+          placeholder="Ex: Psicologia, Enfermagem, Terapia"
+        />
+      </div>
+  
+      <!-- Botões -->
+      <div class="buttons">
+        <button type="submit" [disabled]="!agendamentoForm.form.valid">
+          Salvar
+        </button>
+        <button type="button" class="cancel" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+  

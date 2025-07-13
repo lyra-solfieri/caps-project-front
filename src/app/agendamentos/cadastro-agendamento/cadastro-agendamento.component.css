@@ -1,0 +1,82 @@
+.cadastro-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .cadastro-container h2 {
+    color: #004d40;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 18px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+    font-size: 14px;
+  }
+  
+  .form-group input:focus {
+    border-color: #26a69a;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+  }
+  
+  .buttons button {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .buttons button[type="submit"] {
+    background-color: #00796b;
+    color: white;
+  }
+  
+  .buttons button[type="submit"]:hover {
+    background-color: #004d40;
+  }
+  
+  .buttons .cancel {
+    background-color: #d32f2f;
+    color: white;
+  }
+  
+  .buttons .cancel:hover {
+    background-color: #b71c1c;
+  }
+  
+  @media (max-width: 480px) {
+    .buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  
