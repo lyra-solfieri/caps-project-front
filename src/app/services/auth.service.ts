@@ -11,7 +11,7 @@ interface LoginRequest {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:4200/auth/login';  // Rota api login
+  private apiUrl = 'http://localhost:4200/auth/login';  
 
   constructor(private http: HttpClient) { }
 

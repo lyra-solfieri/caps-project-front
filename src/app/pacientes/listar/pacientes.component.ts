@@ -19,7 +19,7 @@ export class PacientesComponent {
   constructor(private router: Router) {}
 
   addPaciente() {
-    this.router.navigate(['/pacientes/novo']);
+    this.router.navigate(['/pacientes/cadastro']);
   }
 
   editarPaciente(paciente: any) {

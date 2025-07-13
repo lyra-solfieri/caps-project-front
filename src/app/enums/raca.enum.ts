@@ -1,0 +1,8 @@
+export enum Raca {
+  BRANCA = 'BRANCA',
+  PRETA = 'PRETA',
+  PARDA = 'PARDA',
+  AMARELA = 'AMARELA',
+  INDIGENA = 'INDIGENA',
+  NAO_DECLARADO = 'NAO_DECLARADO'
+}

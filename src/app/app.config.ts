@@ -16,11 +16,11 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'pacientes', component: PacientesComponent },
-  { path: 'pacientes/novo', component: CadastroPacienteComponent },
-  {path: 'pacientes/editar/:id', component: EdicaoPacienteComponent},
-  {path: 'agendamentos', component: AgendamentosComponent},
-  {path: 'agendamentos/novo', component: CadastroAgendamentoComponent},
-  {path: 'agendamentos/editar/:id', component: EdicaoAgendamentoComponent},
+  { path: 'pacientes/cadastro', component: CadastroPacienteComponent },
+  { path: 'pacientes/editar/:id', component: EdicaoPacienteComponent},
+  { path: 'agendamentos', component: AgendamentosComponent},
+  { path: 'agendamentos/novo', component: CadastroAgendamentoComponent},
+  { path: 'agendamentos/editar/:id', component: EdicaoAgendamentoComponent},
   { path: '**', redirectTo: 'login' }
 ];
 
