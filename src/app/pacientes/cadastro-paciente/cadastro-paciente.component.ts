@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { Genero } from '../../enums/genero.enum';
 import { Raca } from '../../enums/raca.enum';
-import { PacienteDto, PacienteService } from '../../services/paciente.service';
+import { PacienteDto, PacienteService } from '../../services/paciente/paciente.service';
 
 @Component({
   selector: 'app-cadastro-paciente',
@@ -35,13 +35,16 @@ export class CadastroPacienteComponent {
     infantojuvenil: false,
     emSituacaoSocioeconomica: false,
     endereco: {
+      cep: '',
       logradouro: '',
       numero: '',
+      complemento: '',
       bairro: '',
       cidade: '',
       estado: '',
-      cep: ''
+      pais: ''
     }
+     
   };
 
   constructor(
