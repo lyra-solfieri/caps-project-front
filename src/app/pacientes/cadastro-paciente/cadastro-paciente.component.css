@@ -1,89 +1,100 @@
-/* Container geral */
+/* Estilização básica do contêiner do formulário */
 .cadastro-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  /* Título */
-  .cadastro-container h2 {
-    color: #004d40;
-    margin-bottom: 24px;
-    text-align: center;
-  }
-  
-  /* Grupos do formulário */
-  .form-group {
-    margin-bottom: 18px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 6px;
-    color: #333;
-    font-weight: 500;
-  }
-  
-  .form-group input,
-  .form-group textarea {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    outline: none;
-    transition: border-color 0.3s;
-    font-size: 14px;
-  }
-  
-  .form-group input:focus,
-  .form-group textarea:focus {
-    border-color: #26a69a;
-  }
-  
-  /* Botões */
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 24px;
-  }
-  
-  .buttons button {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 14px;
-    transition: background-color 0.3s;
-  }
-  
-  .buttons button[type="submit"] {
-    background-color: #00796b;
-    color: white;
-  }
-  
-  .buttons button[type="submit"]:hover {
-    background-color: #004d40;
-  }
-  
-  .buttons .cancel {
-    background-color: #d32f2f;
-    color: white;
-  }
-  
-  .buttons .cancel:hover {
-    background-color: #b71c1c;
-  }
-  
-  /* Responsivo */
-  @media (max-width: 480px) {
-    .buttons {
-      flex-direction: column;
-      gap: 10px;
-    }
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilo para cada seção do formulário */
+.form-section {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 30px;
+  margin-bottom: 25px; /* Adiciona espaço entre as seções */
+}
+
+/* Título de cada seção */
+.form-section h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 2px solid #007bff; /* Linha de destaque para o título */
+  padding-bottom: 10px;
+}
+
+/* Estilo para os grupos de campos (label + input) */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Estilo para os botões */
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.buttons button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.buttons button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.buttons button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.buttons button.cancel {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.buttons button.cancel:hover {
+  background-color: #5a6268;
+}
+
+/* Estilo para o estado desabilitado do botão de salvar */
+.buttons button[type="submit"][disabled] {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.required-legend {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Estilo para o asterisco de campo obrigatório */
+.required {
+  color: red;
+  margin-left: 4px;
+}

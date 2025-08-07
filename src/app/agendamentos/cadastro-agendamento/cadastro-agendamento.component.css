@@ -1,82 +1,101 @@
-.cadastro-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    font-family: 'Segoe UI', sans-serif;
+ .cadastro-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
   }
-  
-  .cadastro-container h2 {
-    color: #004d40;
-    margin-bottom: 24px;
-    text-align: center;
+
+  /* Estilo para cada seção do formulário */
+  .form-section {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px; /* Adiciona espaço entre as seções */
   }
-  
+
+  /* Título de cada seção */
+  .form-section h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    border-bottom: 2px solid #007bff; /* Linha de destaque para o título */
+    padding-bottom: 10px;
+  }
+
+  /* Estilo para os grupos de campos (label + input) */
   .form-group {
-    margin-bottom: 18px;
+    margin-bottom: 15px;
   }
-  
+
   .form-group label {
     display: block;
-    margin-bottom: 6px;
-    color: #333;
-    font-weight: 500;
+    margin-bottom: 5px;
+    font-weight: bold;
   }
-  
-  .form-group input {
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="date"],
+  .form-group input[type="number"],
+  .form-group input[type="time"],
+  .form-group select {
     width: 100%;
-    padding: 10px 14px;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    outline: none;
-    transition: border-color 0.3s;
-    font-size: 14px;
+    border-radius: 4px;
   }
-  
-  .form-group input:focus {
-    border-color: #26a69a;
-  }
-  
+
+  /* Estilo para os botões */
   .buttons {
     display: flex;
-    justify-content: space-between;
-    margin-top: 24px;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
   }
-  
+
   .buttons button {
-    padding: 10px 24px;
+    padding: 12px 25px;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: bold;
     transition: background-color 0.3s;
   }
-  
+
   .buttons button[type="submit"] {
-    background-color: #00796b;
-    color: white;
+    background-color: #007bff;
+    color: #fff;
   }
-  
+
   .buttons button[type="submit"]:hover {
-    background-color: #004d40;
+    background-color: #0056b3;
   }
-  
-  .buttons .cancel {
-    background-color: #d32f2f;
-    color: white;
+
+  .buttons button.cancel {
+    background-color: #6c757d;
+    color: #fff;
   }
-  
-  .buttons .cancel:hover {
-    background-color: #b71c1c;
+
+  .buttons button.cancel:hover {
+    background-color: #5a6268;
   }
-  
-  @media (max-width: 480px) {
-    .buttons {
-      flex-direction: column;
-      gap: 10px;
-    }
+
+  /* Estilo para o estado desabilitado do botão de salvar */
+  .buttons button[type="submit"][disabled] {
+    background-color: #cccccc;
+    cursor: not-allowed;
   }
-  
+
+  /* Estilo para a legenda de campos obrigatórios */
+  .required-legend {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+
+  /* Estilo para o asterisco de campo obrigatório */
+  .required {
+    color: red;
+    margin-left: 4px;
+  }
