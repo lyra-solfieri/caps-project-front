@@ -1,8 +1,13 @@
+<app-header></app-header>
+
 <div class="pacientes-container">
-  <header class="pacientes-header">
+  <div class="pacientes-header">
     <h2>Lista de Pacientes</h2>
-    <button class="add-button" (click)="addPaciente()">+ Novo Paciente</button>
-  </header>
+    <div class="pacientes-actions">
+      <button class="back-button" routerLink="/dashboard">Voltar ao Menu</button>
+      <button class="add-button" (click)="addPaciente()">+ Novo Paciente</button>
+    </div>
+  </div>
 
   <table class="pacientes-table" *ngIf="pacientes.length > 0">
     <thead>

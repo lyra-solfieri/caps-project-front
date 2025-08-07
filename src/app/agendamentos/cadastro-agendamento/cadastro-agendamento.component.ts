@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HeaderComponent } from "../../shared/header/header.component";
 
 @Component({
   selector: 'app-cadastro-agendamento',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent],
   templateUrl: './cadastro-agendamento.component.html',
   styleUrls: ['./cadastro-agendamento.component.css']
 })

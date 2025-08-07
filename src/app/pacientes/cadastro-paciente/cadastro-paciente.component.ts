@@ -7,11 +7,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { Genero } from '../../enums/genero.enum';
 import { Raca } from '../../enums/raca.enum';
 import { PacienteDto, PacienteService } from '../../services/paciente/paciente.service';
+import { HeaderComponent } from "../../shared/header/header.component";
 
 @Component({
   selector: 'app-cadastro-paciente',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, HeaderComponent],
   templateUrl: './cadastro-paciente.component.html',
   styleUrls: ['./cadastro-paciente.component.css']
 })
