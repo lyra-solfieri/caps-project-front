@@ -90,6 +90,12 @@ export class CadastroPacienteComponent {
 
   cancelar() {
     this.router.navigate(['/dashboard']);
+    Swal.fire({
+      icon: 'warning',
+      title: 'Cadastro cancelado',
+      showConfirmButton: false,
+      timer: 2000
+    })
   }
 
   get f() {
