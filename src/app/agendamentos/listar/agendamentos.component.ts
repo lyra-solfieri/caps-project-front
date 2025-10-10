@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { HeaderComponent } from "../../shared/header/header.component";
-
+//import { HeaderComponent } from "../../shared/header/header.component";
+import { AppHeaderComponent } from '../../app-header/app-header.component';
+import { AppFooterComponent } from '../../app-footer/app-footer.component';
 @Component({
   selector: 'app-agendamentos',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, RouterModule],
+  imports: [CommonModule, AppHeaderComponent, AppFooterComponent, RouterModule],
   templateUrl: './agendamentos.component.html',
   styleUrls: ['./agendamentos.component.css']
 })

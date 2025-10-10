@@ -1,0 +1,42 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #00796b;
+    color: white;
+    padding: 16px 32px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .logo {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  
+  .nav a {
+    margin-left: 24px;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+  }
+  
+  .nav a.active,
+  .nav a:hover {
+    text-decoration: underline;
+  }
+  
+  .logout {
+    color: #ffccbc;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-left .logo {
+    width: 50px;
+    margin-right: 16px;
+  }
+  
