@@ -1,8 +1,8 @@
+<app-header></app-header>
 <div class="cadastro-container">
     <h2>Edição de Agendamento</h2>
   
     <form #agendamentoForm="ngForm" (ngSubmit)="onSubmit()">
-      <!-- Paciente -->
       <div class="form-group">
         <label for="paciente">Paciente</label>
         <input
@@ -15,7 +15,6 @@
         />
       </div>
   
-      <!-- Profissional -->
       <div class="form-group">
         <label for="profissional">Profissional</label>
         <input
@@ -28,7 +27,6 @@
         />
       </div>
   
-      <!-- Data -->
       <div class="form-group">
         <label for="data">Data</label>
         <input
@@ -40,7 +38,6 @@
         />
       </div>
   
-      <!-- Hora -->
       <div class="form-group">
         <label for="hora">Hora</label>
         <input
@@ -52,7 +49,6 @@
         />
       </div>
   
-      <!-- Tipo de Atendimento -->
       <div class="form-group">
         <label for="tipo">Tipo de Atendimento</label>
         <input
@@ -65,7 +61,6 @@
         />
       </div>
   
-      <!-- Botões -->
       <div class="buttons">
         <button type="submit" [disabled]="!agendamentoForm.form.valid">
           Atualizar

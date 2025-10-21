@@ -10,6 +10,7 @@ import { AgendamentosComponent } from './agendamentos/listar/agendamentos.compon
 import { CadastroAgendamentoComponent } from './agendamentos/cadastro-agendamento/cadastro-agendamento.component';
 import { EdicaoAgendamentoComponent } from './agendamentos/edicao-agendamento/edicao-agendamento.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { AtendimentoComponent } from './atendimento/atendimento.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,7 +22,8 @@ export const routes: Routes = [
   { path: 'agendamentos', component: AgendamentosComponent},
   { path: 'agendamentos/novo', component: CadastroAgendamentoComponent},
   { path: 'agendamentos/editar/:id', component: EdicaoAgendamentoComponent},
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: 'login' },
+  { path: 'atendimento', component: AtendimentoComponent}
 ];
 
 export const appConfig: ApplicationConfig = {

@@ -2,13 +2,11 @@
 <div class="cadastro-container">
   <h2>Cadastro de Agendamento</h2>
   
-  <!-- Legenda para campos obrigatórios -->
   <p class="required-legend">Os campos marcados com <span class="required">*</span> são obrigatórios.</p>
 
   <form #agendamentoForm="ngForm" (ngSubmit)="onSubmit()">
 
-    <!-- Seção: Informações do Agendamento -->
-    <!-- Este bloco agrupa os campos relacionados às pessoas envolvidas no agendamento. -->
+   
     <div class="form-section">
       <h3>Informações do Agendamento</h3>
       
@@ -37,8 +35,6 @@
       </div>
     </div>
 
-    <!-- Seção: Data e Hora -->
-    <!-- Este bloco organiza os campos de data e tempo, que são essenciais para o agendamento. -->
     <div class="form-section">
       <h3>Data e Hora</h3>
 
@@ -65,8 +61,6 @@
       </div>
     </div>
 
-    <!-- Seção: Detalhes do Atendimento -->
-    <!-- Este bloco contém informações específicas sobre o tipo de consulta. -->
     <div class="form-section">
       <h3>Detalhes do Atendimento</h3>
       
@@ -83,7 +77,6 @@
       </div>
     </div>
   
-    <!-- Botões de ação -->
     <div class="buttons">
       <button type="submit" [disabled]="!agendamentoForm.form.valid">
         Salvar
