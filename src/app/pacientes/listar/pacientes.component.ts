@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { PacienteService, PacienteDto } from '../../services/paciente/paciente.service';
-//import { HeaderComponent } from "../../shared/header/header.component";
 import { AppHeaderComponent } from '../../app-header/app-header.component';
 import { AppFooterComponent } from '../../app-footer/app-footer.component';
 

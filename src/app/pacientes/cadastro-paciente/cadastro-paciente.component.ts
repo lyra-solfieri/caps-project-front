@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import { Genero } from '../../enums/genero.enum';
 import { Raca } from '../../enums/raca.enum';
 import { PacienteService } from '../../services/paciente/paciente.service';
-//import { HeaderComponent } from "../../shared/header/header.component";
 import { AppHeaderComponent } from '../../app-header/app-header.component';
 import { AppFooterComponent } from '../../app-footer/app-footer.component';
 
@@ -33,7 +32,7 @@ export class CadastroPacienteComponent {
       nome: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       telefone: ['', [Validators.required, Validators.pattern(/^\d{10,11}$/)]],
-      cpf: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      cpf: ['', [Validators.maxLength(11),Validators.required, Validators.pattern(/^\d{11}$/)]],
       dataNascimento: ['', Validators.required],
       genero: ['', Validators.required],
       nomeMae: [''],
@@ -80,11 +79,11 @@ export class CadastroPacienteComponent {
         });
       },
       error: (err) => {
-        console.error('Erro ao cadastrar paciente:', err.error);
+        console.error('Erro ao cadastrar paciente:', err.error.message);
         Swal.fire({
           icon: 'error',
           title: 'Erro ao cadastrar paciente',
-          text: err.error
+          text: err.error.message
         });
       }
     });

@@ -1,29 +1,25 @@
-/* Estilização básica do contêiner do formulário */
 .cadastro-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Estilo para cada seção do formulário */
 .form-section {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 30px;
-  margin-bottom: 25px; /* Adiciona espaço entre as seções */
+  margin-bottom: 25px;
 }
 
-/* Título de cada seção */
 .form-section h3 {
   margin-top: 0;
   margin-bottom: 20px;
   color: #333;
-  border-bottom: 2px solid #007bff; /* Linha de destaque para o título */
+  border-bottom: 2px solid #007bff;
   padding-bottom: 10px;
 }
 
-/* Estilo para os grupos de campos (label + input) */
 .form-group {
   margin-bottom: 15px;
 }
@@ -45,7 +41,6 @@
   border-radius: 4px;
 }
 
-/* Estilo para os botões */
 .buttons {
   display: flex;
   justify-content: flex-end;
@@ -81,7 +76,6 @@
   background-color: #5a6268;
 }
 
-/* Estilo para o estado desabilitado do botão de salvar */
 .buttons button[type="submit"][disabled] {
   background-color: #cccccc;
   cursor: not-allowed;
@@ -93,8 +87,11 @@
   margin-bottom: 20px;
 }
 
-/* Estilo para o asterisco de campo obrigatório */
 .required {
   color: red;
   margin-left: 4px;
+}
+
+.error{
+  color: red;
 }

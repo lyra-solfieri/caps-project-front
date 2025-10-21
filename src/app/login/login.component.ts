@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, RequiredValidator } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClientModule ,HttpClient } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,12 @@ export class LoginComponent {
         next: (response) => {
           localStorage.setItem('token', response.token);
           this.errorMessage = '';
-          alert('Login efetuado com sucesso!');// TODO: Adicionar um SweetAlert
+          Swal.fire({
+            icon: 'success',
+            title: 'Usuário logado com sucesso',
+            showConfirmButton: false,
+            timer: 2000
+          });
           this.router.navigate(['/dashboard']);
         },
         error: () => {
