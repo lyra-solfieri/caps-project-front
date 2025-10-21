@@ -7,12 +7,14 @@ import Swal from 'sweetalert2';
 import { Genero } from '../../enums/genero.enum';
 import { Raca } from '../../enums/raca.enum';
 import { PacienteService } from '../../services/paciente/paciente.service';
-import { HeaderComponent } from "../../shared/header/header.component";
+//import { HeaderComponent } from "../../shared/header/header.component";
+import { AppHeaderComponent } from '../../app-header/app-header.component';
+import { AppFooterComponent } from '../../app-footer/app-footer.component';
 
 @Component({
   selector: 'app-cadastro-paciente',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderComponent],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, AppHeaderComponent, AppFooterComponent],
   templateUrl: './cadastro-paciente.component.html',
   styleUrls: ['./cadastro-paciente.component.css']
 })
