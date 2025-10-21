@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-//import { HeaderComponent } from '../shared/header/header.component';
 import { AppHeaderComponent } from '../app-header/app-header.component';
 import { AppFooterComponent } from '../app-footer/app-footer.component';
 @Component({

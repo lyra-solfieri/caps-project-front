@@ -24,7 +24,7 @@
         <td>{{ paciente.numeroProntuario }}</td>
         <td>{{ paciente.nome }}</td>
         <td>{{ calcularIdade(paciente.dataNascimento) }}</td>
-        <td>{{ paciente.nomeMae }}</td> <!-- ou outro campo de responsável -->
+        <td>{{ paciente.nomeMae }}</td>
         <td>
           <button class="edit" (click)="editarPaciente(paciente)">Editar</button>
           <button class="delete" (click)="excluirPaciente(paciente)">Excluir</button>
@@ -37,3 +37,4 @@
     Nenhum paciente cadastrado.
   </div>
 </div>
+<app-footer></app-footer>
