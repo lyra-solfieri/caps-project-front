@@ -25,9 +25,18 @@
         <td>{{ paciente.nome }}</td>
         <td>{{ calcularIdade(paciente.dataNascimento) }}</td>
         <td>{{ paciente.nomeMae }}</td>
-        <td>
-          <button class="edit" (click)="editarPaciente(paciente)">Editar</button>
-          <button class="delete" (click)="excluirPaciente(paciente)">Excluir</button>
+        <td>          
+          <button 
+            class="edit" 
+            (click)="editarPaciente(paciente)">
+            Editar
+          </button>
+
+          <button
+            class="delete" 
+            (click)="excluirPaciente(paciente.id!)">
+            Excluir
+          </button>
         </td>
       </tr>
     </tbody>
@@ -37,4 +46,3 @@
     Nenhum paciente cadastrado.
   </div>
 </div>
-<app-footer></app-footer>

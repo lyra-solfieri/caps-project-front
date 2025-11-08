@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface PacienteDto {
+  id?: number;
   nome: string;
   email: string;
   telefone: string;
@@ -56,5 +57,19 @@ export class PacienteService {
     return this.http.get(this.apiUrl, { headers });
   }
 
+  excluirPaciente(id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.delete(`${this.apiUrl}/${id}`, { headers });
+  }
 
+  editarPaciente(id: number, paciente: PacienteDto): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.put(`${this.apiUrl}/${id}`, paciente, { headers });
+  }
 }

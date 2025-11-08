@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edicao-paciente',
@@ -30,26 +31,16 @@ export class EdicaoPacienteComponent implements OnInit {
   }
 
   carregarPaciente(id: any) {
-    // Chamar a API para buscar dados do paciente
-    // Simulando com dados mockados
-    const dadosMock = [
-      { id: 1, nome: 'João Silva', idade: 12, responsavel: 'Maria Silva', observacoes: 'Acompanhamento semanal' },
-      { id: 2, nome: 'Ana Souza', idade: 15, responsavel: 'Carlos Souza', observacoes: 'Necessita acompanhamento psicopedagógico' },
-    ];
-
-    const pacienteEncontrado = dadosMock.find(p => p.id == id);
-
-    if (pacienteEncontrado) {
-      this.paciente = { ...pacienteEncontrado };
-    } else {
-      alert('Paciente não encontrado!');
-      this.router.navigate(['/pacientes']);
-    }
+   
   }
 
   onSubmit() {
-    console.log('Paciente atualizado:', this.paciente);
-    alert('Paciente atualizado com sucesso!');
+    Swal.fire({
+      icon: 'success',
+      title: 'Paciente atualizado com sucesso!',
+      showConfirmButton: false,
+      timer: 2000
+    })
     this.router.navigate(['/pacientes']);
   }
 

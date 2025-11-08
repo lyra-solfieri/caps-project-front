@@ -4,11 +4,12 @@ import { Router, RouterModule } from '@angular/router';
 import { PacienteService, PacienteDto } from '../../services/paciente/paciente.service';
 import { AppHeaderComponent } from '../../app-header/app-header.component';
 import { AppFooterComponent } from '../../app-footer/app-footer.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pacientes',
   standalone: true,
-  imports: [CommonModule, AppHeaderComponent, AppFooterComponent,RouterModule],
+  imports: [CommonModule, AppHeaderComponent, RouterModule],
   templateUrl: './pacientes.component.html',
   styleUrls: ['./pacientes.component.css']
 })
@@ -40,15 +41,22 @@ export class PacientesComponent implements OnInit {
   }
 
   editarPaciente(paciente: PacienteDto): void {
-    this.router.navigate(['/pacientes/editar', paciente.numeroProntuario]);
+    this.router.navigate(['/pacientes/editar', paciente.id]);
   }
 
-  excluirPaciente(paciente: PacienteDto): void {
-    const confirmar = confirm(`Deseja excluir ${paciente.nome}?`);
-    if (confirmar) {
-      this.pacientes = this.pacientes.filter(p => p.numeroProntuario !== paciente.numeroProntuario);
-      // Aqui seria ideal também chamar o service para excluir no backend.
-    }
+  excluirPaciente(pacienteId: number): void {
+    this.pacienteService.excluirPaciente(pacienteId).subscribe({
+      next: () => {
+        this.carregarPacientes();
+      },
+      error: (erro) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao excluir paciente',
+          text: 'Ocorreu um erro ao excluir o paciente.'
+        })
+      }
+    });
   }
 
   calcularIdade(dataNascimento: string): number {

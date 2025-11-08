@@ -8,4 +8,4 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app-footer.component.html',
   styleUrls: ['./app-footer.component.css']
 })
-export class AppFooterComponent {}
+export class AppFooterComponent {}''
