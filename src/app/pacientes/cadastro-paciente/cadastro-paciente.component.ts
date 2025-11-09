@@ -9,11 +9,19 @@ import { Raca } from '../../enums/raca.enum';
 import { PacienteService } from '../../services/paciente/paciente.service';
 import { AppHeaderComponent } from '../../app-header/app-header.component';
 import { AppFooterComponent } from '../../app-footer/app-footer.component';
+import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 
 @Component({
   selector: 'app-cadastro-paciente',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, AppHeaderComponent, AppFooterComponent],
+  imports: [
+     CommonModule,
+     ReactiveFormsModule,
+     HttpClientModule,
+     AppHeaderComponent,
+     NgxMaskDirective
+    ],
+  providers: [provideNgxMask()],
   templateUrl: './cadastro-paciente.component.html',
   styleUrls: ['./cadastro-paciente.component.css']
 })
@@ -31,8 +39,8 @@ export class CadastroPacienteComponent {
     this.pacienteForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      telefone: ['', [Validators.required, Validators.pattern(/^\d{10,11}$/)]],
-      cpf: ['', [Validators.maxLength(11),Validators.required, Validators.pattern(/^\d{11}$/)]],
+      telefone: ['', [Validators.required]],
+      cpf: ['', [Validators.required,]],
       dataNascimento: ['', Validators.required],
       genero: ['', Validators.required],
       nomeMae: [''],

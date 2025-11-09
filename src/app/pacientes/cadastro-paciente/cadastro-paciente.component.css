@@ -1,5 +1,5 @@
 .cadastro-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -40,6 +40,46 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 220px;
+}
+
+.form-row .form-group.small {
+  flex: 0 0 120px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-row .form-group,
+  .form-row .form-group.small {
+    flex: 1 1 100%;
+  }
+}
+
 
 .buttons {
   display: flex;

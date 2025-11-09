@@ -6,7 +6,7 @@ import { AppFooterComponent } from '../app-footer/app-footer.component';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, AppHeaderComponent, AppFooterComponent],
+  imports: [CommonModule, RouterLink, AppHeaderComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })

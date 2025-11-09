@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { PacienteService, PacienteDto } from '../../services/paciente/paciente.service';
 import { AppHeaderComponent } from '../../app-header/app-header.component';
-import { AppFooterComponent } from '../../app-footer/app-footer.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -29,6 +28,7 @@ export class PacientesComponent implements OnInit {
     this.pacienteService.listarPacientes().subscribe({
       next: (dados) => {
         this.pacientes = dados;
+        console.log("🚀 ~ PacientesComponent ~ carregarPacientes ~ this.pacientes:", this.pacientes);
       },
       error: (erro) => {
         console.error('Erro ao buscar pacientes:', erro);
@@ -45,16 +45,33 @@ export class PacientesComponent implements OnInit {
   }
 
   excluirPaciente(pacienteId: number): void {
-    this.pacienteService.excluirPaciente(pacienteId).subscribe({
-      next: () => {
-        this.carregarPacientes();
-      },
-      error: (erro) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Erro ao excluir paciente',
-          text: 'Ocorreu um erro ao excluir o paciente.'
-        })
+    Swal.fire({
+      icon: 'warning',
+      title: 'Excluir paciente',
+      text: 'Tem certeza que deseja excluir o paciente?',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.pacienteService.excluirPaciente(pacienteId).subscribe({
+          next: () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Paciente excluído com sucesso!',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            this.carregarPacientes();
+          },
+          error: () => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Erro ao excluir paciente',
+              text: 'Ocorreu um erro ao excluir o paciente.'
+            });
+          }
+        });
       }
     });
   }

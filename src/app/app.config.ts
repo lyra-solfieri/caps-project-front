@@ -10,6 +10,7 @@ import { AgendamentosComponent } from './agendamentos/listar/agendamentos.compon
 import { CadastroAgendamentoComponent } from './agendamentos/cadastro-agendamento/cadastro-agendamento.component';
 import { EdicaoAgendamentoComponent } from './agendamentos/edicao-agendamento/edicao-agendamento.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideNgxMask } from 'ngx-mask';
 import { AtendimentoComponent } from './atendimento/atendimento.component';
 
 export const routes: Routes = [
@@ -30,6 +31,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    provideRouter(routes)
+    provideRouter(routes),
+    provideNgxMask()
   ],
 };

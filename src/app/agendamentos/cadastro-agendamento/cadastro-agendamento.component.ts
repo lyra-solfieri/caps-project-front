@@ -8,7 +8,7 @@ import { AppFooterComponent } from '../../app-footer/app-footer.component';
 @Component({
   selector: 'app-cadastro-agendamento',
   standalone: true,
-  imports: [CommonModule, FormsModule, AppHeaderComponent,AppFooterComponent],
+  imports: [CommonModule, FormsModule, AppHeaderComponent],
   templateUrl: './cadastro-agendamento.component.html',
   styleUrls: ['./cadastro-agendamento.component.css']
 })
