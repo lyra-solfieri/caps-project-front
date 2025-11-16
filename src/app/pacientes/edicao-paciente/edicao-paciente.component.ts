@@ -40,7 +40,7 @@ export class EdicaoPacienteComponent implements OnInit {
   ngOnInit(): void {
     this.pacienteId = Number(this.route.snapshot.paramMap.get('id'));
     this.criarFormulario();
-    // this.carregarPaciente(this.pacienteId);
+    this.carregarPaciente(this.pacienteId);
   }
 
   criarFormulario() {

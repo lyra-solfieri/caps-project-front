@@ -41,45 +41,31 @@ export class PacienteService {
 
   
   constructor(private http: HttpClient) {}
+
+
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({ Authorization: `Bearer ${token}` });
+  }
+
   
   criarPaciente(paciente: PacienteDto): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-    return this.http.post(this.apiUrl, paciente, { headers });
+    return this.http.post(this.apiUrl, paciente, {headers: this.getHeaders() });    
   }
 
   listarPacientes(): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-    return this.http.get(this.apiUrl, { headers });
+    return this.http.get(this.apiUrl, { headers: this.getHeaders() });
   }
 
   excluirPaciente(id: number): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-    return this.http.delete(`${this.apiUrl}/${id}`, { headers });
+    return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 
   atualizarPaciente(id: number, paciente: PacienteDto): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-    return this.http.put(`${this.apiUrl}/${id}`, paciente, { headers });
+    return this.http.put(`${this.apiUrl}/${id}`, paciente, { headers: this.getHeaders()})
   }
 
   buscarPacientePorId(id: number): Observable<any> {
-   const token = localStorage.getItem('token');
-   const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-
-   return this.http.get(`${this.apiUrl}/${id}}`, {headers})
+   return this.http.get<PacienteDto>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 }
