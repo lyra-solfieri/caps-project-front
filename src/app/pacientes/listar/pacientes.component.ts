@@ -28,7 +28,6 @@ export class PacientesComponent implements OnInit {
     this.pacienteService.listarPacientes().subscribe({
       next: (dados) => {
         this.pacientes = dados;
-        console.log("🚀 ~ PacientesComponent ~ carregarPacientes ~ this.pacientes:", this.pacientes);
       },
       error: (erro) => {
         console.error('Erro ao buscar pacientes:', erro);
@@ -40,8 +39,8 @@ export class PacientesComponent implements OnInit {
     this.router.navigate(['/pacientes/cadastro']);
   }
 
-  editarPaciente(paciente: PacienteDto): void {
-    this.router.navigate(['/pacientes/editar', paciente.id]);
+  editarPaciente(pacienteId: number): void {
+    this.router.navigate(['/pacientes/editar',pacienteId]);
   }
 
   excluirPaciente(pacienteId: number): void {

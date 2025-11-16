@@ -1,64 +1,188 @@
+<app-header></app-header>
 <div class="cadastro-container">
-    <h2>Edição de Paciente</h2>
-  
-    <form #pacienteForm="ngForm" (ngSubmit)="onSubmit()">
-      <!-- Nome -->
+  <h2>Edição de Paciente</h2>
+  <p class="required-legend">Os campos marcados com <span class="required">*</span> são obrigatórios.</p>
+
+  <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-section">
+      <h3>Informações Pessoais</h3>
+      
       <div class="form-group">
-        <label for="nome">Nome Completo</label>
-        <input
-          type="text"
-          id="nome"
-          name="nome"
-          required
-          [(ngModel)]="paciente.nome"
-          placeholder="Digite o nome completo"
-        />
+        <label for="nome">Nome Completo <span class="required">*</span></label>
+        <input id="nome" type="text" formControlName="nome" />
+        <div class="error" *ngIf="f.nome.touched && f.nome.invalid">
+          <small *ngIf="f.nome.errors?.['required']">Nome é obrigatório.</small>
+          <small *ngIf="f.nome.errors?.['minlength']">Mínimo de 3 caracteres.</small>
+        </div>
       </div>
-  
-      <!-- Idade -->
+
       <div class="form-group">
-        <label for="idade">Idade</label>
-        <input
-          type="number"
-          id="idade"
-          name="idade"
-          required
-          [(ngModel)]="paciente.idade"
-          placeholder="Digite a idade"
-        />
+        <label for="cpf">CPF <span class="required">*</span></label>
+        <input id="cpf" type="text" mask="000.000.000-00" formControlName="cpf"/>
+        <div class="error" *ngIf="f.cpf.touched && f.cpf.invalid">
+          <small *ngIf="f.cpf.errors?.['required']">CPF é obrigatório.</small>
+          <small *ngIf="f.cpf.errors?.['pattern']">Digite um CPF válido.</small>
+        </div>
       </div>
-  
-      <!-- Responsável -->
+
       <div class="form-group">
-        <label for="responsavel">Nome do Responsável</label>
-        <input
-          type="text"
-          id="responsavel"
-          name="responsavel"
-          required
-          [(ngModel)]="paciente.responsavel"
-          placeholder="Digite o nome do responsável"
-        />
+        <label for="dataNascimento">Data de Nascimento <span class="required">*</span></label>
+        <input id="dataNascimento" type="date" formControlName="dataNascimento" />
+        <div class="error" *ngIf="f.dataNascimento.touched && f.dataNascimento.invalid">
+          <small>Data de nascimento é obrigatória.</small>
+        </div>
       </div>
-  
-      <!-- Observações -->
+
       <div class="form-group">
-        <label for="observacoes">Observações</label>
-        <textarea
-          id="observacoes"
-          name="observacoes"
-          [(ngModel)]="paciente.observacoes"
-          placeholder="Digite alguma observação"
-        ></textarea>
+        <label for="genero">Gênero <span class="required">*</span></label>
+        <select id="genero" formControlName="genero">
+          <option value="">Selecione</option>
+          <option *ngFor="let g of generos" [value]="g">{{ g }}</option>
+        </select>
+        <div class="error" *ngIf="f.genero.touched && f.genero.invalid">
+          <small>Selecione um gênero.</small>
+        </div>
       </div>
-  
-      <!-- Botões -->
-      <div class="buttons">
-        <button type="submit" [disabled]="!pacienteForm.form.valid">
-          Atualizar
-        </button>
-        <button type="button" class="cancel" (click)="cancelar()">Cancelar</button>
+
+      <div class="form-group">
+        <label for="raca">Raça <span class="required">*</span></label>
+        <select id="raca" formControlName="raca">
+          <option value="">Selecione</option>
+          <option *ngFor="let r of racas" [value]="r">{{ r }}</option>
+        </select>
+        <div class="error" *ngIf="f.raca.touched && f.raca.invalid">
+          <small>Selecione uma raça.</small>
+        </div>
       </div>
-    </form>
-  </div>
-  
+
+      <div class="form-group">
+        <label for="profissao">Profissão</label>
+        <input id="profissao" type="text" formControlName="profissao" />
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Contato</h3>
+
+      <div class="form-group">
+        <label for="telefone">Telefone <span class="required">*</span></label>
+        <input id="telefone" type="text" mask="(00) 00000-0000" formControlName="telefone" />
+        <div class="error" *ngIf="f.telefone.touched && f.telefone.invalid">
+          <small *ngIf="f.telefone.errors?.['required']">Telefone é obrigatório.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail <span class="required">*</span></label>
+        <input id="email" type="email" formControlName="email" />
+        <div class="error" *ngIf="f.email.touched && f.email.invalid">
+          <small *ngIf="f.email.errors?.['required']">E-mail é obrigatório.</small>
+          <small *ngIf="f.email.errors?.['email']">Digite um e-mail válido.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Filiação</h3>
+
+      <div class="form-group">
+        <label for="nomeMae">Nome da Mãe</label>
+        <input id="nomeMae" type="text" formControlName="nomeMae" />
+      </div>
+
+      <div class="form-group">
+        <label for="nomePai">Nome do Pai</label>
+        <input id="nomePai" type="text" formControlName="nomePai" />
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Saúde e Prontuário</h3>
+
+      <div class="form-group">
+        <label for="numeroCartaoSUS">Cartão SUS</label>
+        <input id="numeroCartaoSUS" type="number" formControlName="numeroCartaoSUS" />
+      </div>
+
+      <div class="form-group">
+        <label for="numeroProntuario">Número do Prontuário</label>
+        <input id="numeroProntuario" type="number" formControlName="numeroProntuario" />
+      </div>
+    </div>
+
+    <div class="form-section" formGroupName="endereco">
+      <h3>Endereço</h3>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cep">CEP <span class="required">*</span></label>
+          <input id="cep" type="text" mask="00000-000" formControlName="cep" />
+        </div>
+
+        <div class="form-group">
+          <label for="logradouro">Rua</label>
+          <input id="logradouro" type="text" formControlName="logradouro" />
+        </div>
+
+        <div class="form-group small">
+          <label for="numero">Número</label>
+          <input id="numero" type="number" formControlName="numero" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="complemento">Complemento</label>
+          <input id="complemento" type="text" formControlName="complemento" />
+        </div>
+
+        <div class="form-group">
+          <label for="bairro">Bairro</label>
+          <input id="bairro" type="text" formControlName="bairro" />
+        </div>
+
+        <div class="form-group">
+          <label for="cidade">Cidade</label>
+          <input id="cidade" type="text" formControlName="cidade" />
+        </div>
+
+        <div class="form-group small">
+          <label for="estado">Estado</label>
+          <input id="estado" type="text" maxlength="2" formControlName="estado" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="pais">País</label>
+          <input id="pais" type="text" formControlName="pais" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Outras Informações</h3>
+
+      <div class="form-group">
+        <label>
+          <input type="checkbox" formControlName="infantojuvenil" />
+          Infantojuvenil
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input type="checkbox" formControlName="emSituacaoSocioeconomica" />
+          Em situação socioeconômica vulnerável
+        </label>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="submit" [disabled]="pacienteForm.invalid">Atualizar</button>
+      <button type="button" class="cancel" (click)="cancelar()">Cancelar</button>
+    </div>
+
+  </form>
+</div>

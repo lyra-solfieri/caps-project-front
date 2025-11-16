@@ -30,6 +30,7 @@ export interface EnderecoDto {
   cidade: string;
   estado: string;
   pais: string;
+  rua?: string;
 }
 
 @Injectable({
@@ -65,11 +66,20 @@ export class PacienteService {
     return this.http.delete(`${this.apiUrl}/${id}`, { headers });
   }
 
-  editarPaciente(id: number, paciente: PacienteDto): Observable<any> {
+  atualizarPaciente(id: number, paciente: PacienteDto): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
     return this.http.put(`${this.apiUrl}/${id}`, paciente, { headers });
+  }
+
+  buscarPacientePorId(id: number): Observable<any> {
+   const token = localStorage.getItem('token');
+   const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+   return this.http.get(`${this.apiUrl}/${id}}`, {headers})
   }
 }

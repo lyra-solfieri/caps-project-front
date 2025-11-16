@@ -12,23 +12,23 @@
   <table class="pacientes-table" *ngIf="pacientes.length > 0">
     <thead>
       <tr>
-        <th>Prontuário</th>
         <th>Nome</th>
         <th>Idade</th>
-        <th>Responsável</th>
+        <th>Contato</th>
+        <th>Endereço</th>
         <th>Ações</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let paciente of pacientes">
-        <td>{{ paciente.numeroProntuario }}</td>
         <td>{{ paciente.nome }}</td>
         <td>{{ calcularIdade(paciente.dataNascimento) }}</td>
-        <td>{{ paciente.nomeMae }}</td>
+        <td>{{ paciente.telefone }} - {{ paciente.email }}</td>
+        <td>{{ paciente.endereco?.cidade }} - {{ paciente.endereco?.bairro }} - {{ paciente.endereco?.numero }}</td>
         <td>          
           <button 
             class="edit" 
-            (click)="editarPaciente(paciente)">
+            (click)="editarPaciente(paciente.id!)">
             Editar
           </button>
 
