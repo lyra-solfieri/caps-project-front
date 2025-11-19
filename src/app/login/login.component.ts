@@ -26,7 +26,7 @@ export class LoginComponent {
     this.http.post<{ token: string }>('http://localhost:8080/auth/login', this.loginData)
       .subscribe({
         next: (response) => {
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('auth_token', response.token);
           this.errorMessage = '';
           Swal.fire({
             icon: 'success',

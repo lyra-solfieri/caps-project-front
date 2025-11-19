@@ -10,23 +10,19 @@ export class AgendamentoService {
     private readonly apiUrl = 'http://localhost:8080/api/agendamentos';
 
     constructor(private http: HttpClient) {}
-    private token = localStorage.getItem('token');
+    private token = localStorage.getItem('auth_token');
 
+    getHeaders(): HttpHeaders {
+        const token = localStorage.getItem('auth_token');
+        return new HttpHeaders({ Authorization: `Bearer ${token}` });
+    }
 
     listarAgendamentos(): Observable<any> {
-        const token = localStorage.getItem('token');
-        const headers = new HttpHeaders({
-          Authorization: `Bearer ${token}`
-        });
-        return this.http.get(this.apiUrl, { headers });
+        return this.http.get(this.apiUrl, { headers: this.getHeaders() });
     }
 
     cadastrarAgendamento(agendamento: any): Observable<any> {
-        const token = localStorage.getItem('token');
-        const headers = new HttpHeaders({
-          Authorization: `Bearer ${token}`
-        });
-        return this.http.post(this.apiUrl, agendamento, { headers });
+        return this.http.post(this.apiUrl, agendamento, { headers: this.getHeaders() });
     }
 
 }

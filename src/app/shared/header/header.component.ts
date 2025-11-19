@@ -10,7 +10,7 @@ export class HeaderComponent {
   constructor(private router: Router) {}
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('auth_token');
     localStorage.clear();
     this.router.navigate(['/login']);
   }
