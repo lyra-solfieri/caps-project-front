@@ -10,6 +10,7 @@ import { PacienteService } from '../../services/paciente/paciente.service';
 import { AppHeaderComponent } from '../../app-header/app-header.component';
 import { AppFooterComponent } from '../../app-footer/app-footer.component';
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
+import { ViaCepService } from '../../services/paciente/cep.service';
 
 @Component({
   selector: 'app-cadastro-paciente',
@@ -34,7 +35,8 @@ export class CadastroPacienteComponent {
   constructor(
     private pacienteService: PacienteService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cepService: ViaCepService
   ) {
     this.pacienteForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -53,8 +55,8 @@ export class CadastroPacienteComponent {
       emSituacaoSocioeconomica: [false],
       endereco: this.fb.group({
         cep: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
-        logradouro: [''],
-        numero: [''],
+        logradouro: ['',Validators.required],
+        numero: ['', Validators.required],
         complemento: [''],
         bairro: [''],
         cidade: [''],
@@ -95,6 +97,29 @@ export class CadastroPacienteComponent {
         });
       }
     });
+  }
+
+  async buscarCep() {
+    const cep = this.pacienteForm.get('endereco.cep')?.value;
+    if (cep) {
+      this.cepService.buscarCep(cep).subscribe(
+        (cepData: any) => {
+          this.pacienteForm.patchValue({
+            endereco: {
+              logradouro: cepData.logradouro,
+              complemento: cepData.complemento,
+              bairro: cepData.bairro,
+              cidade: cepData.localidade,
+              estado: cepData.uf,
+              pais: "Brasil"
+            }
+          });
+        },
+        (error) => {
+          console.error('Erro ao buscar CEP:', error);
+        }
+      );
+    }
   }
 
   cancelar() {

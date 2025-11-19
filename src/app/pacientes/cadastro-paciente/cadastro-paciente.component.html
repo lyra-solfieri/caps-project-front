@@ -117,9 +117,15 @@
       <h3>Endereço</h3>
 
       <div class="form-row">
-        <div class="form-group">
+          <div class="form-group">
           <label for="cep">CEP <span class="required">*</span></label>
-          <input id="cep" type="text" mask="00000-000" formControlName="cep" required />
+          <input 
+            id="cep" 
+            type="text" 
+            mask="00000-000"
+            formControlName="cep"
+            required
+            (blur)="buscarCep()" />
           <div class="error" *ngIf="f['endereco'].get('cep')?.touched && f['endereco'].get('cep')?.invalid">
             <small *ngIf="f['endereco'].get('cep')?.errors?.['required']">CEP é obrigatório.</small>
             <small *ngIf="f['endereco'].get('cep')?.errors?.['pattern']">Digite um CEP válido (8 dígitos).</small>
@@ -134,6 +140,8 @@
         <div class="form-group small">
           <label for="numero">Número</label>
           <input id="numero" type="number" formControlName="numero" />
+          <div class="error" *ngIf="f['endereco'].get('numero')?.touched && f['endereco'].get('numero')?.invalid">
+            <small>Número é obrigatório.</small></div>
         </div>
       </div>
 
