@@ -24,6 +24,29 @@
   margin-bottom: 15px;
 }
 
+.pacientes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.pacientes-header h2 {
+  color: #004d40;
+  margin: 0;
+}
+
+.back-button {
+  background-color: #00796b;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
 .form-group label {
   display: block;
   margin-bottom: 5px;

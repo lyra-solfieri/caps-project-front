@@ -1,6 +1,12 @@
 <app-header></app-header>
 <div class="cadastro-container">
-  <h2>Edição de Paciente</h2>
+  <div class="pacientes-header">
+     <h2>Edição de Paciente</h2>
+     <div class="pacientes-actions">
+      <button class="back-button" (click)="cancelar()">Voltar</button>
+    </div>
+  </div>
+
   <p class="required-legend">Os campos marcados com <span class="required">*</span> são obrigatórios.</p>
 
   <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()">

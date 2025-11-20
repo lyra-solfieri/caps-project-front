@@ -132,6 +132,10 @@ export class CadastroPacienteComponent {
     })
   }
 
+  listaPacientes() {
+    this.router.navigate(['/pacientes']);
+  }
+
   get f() {
     return this.pacienteForm.controls as any;
   }
