@@ -14,6 +14,8 @@ import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { provideNgxMask } from 'ngx-mask';
 
 import { authGuard } from './core/guards/auth.guard';
+import { ConfiguracoesComponent } from './configuracoes/configuracoes.component';
+import { AuditoriaComponent } from './auditoria/auditoria.component';
 
 export const routes: Routes = [
   {
@@ -74,6 +76,18 @@ export const routes: Routes = [
   {
     path: 'atendimento',
     component: AtendimentoComponent,
+    canActivate: [authGuard],
+    canMatch: [authGuard]
+  },
+  {
+    path: 'configuracoes',
+    component: ConfiguracoesComponent,
+    canActivate: [authGuard],
+    canMatch: [authGuard]
+  },
+  {
+    path: 'auditoria',
+    component: AuditoriaComponent,
     canActivate: [authGuard],
     canMatch: [authGuard]
   },
