@@ -9,6 +9,7 @@ import { AppHeaderComponent } from "../../app-header/app-header.component";
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { Genero } from '../../enums/genero.enum';
 import { Raca } from '../../enums/raca.enum';
+import { ViaCepService } from '../../services/paciente/cep.service';
 
 @Component({
   selector: 'app-edicao-paciente',
@@ -17,7 +18,7 @@ import { Raca } from '../../enums/raca.enum';
     CommonModule,
     ReactiveFormsModule,
     AppHeaderComponent,
-    NgxMaskDirective
+    NgxMaskDirective,
   ],
   providers: [provideNgxMask()],
   templateUrl: './edicao-paciente.component.html',
@@ -34,7 +35,8 @@ export class EdicaoPacienteComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private pacienteService: PacienteService
+    private pacienteService: PacienteService,
+    private cepService: ViaCepService
   ) {}
 
   ngOnInit(): void {
@@ -122,6 +124,29 @@ export class EdicaoPacienteComponent implements OnInit {
 
   cancelar() {
     this.router.navigate(['/pacientes']);
+  }
+
+  async buscarCep() {
+    const cep = this.pacienteForm.get('endereco.cep')?.value;
+    if (cep) {
+      this.cepService.buscarCep(cep).subscribe(
+        (cepData: any) => {
+          this.pacienteForm.patchValue({
+            endereco: {
+              logradouro: cepData.logradouro,
+              complemento: cepData.complemento,
+              bairro: cepData.bairro,
+              cidade: cepData.localidade,
+              estado: cepData.uf,
+              pais: "Brasil"
+            }
+          });
+        },
+        (error) => {
+          console.error('Erro ao buscar CEP:', error);
+        }
+      );
+    }
   }
 
   get f() {
