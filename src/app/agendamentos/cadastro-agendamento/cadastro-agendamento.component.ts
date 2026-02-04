@@ -32,10 +32,10 @@ export class CadastroAgendamentoComponent implements OnInit {
 
   private criarFormulario(): void {
     this.agendamentosForm = this.fb.group({
-      idPaciente: [1],
+      idPaciente: [null],
       tipoComunicacao: [null, Validators.required],
       destinatario: ['', Validators.required],
-      message: ['', Validators.required],
+      message: [''],
       dataHoraAtendimento: ['', Validators.required]
     });
   }
@@ -68,19 +68,19 @@ export class CadastroAgendamentoComponent implements OnInit {
      
   }
 
-  listarPacientes(): void {
+  // listarPacientes(): void {
 
-    this.pacientesService.listarPacientes().subscribe({
-      next: (dados) => {
-        console.log("🚀 ~ CadastroAgendamentoComponent ~ listarPacientes ~ dados:", dados);
-        this.pacientes = dados;
-      },
-      error: (erro) => {
-        console.error('Erro ao buscar pacientes:', erro);
-      }
-    })
+  //   this.pacientesService.listarPacientes().subscribe({
+  //     next: (dados) => {
+  //       console.log("🚀 ~ CadastroAgendamentoComponent ~ listarPacientes ~ dados:", dados);
+  //       this.pacientes = dados;
+  //     },
+  //     error: (erro) => {
+  //       console.error('Erro ao buscar pacientes:', erro);
+  //     }
+  //   })
     
-  }
+  // }
 
   cancelar(): void {
     this.router.navigate(['/agendamentos']);

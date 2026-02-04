@@ -112,4 +112,30 @@
     text-align: center;
     color: #666;
   }
+
+  .paginacao {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .paginacao button {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+
+  .paginacao button.ativo {
+    background-color: #1976d2;
+    color: white;
+    font-weight: bold;
+  }
+
+  .paginacao button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   

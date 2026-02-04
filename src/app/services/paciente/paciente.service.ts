@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface PacienteDto {
@@ -33,6 +33,17 @@ export interface EnderecoDto {
   rua?: string;
 }
 
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+  first: boolean;
+  last: boolean;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -53,9 +64,26 @@ export class PacienteService {
     return this.http.post(this.apiUrl, paciente, {headers: this.getHeaders() });    
   }
 
-  listarPacientes(): Observable<any> {
-    return this.http.get(this.apiUrl, { headers: this.getHeaders() });
+
+  listarPacientes(
+    pageNo: number,
+    pageSize: number,
+    sortBy: string,
+    direction: string
+  ): Observable<PageResponse<PacienteDto>> {
+
+    const params = new HttpParams()
+      .set('pageNo', pageNo)
+      .set('pageSize', pageSize)
+      .set('sortBy', sortBy)
+      .set('direction', direction);
+
+    return this.http.get<PageResponse<PacienteDto>>(
+      this.apiUrl,
+      { headers: this.getHeaders(), params }
+    );
   }
+
 
   excluirPaciente(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });

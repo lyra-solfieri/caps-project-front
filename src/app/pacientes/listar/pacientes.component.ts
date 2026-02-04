@@ -14,6 +14,16 @@ import Swal from 'sweetalert2';
 })
 export class PacientesComponent implements OnInit {
   pacientes: PacienteDto[] = [];
+  pageNo = 0;
+  pageSize = 10;
+
+  totalPages = 0;
+  totalElements = 0;
+  isFirst = true;
+  isLast = false;
+
+  sortBy = 'nome';
+  direction = 'asc';
 
   constructor(
     private router: Router,
@@ -24,16 +34,28 @@ export class PacientesComponent implements OnInit {
     this.carregarPacientes();
   }
 
-  carregarPacientes(): void {
-    this.pacienteService.listarPacientes().subscribe({
-      next: (dados) => {
-        this.pacientes = dados;
+carregarPacientes(): void {
+  this.pacienteService
+    .listarPacientes(this.pageNo, this.pageSize, this.sortBy, this.direction)
+    .subscribe({
+      next: (page) => {
+        this.pacientes = page.content;
+        this.totalPages = page.totalPages;
+        this.totalElements = page.totalElements;
+        this.isFirst = page.first;
+        this.isLast = page.last;
       },
       error: (erro) => {
         console.error('Erro ao buscar pacientes:', erro);
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao buscar pacientes',
+          text: 'Ocorreu um erro ao buscar os pacientes.'
+        })
       }
     });
-  }
+}
+
 
   addPaciente(): void {
     this.router.navigate(['/pacientes/cadastro']);
@@ -85,6 +107,25 @@ export class PacientesComponent implements OnInit {
       idade--;
     }
     return idade;
+  }
+
+  proximaPagina(): void {
+    if (!this.isLast) {
+      this.pageNo++;
+      this.carregarPacientes();
+    }
+  }
+
+  paginaAnterior(): void {
+    if (!this.isFirst) {
+      this.pageNo--;
+      this.carregarPacientes();
+    }
+  }
+
+  irParaPagina(pagina: number): void {
+    this.pageNo = pagina;
+    this.carregarPacientes();
   }
 
 }

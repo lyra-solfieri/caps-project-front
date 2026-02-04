@@ -3,9 +3,15 @@
 <div class="pacientes-container">
   <div class="pacientes-header">
     <h2>Lista de Pacientes</h2>
+
     <div class="pacientes-actions">
-      <button class="back-button" routerLink="/dashboard">Voltar ao Menu</button>
-      <button class="add-button" (click)="addPaciente()">+ Novo Paciente</button>
+      <button class="back-button" routerLink="/dashboard">
+        Voltar ao Menu
+      </button>
+
+      <button class="add-button" (click)="addPaciente()">
+        + Novo Paciente
+      </button>
     </div>
   </div>
 
@@ -19,21 +25,33 @@
         <th>Ações</th>
       </tr>
     </thead>
+
     <tbody>
       <tr *ngFor="let paciente of pacientes">
         <td>{{ paciente.nome }}</td>
+
         <td>{{ calcularIdade(paciente.dataNascimento) }}</td>
-        <td>{{ paciente.telefone }} - {{ paciente.email }}</td>
-        <td>{{ paciente.endereco?.cidade }} - {{ paciente.endereco?.bairro }} - {{ paciente.endereco?.numero }}</td>
-        <td>          
-          <button 
-            class="edit" 
+
+        <td>
+          {{ paciente.telefone }} <br />
+          {{ paciente.email }}
+        </td>
+
+        <td>
+          {{ paciente.endereco?.cidade }} -
+          {{ paciente.endereco?.bairro }} -
+          {{ paciente.endereco?.numero }}
+        </td>
+
+        <td class="acoes">
+          <button
+            class="edit"
             (click)="editarPaciente(paciente.id!)">
             Editar
           </button>
 
           <button
-            class="delete" 
+            class="delete"
             (click)="excluirPaciente(paciente.id!)">
             Excluir
           </button>
@@ -44,5 +62,26 @@
 
   <div *ngIf="pacientes.length === 0" class="empty-message">
     Nenhum paciente cadastrado.
+  </div>
+
+  <div class="paginacao" *ngIf="totalPages > 1">
+    <button
+      (click)="paginaAnterior()"
+      [disabled]="isFirst">
+      ⬅ Anterior
+    </button>
+
+    <button
+      *ngFor="let p of [].constructor(totalPages); let i = index"
+      (click)="irParaPagina(i)"
+      [class.ativo]="i === pageNo">
+      {{ i + 1 }}
+    </button>
+
+    <button
+      (click)="proximaPagina()"
+      [disabled]="isLast">
+      Próxima ➡
+    </button>
   </div>
 </div>

@@ -46,7 +46,7 @@
           class="error"
           *ngIf="agendamentosForm.get('userId')?.touched &&
                  agendamentosForm.get('userId')?.invalid">
-          Profissional é obrigatório.
+          O Profissional solitado é obrigatório.
         </small>
       </div>
     </div>
@@ -94,7 +94,7 @@
 
       <div class="form-group">
         <label for="message">
-          Mensagem <span class="required">*</span>
+          Mensagem
         </label>
         <textarea
           id="message"
@@ -112,7 +112,7 @@
 
       <div class="form-group">
         <label for="dataHoraAtendimento">
-          Data e Hora de Envio <span class="required">*</span>
+          Data e Hora do Atendimento Solicitado <span class="required">*</span>
         </label>
         <input
           type="datetime-local"
@@ -124,7 +124,7 @@
           class="error"
           *ngIf="agendamentosForm.get('dataHoraAtendimento')?.touched &&
                  agendamentosForm.get('dataHoraAtendimento')?.invalid">
-          Data e hora de envio são obrigatórias.
+          A data para o agendamento é obrigatória.
         </small>
       </div>
     </div>
