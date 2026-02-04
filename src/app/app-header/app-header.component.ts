@@ -11,6 +11,10 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class AppHeaderComponent {
    constructor(private router: Router) {}
+   isMenuOpen = false;
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 
   logout() {
     localStorage.removeItem('auth_token');
