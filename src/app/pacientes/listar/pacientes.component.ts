@@ -34,27 +34,27 @@ export class PacientesComponent implements OnInit {
     this.carregarPacientes();
   }
 
-carregarPacientes(): void {
-  this.pacienteService
-    .listarPacientes(this.pageNo, this.pageSize, this.sortBy, this.direction)
-    .subscribe({
-      next: (page) => {
-        this.pacientes = page.content;
-        this.totalPages = page.totalPages;
-        this.totalElements = page.totalElements;
-        this.isFirst = page.first;
-        this.isLast = page.last;
-      },
-      error: (erro) => {
-        console.error('Erro ao buscar pacientes:', erro);
-        Swal.fire({
-          icon: 'error',
-          title: 'Erro ao buscar pacientes',
-          text: 'Ocorreu um erro ao buscar os pacientes.'
-        })
-      }
-    });
-}
+  carregarPacientes(): void {
+    this.pacienteService
+      .listarPacientes(this.pageNo, this.pageSize, this.sortBy, this.direction)
+      .subscribe({
+        next: (page) => {
+          this.pacientes = page.content;
+          this.totalPages = page.totalPages;
+          this.totalElements = page.totalElements;
+          this.isFirst = page.first;
+          this.isLast = page.last;
+        },
+        error: (erro) => {
+          console.error('Erro ao buscar pacientes:', erro);
+          Swal.fire({
+            icon: 'error',
+            title: 'Erro ao buscar pacientes',
+            text: 'Ocorreu um erro ao buscar os pacientes.'
+          })
+        }
+      });
+  }
 
 
   addPaciente(): void {

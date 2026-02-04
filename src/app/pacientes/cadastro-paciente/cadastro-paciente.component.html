@@ -142,6 +142,9 @@
         <div class="form-group">
           <label for="logradouro">Rua</label>
           <input id="logradouro" type="text" formControlName="logradouro" />
+          <div class="error" *ngIf="f['endereco'].get('logradouro')?.touched && f['endereco'].get('logradouro')?.invalid">
+            <small>Logradouro é obrigatório.</small>
+          </div>
         </div>
 
         <div class="form-group small">

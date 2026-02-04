@@ -88,12 +88,11 @@ export class CadastroPacienteComponent {
           this.router.navigate(['/pacientes']);
         });
       },
-      error: (err) => {
-        console.error('Erro ao cadastrar paciente:', err.error.message);
+      error: (err) => {        
         Swal.fire({
           icon: 'error',
           title: 'Erro ao cadastrar paciente',
-          text: err.error.message
+          text: err.error
         });
       }
     });
