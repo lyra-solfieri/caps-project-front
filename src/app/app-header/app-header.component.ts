@@ -17,6 +17,7 @@ export class AppHeaderComponent {
   }
 
   logout() {
+    this.isMenuOpen = false;
     localStorage.removeItem('auth_token');
     localStorage.clear();
     this.router.navigate(['/login']);

@@ -1,29 +1,29 @@
 <header class="header">
-  <div class="dashboard-header">
-    <div class="header-left">
-      <img src="logo-capsi.png" alt="Logo CAPSI" class="logo" />
-    </div>
-
-    <button class="hamburger" (click)="isMenuOpen = !isMenuOpen">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+  <div class="header-left">
+    <img src="logo-capsi.png" alt="Logo CAPSI" class="logo" />
   </div>
 
-    <nav class="nav" [class.open]="isMenuOpen">
-      <a routerLink="/dashboard" routerLinkActive="active">Início</a>
-      <a routerLink="/dashboard" routerLinkActive="active">Atendimento</a>
-      <a routerLink="/pacientes" routerLinkActive="active">Pacientes</a>
-      <a routerLink="/agendamentos" routerLinkActive="active">Agendamentos</a>
-      <a routerLink="/equipe" routerLinkActive="active">Equipe</a>
-      <a routerLink="/equipe" routerLinkActive="active">Auditoria</a> 
-      <a routerLink="/equipe" routerLinkActive="active">Configurações</a>
-      <a routerLink="/equipe" routerLinkActive="active">RAAS</a>
-      <a routerLink="/equipe" routerLinkActive="active">Acolhimento</a>
-      <a routerLink="/equipe" routerLinkActive="active">Evolução</a>
-      <a routerLink="/equipe" routerLinkActive="active">Relatórios</a>
-      <a routerLink="/login" (click)="logout()" class="logout">Sair</a>
-    </nav>
+  <button class="hamburger-btn" [class.active]="isMenuOpen" (click)="toggleMenu()">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+
+  <nav class="nav-menu" [class.open]="isMenuOpen">
+    <a routerLink="/dashboard" routerLinkActive="active" (click)="toggleMenu()">Início</a>
+    <a routerLink="/atendimento" routerLinkActive="active" (click)="toggleMenu()">Atendimento</a>
+    <a routerLink="/pacientes" routerLinkActive="active" (click)="toggleMenu()">Pacientes</a>
+    <a routerLink="/agendamentos" routerLinkActive="active" (click)="toggleMenu()">Agendamentos</a>
+    <a routerLink="/equipe" routerLinkActive="active" (click)="toggleMenu()">Equipe</a>
+    <a routerLink="/auditoria" routerLinkActive="active" (click)="toggleMenu()">Auditoria</a>
+    <a routerLink="/configuracoes" routerLinkActive="active" (click)="toggleMenu()">Configurações</a>
+    <a routerLink="/raas" routerLinkActive="active" (click)="toggleMenu()">RAAS</a>
+    <a routerLink="/acolhimento" routerLinkActive="active" (click)="toggleMenu()">Acolhimento</a>
+    <a routerLink="/evolucao" routerLinkActive="active" (click)="toggleMenu()">Evolução</a>
+    <a routerLink="/relatorios" routerLinkActive="active" (click)="toggleMenu()">Relatórios</a>
+    
+    <a routerLink="/login" (click)="logout()" class="logout-btn">Sair</a>
+  </nav>
+
+  <div class="overlay" *ngIf="isMenuOpen" (click)="toggleMenu()"></div>
 </header>
-  
