@@ -5,4 +5,47 @@
     font-size: 14px;
     color: #666;
   }
+
+  .main-footer {
+    background-color: #1e293b; /* Mesma cor do seu card de registro */
+    color: #94a3b8;
+    padding: 1rem 2rem;
+    border-top: 1px solid #334155;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.85rem;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .real-time-clock {
+    font-family: 'JetBrains Mono', 'Courier New', monospace; /* Fonte mono para os números não "pularem" */
+    color: #f8fafc;
+    font-weight: 500;
+    background: #7b8ca2;
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+  
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .dot {
+    height: 8px;
+    width: 8px;
+    background-color: #22c55e; /* Verde de "Online" */
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 8px #22c55e;
+  }
   

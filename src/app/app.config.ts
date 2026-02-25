@@ -16,6 +16,7 @@ import { provideNgxMask } from 'ngx-mask';
 import { authGuard } from './core/guards/auth.guard';
 import { ConfiguracoesComponent } from './configuracoes/configuracoes.component';
 import { AuditoriaComponent } from './auditoria/auditoria.component';
+import { RegisterComponent } from './equipe-caps/equipe-caps.component';
 
 export const routes: Routes = [
   {
@@ -88,6 +89,12 @@ export const routes: Routes = [
   {
     path: 'auditoria',
     component: AuditoriaComponent,
+    canActivate: [authGuard],
+    canMatch: [authGuard]
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
     canActivate: [authGuard],
     canMatch: [authGuard]
   },

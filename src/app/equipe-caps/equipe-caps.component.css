@@ -1,0 +1,87 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-dark);
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .register-card {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  h2 {
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  
+  p {
+    color: var(--text-muted);
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  input, select {
+    background: #334155;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    padding: 0.75rem;
+    color: white;
+    transition: border-color 0.2s;
+  }
+  
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+  }
+  
+  .btn-register {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--primary-color);
+    color: #334155;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 1rem;
+  }
+  
+  .btn-register:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  .btn-register:disabled {
+    background-color: #475569;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  /* Estilização básica para mensagens de erro */
+  .error-msg {
+    color: var(--error-color);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }

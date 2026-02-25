@@ -1,1 +1,33 @@
-<p>equipe-caps works!</p>
+<app-header></app-header>
+
+<div class="register-container">
+    <div class="register-card">
+      <h2>Criar Conta</h2>
+      <p>Cadastre novos usuários para o projeto CAPS</p>
+  
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>E-mail Corporativo</label>
+          <input type="email" formControlName="email" placeholder="exemplo@araujo.com">
+        </div>
+  
+        <div class="form-group">
+          <label>Senha</label>
+          <input type="password" formControlName="password" placeholder="••••••••">
+        </div>
+  
+        <div class="form-group">
+          <label>Nível de Acesso (Role)</label>
+          <select formControlName="role">
+            <option value="USER">Usuário Padrão</option>
+            <option value="MODERATOR">Moderador</option>
+            <option value="ADMIN">Administrador (SRE/DevOps)</option>
+          </select>
+        </div>
+  
+        <button type="submit" class="btn-register" [disabled]="registerForm.invalid">
+          Finalizar Cadastro
+        </button>
+      </form>
+    </div>
+  </div>
