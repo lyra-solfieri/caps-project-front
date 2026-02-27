@@ -1,87 +1,115 @@
-.register-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: var(--bg-dark);
-    font-family: 'Inter', sans-serif;
-  }
+/* Fundo da Página */
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 60px);
+  background-color: #e2e8f0; /* Cinza de fundo */
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  padding: 20px;
+}
+
+/* Card Branco */
+.register-card {
+  background-color: #ffffff; /* Branco Puro */
+  width: 100%;
+  max-width: 450px;
+  padding: 2.5rem;
+  border-radius: 12px;
+  /* Sombra para destaque */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); 
+  border: 1px solid #cbd5e1;
+}
+
+/* Cabeçalho */
+.card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.card-header h2 {
+  color: #1e293b; /* Texto Escuro */
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.card-header p {
+  color: #64748b; /* Texto Cinza */
+  font-size: 0.95rem;
+}
+
+/* Labels */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  color: #0f172a; /* Preto suave */
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* --- CORREÇÃO DOS INPUTS --- */
+input, select {
+  width: 100%;
+  padding: 0.85rem 1rem;
   
-  .register-card {
-    background: var(--card-bg);
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 400px;
-  }
+  /* Cores Fixas para garantir visibilidade */
+  background-color: #f8fafc; /* Cinza bem clarinho (quase branco) */
+  border: 1px solid #94a3b8; /* Borda cinza médio (mais visível) */
+  color: #334155;            /* Texto digitado escuro */
   
-  h2 {
-    color: var(--text-main);
-    margin-bottom: 0.5rem;
-    text-align: center;
-  }
-  
-  p {
-    color: var(--text-muted);
-    text-align: center;
-    font-size: 0.9rem;
-    margin-bottom: 2rem;
-  }
-  
-  .form-group {
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    color: var(--text-main);
-    margin-bottom: 0.5rem;
-    font-size: 0.85rem;
-  }
-  
-  input, select {
-    background: #334155;
-    border: 1px solid #475569;
-    border-radius: 6px;
-    padding: 0.75rem;
-    color: white;
-    transition: border-color 0.2s;
-  }
-  
-  input:focus, select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
-  }
-  
-  .btn-register {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: var(--primary-color);
-    color: #334155;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-top: 1rem;
-  }
-  
-  .btn-register:hover {
-    background-color: var(--secondary-color);
-  }
-  
-  .btn-register:disabled {
-    background-color: #475569;
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-  
-  /* Estilização básica para mensagens de erro */
-  .error-msg {
-    color: var(--error-color);
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
-  }
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  appearance: none; /* Remove estilo nativo do navegador */
+}
+
+/* Garante que o select tenha a setinha (opcional, pois appearance remove) */
+select {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23334155%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.65em auto;
+}
+
+input::placeholder {
+  color: #94a3b8; /* Cor do placeholder */
+}
+
+/* Efeito de Foco */
+input:focus, select:focus {
+  outline: none;
+  background-color: #ffffff;
+  border-color: #2E7D6F; /* Verde CAPS */
+  box-shadow: 0 0 0 3px rgba(46, 125, 111, 0.2);
+}
+
+/* Botão */
+.btn-submit {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #2E7D6F; /* Verde CAPS fixo */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: #24665a; /* Verde mais escuro no hover */
+}
+
+.btn-submit:disabled {
+  background-color: #b2dfdb;
+  color: white;
+  cursor: not-allowed;
+}
