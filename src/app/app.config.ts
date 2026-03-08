@@ -17,6 +17,7 @@ import { ConfiguracoesComponent } from './configuracoes/configuracoes.component'
 import { AuditoriaComponent } from './auditoria/auditoria.component';
 import { RegisterComponent } from './equipe-caps/equipe-caps.component';
 import { AnamneseInfantilComponent } from './anamnese-infantil/anamnese-infantil.component';
+import { RaasComponent } from './raas/raas.component';
 
 export const routes: Routes = [
   {
@@ -101,6 +102,12 @@ export const routes: Routes = [
   {
     path: 'anamnese-infantil',
     component: AnamneseInfantilComponent,
+    canActivate: [authGuard],
+    canMatch: [authGuard]
+  },
+  {
+    path: 'raas',
+    component: RaasComponent,
     canActivate: [authGuard],
     canMatch: [authGuard]
   },

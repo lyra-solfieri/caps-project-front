@@ -3,6 +3,14 @@
     <img src="logo-capsi.png" alt="Logo CAPSI" class="logo" />
   </div>
 
+  <div class="header-right">
+    <button class="logout-button" (click)="logout()">Logout</button>
+  </div>
+
+  <div class="header-right">
+    <button class="profile-button">Perfil</button>
+  </div>
+
   <button class="hamburger-btn" [class.active]="isMenuOpen" (click)="toggleMenu()">
     <span class="bar"></span>
     <span class="bar"></span>
@@ -18,7 +26,7 @@
     <a routerLink="/auditoria" routerLinkActive="active" (click)="toggleMenu()">Auditoria</a>
     <a routerLink="/configuracoes" routerLinkActive="active" (click)="toggleMenu()">Configurações</a>
     <a routerLink="/raas" routerLinkActive="active" (click)="toggleMenu()">RAAS</a>
-    <a routerLink="/acolhimento" routerLinkActive="active" (click)="toggleMenu()">Acolhimento</a>
+    <a routerLink="/anamnese-infantil" routerLinkActive="active" (click)="toggleMenu()">Acolhimento</a>
     <a routerLink="/evolucao" routerLinkActive="active" (click)="toggleMenu()">Evolução</a>
     <a routerLink="/relatorios" routerLinkActive="active" (click)="toggleMenu()">Relatórios</a>
     
