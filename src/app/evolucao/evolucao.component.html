@@ -1,0 +1,136 @@
+<app-header></app-header>
+<div class="evolucao-container">
+  <div class="evolucao-header">
+    <h2>
+      <i class="fas fa-notes-medical"></i>
+      Evoluções do Paciente
+    </h2>
+    <span class="badge-info" *ngIf="pacienteNome">
+      {{ pacienteNome }}
+    </span>
+  </div>
+
+  <div class="evolucoes-anteriores" *ngIf="evolucoes.length > 0">
+    <h3>
+      <i class="fas fa-history"></i>
+      Evoluções Anteriores
+    </h3>
+    
+    <div class="evolucoes-list">
+      <div *ngFor="let evol of evolucoes" 
+           class="evolucao-card" 
+           [class.editando]="evolucaoEmEdicao?.id === evol.id"
+           (click)="selecionarEvolucao(evol)">
+        
+        <div class="evolucao-card-header">
+          <div class="evolucao-info">
+            <i class="fas fa-calendar-alt"></i>
+            <span class="data">{{ evol.dataEvolucao | date:'dd/MM/yyyy HH:mm' }}</span>
+            <span class="profissional" *ngIf="evol.profissional">
+              <i class="fas fa-user-md"></i>
+              {{ evol.profissional }}
+            </span>
+            <span>
+              <i class="fas fa-user-circle"></i>
+              {{ getPaciente() }}
+            </span>
+          </div>
+          
+          <div class="evolucao-actions" *ngIf="!evolucaoEmEdicao">
+            <button class="btn-icon" (click)="editarEvolucao(evol, $event)" 
+                    title="Editar evolução">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon" (click)="excluirEvolucao(evol, $event)" 
+                    title="Excluir evolução">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="evolucao-card-content">
+          <p>{{ evol.texto }}</p>
+        </div>
+        
+        <div class="editando-badge" *ngIf="evolucaoEmEdicao?.id === evol.id">
+          <i class="fas fa-pencil-alt"></i> Editando...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="evolucoes.length === 0">
+    <i class="fas fa-notes-medical fa-3x"></i>
+    <p>Nenhuma evolução registrada ainda</p>
+  </div>
+
+  <div class="form-group profissional-group">
+        <label for="profissional">
+          <i class="fas fa-user-md"></i>
+          Paciente
+        </label>
+        <input
+          type="text"
+          id="paciente"
+          formControlName="paciente"
+          placeholder="Digite o nome do paciente"
+        />
+   </div>
+
+
+  <div class="evolucao-form-container">
+    <h3>
+      <i class="fas" [ngClass]="evolucaoEmEdicao ? 'fa-edit' : 'fa-plus-circle'"></i>
+      {{ evolucaoEmEdicao ? 'Editar Evolução' : 'Nova Evolução' }}
+    </h3>
+
+    <form [formGroup]="evolucaoForm" (ngSubmit)="salvarEvolucao()" class="evolucao-form">
+      
+      <div class="form-group">
+        <label for="evolucaoTexto">
+          <i class="fas fa-pen"></i>
+          {{ evolucaoEmEdicao ? 'Altere a evolução' : 'Descreva a evolução do paciente' }}
+        </label>
+        <textarea
+          id="evolucaoTexto"
+          formControlName="texto"
+          rows="6"
+          placeholder="Ex: Paciente apresenta melhora significativa, relata redução da dor..."
+          [class.error]="texto?.invalid && texto?.touched">
+        </textarea>
+        
+        <div class="field-info">
+          <span class="char-counter">
+            {{ texto?.value?.length || 0 }}/1000
+          </span>
+          <span class="error-message" *ngIf="texto?.invalid && texto?.touched">
+            <i class="fas fa-exclamation-circle"></i>
+            A evolução deve ter entre 10 e 1000 caracteres
+          </span>
+        </div>
+      </div>
+
+      
+
+      <!-- Botões do formulário -->
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="btn btn-secondary" 
+          (click)="cancelarEdicao()"
+          *ngIf="evolucaoEmEdicao">
+          <i class="fas fa-times"></i>
+          Cancelar
+        </button>
+        
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="evolucaoForm.invalid || !evolucaoForm.dirty">
+          <i class="fas" [ngClass]="evolucaoEmEdicao ? 'fa-save' : 'fa-paper-plane'"></i>
+          {{ evolucaoEmEdicao ? 'Atualizar' : 'Salvar Evolução' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
