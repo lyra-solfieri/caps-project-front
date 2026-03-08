@@ -12,11 +12,11 @@ import { EdicaoAgendamentoComponent } from './agendamentos/edicao-agendamento/ed
 import { AtendimentoComponent } from './atendimento/atendimento.component';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { provideNgxMask } from 'ngx-mask';
-
 import { authGuard } from './core/guards/auth.guard';
 import { ConfiguracoesComponent } from './configuracoes/configuracoes.component';
 import { AuditoriaComponent } from './auditoria/auditoria.component';
 import { RegisterComponent } from './equipe-caps/equipe-caps.component';
+import { AnamneseInfantilComponent } from './anamnese-infantil/anamnese-infantil.component';
 
 export const routes: Routes = [
   {
@@ -95,6 +95,12 @@ export const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+    canActivate: [authGuard],
+    canMatch: [authGuard]
+  },
+  {
+    path: 'anamnese-infantil',
+    component: AnamneseInfantilComponent,
     canActivate: [authGuard],
     canMatch: [authGuard]
   },

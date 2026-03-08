@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 interface RegisterData {
   username: string;
   password: string;
-  email?: string; // Add other fields as required
+  email?: string;
 }
 import { jwtDecode } from 'jwt-decode';
 
@@ -45,18 +45,14 @@ export class AuthService {
     localStorage.removeItem('auth_token');
   }
 
-  // Seu método de registro
-  register(userData: RegisterData): Observable<void> {
-    // O retorno é void ou qualquer retorno que seu back envie (ResponseEntity.ok().build())
+  register(userData: RegisterData): Observable<void> {  
     return this.http.post<void>(`${this.apiUrlRegister}`, userData);
   }
-  // Dentro do AuthService
   getUserRole(): string | null {
     const token = this.getToken();
     if (!token) return null;
     
     const decoded: any = jwtDecode(token);
-    // O nome do campo depende de como você configurou o Claims no seu TokenService.java
     return decoded.role; 
   }
 
