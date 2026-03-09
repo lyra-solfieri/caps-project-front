@@ -111,7 +111,13 @@ export const routes: Routes = [
     component: RaasComponent,
     canActivate: [authGuard],
     canMatch: [authGuard]
-  },  
+  },
+  {
+    path: 'raas/:id',
+    component: RaasComponent,
+    canActivate: [authGuard],
+    canMatch: [authGuard]
+  },
   {
     path: 'evolucao',
     component: EvolucaoComponent,

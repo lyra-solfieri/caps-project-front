@@ -44,27 +44,27 @@ export class EvolucaoComponent implements OnInit {
 
   carregarEvolucoes(): void {
     // Simulando dados iniciais - substituir por chamada HTTP real
-    this.evolucoes = [
-      {
-        id: 1,
-        texto: 'Paciente relatou melhora significativa após início do novo medicamento. Sinais vitais estáveis e bem orientado.',
-        profissional: 'Dra. Ana Silva',
-        dataEvolucao: new Date('2024-03-15T10:30:00'),
+    // this.evolucoes = [
+    //   {
+    //     id: 1,
+    //     texto: 'Paciente relatou melhora significativa após início do novo medicamento. Sinais vitais estáveis e bem orientado.',
+    //     profissional: 'Dra. Ana Silva',
+    //     dataEvolucao: new Date('2024-03-15T10:30:00'),
        
-      },
-      {
-        id: 2,
-        texto: 'Paciente apresenta boa evolução, sem queixas. Foi orientado sobre a continuidade do tratamento.',
-        profissional: 'Dr. Carlos Santos',
-        dataEvolucao: new Date('2024-03-14T14:20:00')
-      },
-      {
-        id: 3,
-        texto: 'Paciente internado para observação. Exames laboratoriais solicitados. Aguardando resultados.',
-        profissional: 'Dra. Ana Silva',
-        dataEvolucao: new Date('2024-03-13T09:15:00')
-      }
-    ];
+    //   },
+    //   {
+    //     id: 2,
+    //     texto: 'Paciente apresenta boa evolução, sem queixas. Foi orientado sobre a continuidade do tratamento.',
+    //     profissional: 'Dr. Carlos Santos',
+    //     dataEvolucao: new Date('2024-03-14T14:20:00')
+    //   },
+    //   {
+    //     id: 3,
+    //     texto: 'Paciente internado para observação. Exames laboratoriais solicitados. Aguardando resultados.',
+    //     profissional: 'Dra. Ana Silva',
+    //     dataEvolucao: new Date('2024-03-13T09:15:00')
+    //   }
+    // ];
 
     // Ordenar por data decrescente
     this.evolucoes.sort((a, b) => 

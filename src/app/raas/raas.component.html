@@ -1,2 +1,83 @@
 <app-header></app-header>
-<p>raas works!</p>
+<form [formGroup]="raasForm" class="raas-container">
+  <div class="header-raas">
+    <div class="logo-sus">
+      <img src="assets/sus.png" alt="SUS">
+    </div>
+    <div class="titulo-central">
+      <h2>MINISTÉRIO DA SAÚDE</h2>
+      <h1>RAAS - REGISTRO DAS AÇÕES AMBULATORIAIS ESPECIALIZADAS</h1>
+      <p>(PSICOSSOCIAL E ATENÇÃO ESPECIALIZADA)</p>
+    </div>
+  </div>
+
+  <div class="section-title">IDENTIFICAÇÃO DO ESTABELECIMENTO DE SAÚDE</div>
+  <div class="row border-box">
+    <div class="col-8 br">
+      <label>NOME DO ESTABELECIMENTO DE SAÚDE (DESTINO)</label>
+      <input formControlName="nomeEstabelecimento">
+    </div>
+    <div class="col-4">
+      <label>CNES</label>
+      <input formControlName="cnes">
+    </div>
+  </div>
+
+  <div class="section-title">IDENTIFICAÇÃO DO USUÁRIO SUS</div>
+  <div class="row border-box">
+    <div class="col-9 br">
+      <label>NOME DO PACIENTE</label>
+      <input formControlName="nomePaciente">
+    </div>
+    <div class="col-3">
+      <label>Nº DO PRONTUÁRIO</label>
+      <input formControlName="numeroProntuario">
+    </div>
+  </div>
+
+  <div class="row border-box bt-none">
+    <div class="col-6 br">
+      <label>CARTÃO NACIONAL DE SAÚDE (CNS)</label>
+      <input formControlName="cartaoSus">
+    </div>
+    <div class="col-2 br">
+      <label>DATA NASC.</label>
+      <input type="date" formControlName="dataNascimento">
+    </div>
+    <div class="col-1 br">
+      <label>SEXO</label>
+      <select formControlName="sexo">
+        <option value="M">M</option>
+        <option value="F">F</option>
+      </select>
+    </div>
+    <div class="col-3">
+      <label>RAÇA/COR</label>
+      <select formControlName="racaCor">
+        <option value="01">Branca</option>
+        <option value="02">Preta</option>
+        <option value="03">Parda</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="section-title">DADOS DO ATENDIMENTO</div>
+  <table class="tabela-raas">
+    <thead>
+        <tr>
+            <th>DATA</th>
+            <th>PROCEDIMENTO</th>
+            <th>CBO</th>
+            <th>QTD</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="date" class="input-table"></td>
+            <td><input type="text" class="input-table"></td>
+            <td><input type="text" class="input-table"></td>
+            <td><input type="number" class="input-table"></td>
+        </tr>
+    </tbody>
+  </table>
+</form>

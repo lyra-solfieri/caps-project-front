@@ -56,6 +56,9 @@ export class PacientesComponent implements OnInit {
       });
   }
 
+  abrirRaas(pacienteId: number) {
+    this.router.navigate(['/raas', pacienteId]);
+  }
 
   addPaciente(): void {
     this.router.navigate(['/pacientes/cadastro']);
