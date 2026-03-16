@@ -19,13 +19,13 @@
 
 /* --- BOTÃO HAMBURGER (SEMPRE VISÍVEL) --- */
 .hamburger-btn {
-  display: flex;       /* Visível em Desktop e Mobile */
+  display: flex;
   flex-direction: column;
   gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
-  z-index: 1002;       /* Acima do menu lateral */
+  z-index: 1002;
 }
 
 .hamburger-btn .bar {
@@ -51,17 +51,17 @@
 .nav-menu {
   position: fixed;
   top: 0;
-  right: -100%;        /* Escondido fora da tela à direita */
+  right: -100%;
   width: 250px;
-  height: 100vh;       /* Altura total da tela */
+  height: 100vh;
   background-color: #004d40;
   
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 80px 20px 40px 20px; /* Padding-top alto para não bater no botão X */
+  padding: 80px 20px 40px 20px;
   
-  transition: right 0.3s ease-in-out; /* Animação suave de deslize */
+  transition: right 0.3s ease-in-out;
   box-shadow: -2px 0 5px rgba(0,0,0,0.5);
   z-index: 1001;
   
@@ -70,9 +70,8 @@
   overflow-x: hidden;
 }
 
-/* Estado Aberto */
 .nav-menu.open {
-  right: 0;            /* Traz para dentro da tela */
+  right: 0;
 }
 
 /* --- ESTILO DOS LINKS --- */
@@ -90,7 +89,7 @@
 .nav-menu a:hover, 
 .nav-menu a.active {
   color: #ffccbc;
-  padding-left: 10px; /* Efeito visual de movimento ao passar o mouse */
+  padding-left: 10px;
 }
 
 /* Botão Sair */
@@ -134,4 +133,36 @@
 .nav-menu::-webkit-scrollbar-thumb {
   background: rgba(255,255,255,0.2);
   border-radius: 3px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-button,
+.logout-button {
+  background: white;
+  color: #00796b;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+  align-items: left;
+  display: flex;
+  gap: 5px;
+}
+
+.profile-button:hover,
+.logout-button:hover {
+  background: #e0f2f1;
 }

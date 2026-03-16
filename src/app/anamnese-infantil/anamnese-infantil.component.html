@@ -1,2 +1,17 @@
 <app-header></app-header>
-<p>anamnese-infantil works!</p>
+
+<div class="anamnese-container">
+    <div class="anamnese-header">
+        <h2>Lista de Pacientes</h2>
+    
+        <div class="pacientes-actions">
+          <button class="back-button" routerLink="/dashboard">
+            Voltar ao Menu
+          </button>
+    
+          <button class="add-button" (click)="addAnamnese()">
+            Nova Anamnese
+          </button>
+        </div>
+      </div>
+</div>

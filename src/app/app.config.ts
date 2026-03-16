@@ -19,6 +19,7 @@ import { RegisterComponent } from './equipe-caps/equipe-caps.component';
 import { AnamneseInfantilComponent } from './anamnese-infantil/anamnese-infantil.component';
 import { RaasComponent } from './raas/raas.component';
 import { EvolucaoComponent } from './evolucao/evolucao.component';
+import { CadastroAnamneseComponent } from './anamnese-infantil/cadastrar/anamnese-infantil-cadastro.component';
 
 export const routes: Routes = [
   {
@@ -106,6 +107,13 @@ export const routes: Routes = [
     canActivate: [authGuard],
     canMatch: [authGuard]
   },
+  {
+    path: 'anamnese-infantil/cadastrar',
+    component: CadastroAnamneseComponent,
+    canActivate: [authGuard],
+    canMatch: [authGuard]
+  },
+
   {
     path: 'raas',
     component: RaasComponent,
