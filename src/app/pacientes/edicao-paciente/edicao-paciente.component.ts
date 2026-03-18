@@ -4,12 +4,13 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 
-import { PacienteDto, PacienteService } from '../../services/paciente/paciente.service';
+import { PacienteService } from '../../services/paciente/paciente.service';
 import { AppHeaderComponent } from "../../app-header/app-header.component";
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { Genero } from '../../enums/genero.enum';
 import { Raca } from '../../enums/raca.enum';
 import { ViaCepService } from '../../services/paciente/cep.service';
+import { PacienteDto } from '../../services/paciente/paciente.model';
 
 @Component({
   selector: 'app-edicao-paciente',

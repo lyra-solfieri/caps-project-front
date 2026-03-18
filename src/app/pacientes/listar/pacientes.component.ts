@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { PacienteService, PacienteDto } from '../../services/paciente/paciente.service';
+import { PacienteService } from '../../services/paciente/paciente.service';
 import { AppHeaderComponent } from '../../app-header/app-header.component';
 import Swal from 'sweetalert2';
+import { PacienteDto } from '../../services/paciente/paciente.model';
 
 @Component({
   selector: 'app-pacientes',

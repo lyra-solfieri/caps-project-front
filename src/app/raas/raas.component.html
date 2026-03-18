@@ -25,13 +25,13 @@
 
   <div class="section-title">IDENTIFICAÇÃO DO USUÁRIO SUS</div>
   <div class="row border-box">
-    <div class="col-9 br">
-      <label>NOME DO PACIENTE</label>
-      <input formControlName="nomePaciente">
-    </div>
-    <div class="col-3">
+    <div class="col-3 br">
       <label>Nº DO PRONTUÁRIO</label>
       <input formControlName="numeroProntuario">
+    </div>
+    <div class="col-9">
+      <label>NOME DO PACIENTE</label>
+      <input formControlName="nomePaciente">
     </div>
   </div>
 
@@ -40,10 +40,6 @@
       <label>CARTÃO NACIONAL DE SAÚDE (CNS)</label>
       <input formControlName="cartaoSus">
     </div>
-    <div class="col-2 br">
-      <label>DATA NASC.</label>
-      <input type="date" formControlName="dataNascimento">
-    </div>
     <div class="col-1 br">
       <label>SEXO</label>
       <select formControlName="sexo">
@@ -51,33 +47,272 @@
         <option value="F">F</option>
       </select>
     </div>
+    <div class="col-2 br">
+      <label>DATA NASC.</label>
+      <input type="date" formControlName="dataNascimento">
+    </div>
     <div class="col-3">
-      <label>RAÇA/COR</label>
-      <select formControlName="racaCor">
-        <option value="01">Branca</option>
-        <option value="02">Preta</option>
-        <option value="03">Parda</option>
-      </select>
+      <label>Nacionalidade</label>
+      <input formControlName="nacionalidade">
+    </div>
+  </div>
+  
+  <!-- LINHA RAÇA / ETNIA / MÃE -->
+<div class="row border-box bt-none">
+  <div class="col-3 br">
+    <label>RAÇA/COR</label>
+    <select formControlName="racaCor">
+      <option value="01">Branca</option>
+      <option value="02">Preta</option>
+      <option value="03">Parda</option>
+      <option value="04">Amarela</option>
+      <option value="05">Indígena</option>
+    </select>
+  </div>
+
+  <div class="col-4 br">
+    <label>ETNIA INDÍGENA</label>
+    <input formControlName="etniaIndigena">
+  </div>
+
+  <div class="col-5">
+    <label>NOME DA MÃE</label>
+    <input formControlName="nomeMae">
+  </div>
+</div>
+
+
+  <div class="row border-box bt-none">
+    <div class="col-6 br">
+      <label>NOME DO RESPONSÁVEL</label>
+      <input formControlName="nomeResponsavel">
+    </div>
+
+    <div class="col-3 br">
+      <label>MUNICÍPIO DE RESIDÊNCIA</label>
+      <input formControlName="municipio">
+    </div>
+
+    <div class="col-3" >
+      <label>UF</label>
+      <input formControlName="uf">
     </div>
   </div>
 
+
+  <div class="row border-box bt-none">
+    <div class="col-3 br">
+      <label>CÓD. IBGE MUNICÍPIO</label>
+      <input formControlName="codigoIbge">
+    </div>
+
+    <div class="col-3 br">
+      <label>CEP DE RESIDÊNCIA</label>
+      <input formControlName="cep">
+    </div>
+
+    <div class="col-6">
+      <label>ENDEREÇO (RUA, NÚMERO)</label>
+      <input formControlName="endereco">
+    </div>
+  </div>
+
+  <div class="row border-box bt-none">
+    <div class="col-6 br">
+      <label>COMPLEMENTO</label>
+      <input formControlName="complemento">
+    </div>
+
+    <div class="col-3 br">
+      <label>TELEFONE CELULAR</label>
+      <input formControlName="telefoneCelular">
+    </div>
+
+    <div class="col-3">
+      <label>TELEFONE DE CONTATO</label>
+      <input formControlName="telefoneContato">
+    </div>
+  </div>
+    
+
   <div class="section-title">DADOS DO ATENDIMENTO</div>
-  <table class="tabela-raas">
-    <thead>
-        <tr>
-            <th>DATA</th>
-            <th>PROCEDIMENTO</th>
-            <th>CBO</th>
-            <th>QTD</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><input type="date" class="input-table"></td>
-            <td><input type="text" class="input-table"></td>
-            <td><input type="text" class="input-table"></td>
-            <td><input type="number" class="input-table"></td>
-        </tr>
-    </tbody>
-  </table>
+
+  <div class="row border-box">
+    <div class="col-2 br">
+      <label>DATA DE ADMISSÃO</label>
+      <input type="date" formControlName="dataAdmissao">
+    </div>
+    <div class="col-2 br">
+      <label>MÊS ATENDIMENTO</label>
+      <input type="text" formControlName="mesAtendimento">
+    </div>
+
+    <div class="col-8">
+      <label>NÚMERO DA AUTORIZAÇÃO</label>
+      <input formControlName="numeroAutorizacao">
+    </div>
+
+  </div>
+
+  <div class="row border-box bt-none">
+
+    <div class="col-6 br">
+      <label>Usuário de Álcool e/ou Outras Drogas?</label>
+
+      <div class="checkbox-group">
+        <label><input type="radio" formControlName="usoDrogas" value="NAO"> NÃO</label>
+        <label><input type="radio" formControlName="usoDrogas" value="SIM"> SIM</label>
+      </div>
+
+      <small>Em caso positivo marque uma ou mais alternativas</small>
+
+      <div class="checkbox-group">
+        <label><input type="checkbox" formControlName="alcool"> Álcool</label>
+        <label><input type="checkbox" formControlName="crack"> Crack</label>
+        <label><input type="checkbox" formControlName="outrasDrogas"> Outras Drogas</label>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <label>ORIGEM DO PACIENTE</label>
+
+      <div class="checkbox-group">
+        <label><input type="checkbox" formControlName="origemDemanda"> Demanda Espontânea</label>
+        <label><input type="checkbox" formControlName="origemAtencaoBasica"> Atenção Básica</label>
+        <label><input type="checkbox" formControlName="origemUrgencia"> Serviço de Urgência</label>
+        <label><input type="checkbox" formControlName="origemCaps"> Outro CAPS</label>
+        <label><input type="checkbox" formControlName="origemHospital"> Hospital Geral</label>
+        <label><input type="checkbox" formControlName="origemPsiquiatrico"> Hospital Psiquiátrico</label>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row border-box bt-none">
+    <div class="col-2 br">
+      <label>CID10 PRINCIPAL</label>
+      <input formControlName="cidPrincipal">
+    </div>
+
+    <div class="col-10">
+      <label>DESCRIÇÃO DO DIAGNÓSTICO PRINCIPAL</label>
+      <input formControlName="descricaoCidPrincipal">
+    </div>
+  </div>
+
+  <div class="row border-box bt-none">
+    <div class="col-2 br">
+      <label>CID10 CAUSAS ASS</label>
+      <input formControlName="cidSecundario">
+    </div>
+
+    <div class="col-10">
+      <label>DESCRIÇÃO DO DIAGNÓSTICO – CAUSAS ASSOCIADAS</label>
+      <input formControlName="descricaoCidSecundario">
+    </div>
+  </div>
+
+  <div class="row border-box bt-none">
+
+    <div class="col-6 br">
+      <label>EXISTE COBERTURA DE ESTRATÉGIA SAÚDE DA FAMÍLIA?</label>
+
+      <div class="checkbox-group">
+        <label><input type="radio" formControlName="esf" value="SIM"> SIM</label>
+        <label><input type="radio" formControlName="esf" value="NAO"> NÃO</label>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <label>CNES</label>
+      <input formControlName="cnesAtendimento">
+    </div>
+
+  </div>
+
+  <div class="row border-box bt-none">
+
+    <div class="col-8 br">
+      <label>ENCAMINHAMENTO</label>
+
+      <div class="checkbox-group">
+        <label><input type="checkbox" formControlName="encaminhamentoCaps"> Continuidade do acompanhamento em outro CAPS</label>
+        <label><input type="checkbox" formControlName="encaminhamentoAB"> Continuidade do acompanhamento na Atenção Básica</label>
+        <label><input type="checkbox" formControlName="alta"> Alta</label>
+        <label><input type="checkbox" formControlName="obito"> Óbito</label>
+      </div>
+    </div>
+    <div class="col-4">
+      <label>DATA DE CONCLUSÃO</label>
+      <input type="date" formControlName="dataConclusao">
+    </div>
+  </div>
+
+ <div class="section-title">AÇÕES REALIZADAS</div>
+
+  <div formArrayName="acoesRealizadas">
+
+    <div *ngFor="let acao of acoes.controls; let i = index" [formGroupName]="i">
+
+      <div class="row border-box">
+
+        <div class="col-6 br campo-raas">
+          <label>CÓDIGO DA AÇÃO REALIZADA</label>
+          <input formControlName="codigoAcao">
+        </div>
+
+        <div class="col-1 br campo-raas">
+          <label>QTDE.</label>
+          <input type="number" formControlName="quantidade">
+        </div>
+
+        <div class="col-2 br campo-raas">
+          <label>DATA (DD/MM)</label>
+          <input type="date" formControlName="data">
+        </div>
+
+        <div class="col-2 br campo-raas">
+          <label>SERVIÇO</label>
+          <input formControlName="servico" >
+        </div>
+
+        <div class="col-2 campo-raas">
+          <label>CLASSIFICAÇÃO</label>
+          <input formControlName="classificacao">
+        </div>
+
+      </div>
+
+      <div class="row border-box bt-none">
+
+        <div class="col-3 br">
+          <label>CBO DO EXECUTANTE</label>
+          <input formControlName="cboExecutor" >
+        </div>
+
+        <div class="col-6 br ">
+          <label>CARTÃO NACIONAL DE SAÚDE DO PROFISSIONAL EXECUTANTE</label>
+          <input formControlName="cartaoProfissional">
+        </div>
+
+        <div class="col-1 br checkbox-raas">
+          <label>CAPS</label>
+          <input type="checkbox" formControlName="acaoCaps">
+        </div>
+
+        <div class="col-2 checkbox-raas">
+          <label>TERRITÓRIO</label>
+          <input type="checkbox" formControlName="acaoTerritorio">
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <button type="button" (click)="adicionarAcao()">+ Adicionar Ação</button>
+    <button type="button" (click)="removerAcao(acoes.controls.length - 1)">- Remover Ação</button>
+  </div>
+
 </form>

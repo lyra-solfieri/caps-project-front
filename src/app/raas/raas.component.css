@@ -1,14 +1,15 @@
 .raas-container {
-  width: 210mm;
+  max-width: 100vh;
   margin: 0 auto;
   padding: 15px;
   background: #fff;
   font-family: "Arial Narrow", Arial, sans-serif;
   color: #000;
+  font-size:larger;
   text-transform: uppercase;
+  overflow-x: auto;
 }
 
-/* Cabeçalho */
 .header-raas {
   display: flex;
   align-items: center;
@@ -38,7 +39,17 @@
   text-align: center;
 }
 
-.row { display: flex; width: 100%; }
+.acao-bloco {
+  margin-bottom: 5px;
+}
+
+[formArrayName="acoesRealizadas"] {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.row { display: flex; width: wrap; }
 .border-box { border: 1px solid #000; }
 .bt-none { border-top: none; }
 .br { border-right: 1px solid #000; }
@@ -51,7 +62,6 @@
 .col-8 { width: 66.66%; }
 .col-9 { width: 75%; }
 
-/* Inputs e Labels */
 label {
   display: block;
   font-size: 9px;
@@ -68,7 +78,6 @@ input, select {
   background: transparent;
 }
 
-/* Tabela de Procedimentos */
 .tabela-raas {
     width: 100%;
     border-collapse: collapse;
@@ -84,6 +93,55 @@ input, select {
     box-sizing: border-box;
 }
 
+.campo-raas {
+  position: relative;
+  padding: 0;
+}
+
+.input-raas {
+  width: 100%;
+  height: 25px;
+  border: none;
+  background-image: repeating-linear-gradient(
+    to right,
+    black 0px,
+    black 1px,
+    transparent 1px,
+    transparent 20px
+  );
+  background-size: 20px 100%;
+}
+
+.input-raas:focus {
+  outline: none;
+}
+
+.campo-raas label {
+  font-size: 9px;
+  padding-left: 4px;
+}
+
+.checkbox-raas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox-raas input {
+  margin-top: 5px;
+}
+
+@media screen {
+  .raas-container {
+    width: 100%;
+    max-width: 1200px;
+    overflow-y: auto;
+  }
+}
+
 @media print {
-  .raas-container { border: none; }
+  .raas-container {
+    width: 320mm;
+  }
 }
