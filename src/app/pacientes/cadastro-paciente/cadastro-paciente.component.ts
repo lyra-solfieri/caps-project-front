@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Genero } from '../../enums/genero.enum';
@@ -43,6 +43,7 @@ export class CadastroPacienteComponent {
       email: ['', [Validators.required, Validators.email]],
       telefone: ['', [Validators.required]],
       cpf: ['', [Validators.required,]],
+      rg: [''],
       dataNascimento: ['', Validators.required],
       genero: ['', Validators.required],
       nomeMae: [''],
@@ -53,6 +54,23 @@ export class CadastroPacienteComponent {
       numeroProntuario: [null],
       infantojuvenil: [false],
       emSituacaoSocioeconomica: [false],
+      nacionalidade: [''],
+      religiao: [''],
+      escolaridade: [''],
+      etniaIndigena: [''],
+      profissaoMae: [''],
+      profissaoPai: [''],
+      responsavelLegal: [''],
+      parentescoResponsavelLegal: [''],
+      telefoneResponsavelLegal: [''],
+      profissaoResponsavelLegal: [''],
+      unidadeBasicaSaude: [''],
+      agenteSaude: [''],
+      instituicaoEnsino: [''],
+      rendaFamiliar: [''],
+      auxilioOuBeneficioSocial: [''],
+      contextoVulnerabilidadeSocioeconomica: [''],
+      codIBGEMunicipio: [''],
       endereco: this.fb.group({
         cep: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
         logradouro: ['',Validators.required],
@@ -68,31 +86,35 @@ export class CadastroPacienteComponent {
 
   onSubmit() {
     if (this.pacienteForm.invalid) {
-      this.pacienteForm.markAllAsTouched();
-      Swal.fire({
-        icon: 'warning',
-        title: 'Formulário inválido',
-        text: 'Preencha os campos obrigatórios corretamente.'
-      });
+      
       return;
     }
 
     this.pacienteService.criarPaciente(this.pacienteForm.value).subscribe({
-      next: () => {
+      next: (response) => {
         Swal.fire({
           icon: 'success',
-          title: 'Paciente cadastrado!',
+          title: 'Sucesso',
+          text: 'Paciente cadastrado com sucesso!',
           showConfirmButton: false,
           timer: 2000
         }).then(() => {
           this.router.navigate(['/pacientes']);
         });
       },
-      error: (err) => {        
+      error: (err: HttpErrorResponse) => {
+        let mensagemErro = 'Ocorreu um erro ao tentar conectar com o servidor.';
+  
+        if (err.status === 400 || err.status === 409) {
+          mensagemErro = err.error?.message || err.error || 'Este CPF já está cadastrado no sistema.';
+          
+          this.pacienteForm.get('cpf')?.setErrors({ cpfDuplicado: true });
+        }
+  
         Swal.fire({
           icon: 'error',
           title: 'Erro ao cadastrar paciente',
-          text: err.error
+          text: typeof mensagemErro === 'string' ? mensagemErro : 'Verifique os dados enviados.'
         });
       }
     });
