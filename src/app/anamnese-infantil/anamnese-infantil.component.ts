@@ -6,12 +6,12 @@ import { AnamneseService } from '../services/anamnese/anamnese.service';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { PacienteService } from '../services/paciente/paciente.service';
-import { PacienteDto } from '../services/paciente/paciente.model';
+import { SelecionarPacienteModalComponent } from "../modal/paciente/selecionar-paciente-modal/selecionar-paciente-modal.component";
 
 @Component({
   selector: 'app-anamnese-infantil',
   standalone: true,
-  imports: [CommonModule, AppHeaderComponent],
+  imports: [CommonModule, AppHeaderComponent, SelecionarPacienteModalComponent],
   templateUrl: './anamnese-infantil.component.html',
   styleUrl: './anamnese-infantil.component.css'
 })
@@ -24,8 +24,9 @@ export class AnamneseInfantilComponent implements OnInit {
   totalElements = 0;
 
   loading = false;
-  
+  mostrarModal = false;
 
+  
   constructor(
     private router: Router,
     private anamneseService: AnamneseService,
@@ -38,13 +39,14 @@ export class AnamneseInfantilComponent implements OnInit {
 
   buscarAnamneses() {
 
-    this.loading = true;
+    this.loading = true;    
 
     this.anamneseService.listarAnamneses(this.pageNo, this.pageSize)
       .subscribe({
         next: (res: any) => {
-          this.anamnese = res.content;
-          this.totalElements = res.totalElements;
+         
+          this.anamnese = res;
+          this.totalElements = res.length;
           this.loading = false;
         },
         error: () => {
@@ -55,52 +57,24 @@ export class AnamneseInfantilComponent implements OnInit {
 
   }
 
-  addAnamnese() {
-
-    this.pacienteService.listarPacientes(this.pageNo, this.pageSize, '', '').subscribe({
-
-    next: (response: any) => {
-
-      const pacientes = response.content;
-
-      const options: any = {};
-
-      pacientes.forEach((p: PacienteDto) => {
-        options[p.id!] = p.nome;
-      });
-
-      Swal.fire({
-        title: 'Selecione o Paciente',
-        input: 'select',
-        inputOptions: options,
-        inputPlaceholder: 'Escolha um paciente',
-        showCancelButton: true,
-        confirmButtonText: 'Continuar',
-        cancelButtonText: 'Cancelar'
-      }).then(result => {
-
-        if (result.isConfirmed && result.value) {
-
-          this.router.navigate(['/anamnese-infantil/cadastrar'], {
-            queryParams: { pacienteId: result.value }
-          });
-
-        }
-
-      });
-
-    },
-
-      error: () => {
-        Swal.fire('Erro', 'Erro ao carregar pacientes', 'error');
-      }
-
-    });
-
+  fecharModal() {
+    this.mostrarModal = false;
   }
 
-  editar(anamnese: AnamneseDTO) {
-    this.router.navigate(['/anamnese-infantil/editar', anamnese.id]);
+  addAnamnese() {
+    this.mostrarModal = true;
+  }
+
+  onPacienteSelecionado(id: number) {
+    this.mostrarModal = false;
+
+    this.router.navigate(['/anamnese-infantil/cadastrar'], {
+      queryParams: { pacienteId: id }
+    });
+  }
+
+  editar(id: number) {
+    this.router.navigate(['/anamnese-infantil/editar', id]);
   }
 
   deletar(id: number) {

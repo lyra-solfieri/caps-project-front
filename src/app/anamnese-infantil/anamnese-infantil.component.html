@@ -11,7 +11,10 @@
     </div>
   </div>
 
-  <div *ngIf="loading">Carregando...</div>
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Carregando anamneses...</p>
+  </div>
 
   <table *ngIf="!loading && anamnese.length > 0" class="pacientes-table">
     <thead>
@@ -32,7 +35,7 @@
         <td>{{ a.dataRegistro | date:'short' }}</td>
 
         <td>
-          <button class="edit" (click)="editar(a)">Editar</button>
+          <button class="edit" (click)="editar(a.id!)">Editar</button>
           <button class="delete" (click)="deletar(a.id!)">Excluir</button>
         </td>
       </tr>
@@ -43,11 +46,17 @@
     Nenhuma anamnese encontrada.
   </div>
 
-  <div class="paginacao">
+  <div class="paginacao" *ngIf="!loading && anamnese.length > 0">
     <button (click)="paginaAnterior()" [disabled]="pageNo === 0">Anterior</button>
     <button (click)="proximaPagina()" [disabled]="(pageNo + 1) * pageSize >= totalElements">
       Próxima
     </button>
   </div>
+
+  <app-selecionar-paciente-modal
+    *ngIf="mostrarModal"
+    (fechado)="fecharModal()"
+    (selecionado)="onPacienteSelecionado($event)">
+  </app-selecionar-paciente-modal>
 
 </div>

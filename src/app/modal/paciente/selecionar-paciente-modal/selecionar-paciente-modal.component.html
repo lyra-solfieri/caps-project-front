@@ -1,0 +1,29 @@
+<div class="modal-backdrop">
+
+  <div class="modal">
+
+    <h2>Selecionar Paciente</h2>
+
+    <input
+      type="text"
+      [(ngModel)]="termo"
+      (input)="onSearch()"
+      placeholder="Digite o nome do paciente..."
+      class="search-input"
+    />
+
+    <div *ngIf="loading">Buscando...</div>
+
+    <ul *ngIf="!loading">
+      <li *ngFor="let p of pacientes" (click)="selecionar(p.id)">
+        {{ p.nome }}
+      </li>
+    </ul>
+
+    <div class="actions">
+      <button (click)="fechar()">Cancelar</button>
+    </div>
+
+  </div>
+
+</div>
