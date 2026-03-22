@@ -11,6 +11,8 @@
   </div>
 
   <form [formGroup]="anamneseForm" (ngSubmit)="onSubmit()">
+    
+  <input type="hidden" formControlName="pacienteId">
 
   <!-- IDENTIFICAÇÃO -->
   <div class="form-section">
@@ -83,6 +85,26 @@
 
   </div>
 
+  <div class="form-section">
+    <h3>Informações Clínicas Gerais</h3>
+
+    <div class="form-group">
+      <label>Observações Gerais</label>
+      <textarea rows="3" formControlName="observacoesGerais"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Histórico de Internação</label>
+      <textarea rows="3" formControlName="historicoDeInternacao"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Observações da Gestação</label>
+      <textarea rows="3" formControlName="observacoesGestacao"></textarea>
+    </div>
+
+  </div>
+
 
   <!-- NASCIMENTO -->
   <div class="form-section">
@@ -104,6 +126,11 @@
       <div class="form-group">
         <label>Posição ao Nascer</label>
         <input type="text" formControlName="posicaoNascimento">
+      </div>
+
+      <div class="form-group">
+        <label>Alta Hospitalar</label>
+        <input type="text" formControlName="altaHospitalar">
       </div>
 
     </div>
@@ -155,6 +182,36 @@
         <input type="text" formControlName="andou">
       </div>
 
+        <div class="form-group">
+          <label>Equilibrou Pescoço</label>
+          <input type="text" formControlName="equilibrouPescoco">
+        </div>
+
+        <div class="form-group">
+          <label>Primeiras Palavras</label>
+          <input type="text" formControlName="primeirasPalavras">
+        </div>
+
+        <div class="form-group">
+          <label>Fala Correta</label>
+          <input type="text" formControlName="falaCorreta">
+        </div>
+
+        <div class="form-group">
+          <label>Trocou Letras</label>
+          <input type="text" formControlName="trocouLetras">
+        </div>
+
+        <div class="form-group">
+          <label>Gaguejou</label>
+          <input type="text" formControlName="gaguejou">
+        </div>
+
+        <div class="form-group">
+          <label>Dentição</label>
+          <input type="text" formControlName="denticao">
+        </div>
+
     </div>
 
   </div>
@@ -171,12 +228,35 @@
       <label><input type="checkbox" formControlName="chupouDedo"> Chupou dedo</label>
       <label><input type="checkbox" formControlName="roeUnhas"> Roe unhas</label>
       <label><input type="checkbox" formControlName="arrancaCabelos"> Arranca cabelos</label>
+      <label><input type="checkbox" formControlName="puxaOrelha"> Puxa orelha</label>
+      <label><input type="checkbox" formControlName="mordeLabios"> Morde lábios</label>
+      <label><input type="checkbox" formControlName="tiques"> Tiques</label>
 
     </div>
 
     <div class="form-group">
       <label>Atitude diante dos hábitos</label>
       <textarea rows="3" formControlName="atitudeDianteHabitos"></textarea>
+    </div>
+
+  </div>
+
+  <div class="form-section">
+    <h3>Controle Esfincteriano</h3>
+
+    <div class="form-group">
+      <label>Controle Anal Diurno</label>
+      <input type="text" formControlName="controleEsfincterAnalDiurno">
+    </div>
+
+    <div class="form-group">
+      <label>Controle Vesical Diurno</label>
+      <input type="text" formControlName="controleEsfincterVesicalDiurno">
+    </div>
+
+    <div class="form-group">
+      <label>Controle Noturno</label>
+      <input type="text" formControlName="controleEsfincterNoturno">
     </div>
 
   </div>
@@ -195,7 +275,40 @@
       <label><input type="checkbox" formControlName="rangeDentes"> Range dentes</label>
       <label><input type="checkbox" formControlName="sonambulo"> Sonambulismo</label>
       <label><input type="checkbox" formControlName="pesadelos"> Pesadelos</label>
+      <label><input type="checkbox" formControlName="pulaQuandoDorme"> Pula quando dorme</label>
+      <label><input type="checkbox" formControlName="babaNoite"> Baba à noite</label>
+      <label><input type="checkbox" formControlName="sudorese"> Sudorese</label>
+      <label><input type="checkbox" formControlName="acordaVariasVezes"> Acorda várias vezes</label>
 
+    </div>
+
+  </div>
+
+  <div class="form-section">
+    <h3>Alimentação</h3>
+
+    <div class="form-row">
+      <label><input type="checkbox" formControlName="amamentadoNoPeito"> Amamentado no peito</label>
+    </div>
+
+    <div class="form-group">
+      <label>Atitude no Desmame</label>
+      <textarea rows="3" formControlName="atitudeDesmame"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Hábitos Alimentares</label>
+      <textarea rows="3" formControlName="habitosAlimentares"></textarea>
+    </div>
+
+  </div>
+
+  <div class="form-section">
+    <h3>Cuidados</h3>
+
+    <div class="form-group">
+      <label>Cuidados por quem?</label>
+      <input type="text" formControlName="cuidadosPorQuem">
     </div>
 
   </div>
@@ -209,6 +322,11 @@
     <div class="form-group">
       <label>Comportamento na Escola</label>
       <textarea rows="3" formControlName="comportamentoEscola"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Queixas de Comportamento</label>
+      <textarea rows="3" formControlName="queixasComportamento"></textarea>
     </div>
 
     <div class="form-row">

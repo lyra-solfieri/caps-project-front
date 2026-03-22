@@ -40,7 +40,7 @@ export class AnamneseService {
     });
   }
 
-  listarAnamneses(): Observable<AnamneseDTO[]> {
+  listarAnamneses(page: number,size: number): Observable<AnamneseDTO[]> {
     return this.http.get<AnamneseDTO[]>(this.API, {
       headers: this.getHeaders()
     });

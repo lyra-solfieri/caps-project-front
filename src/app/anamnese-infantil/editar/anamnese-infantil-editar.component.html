@@ -1,0 +1,400 @@
+<app-header></app-header>
+
+<div class="cadastro-container">
+
+  <div class="pacientes-header">
+    <h2>Cadastro de Anamnese</h2>
+
+    <div class="pacientes-actions">
+      <button class="back-button" (click)="cancelar()">Voltar</button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+      Carregando anamnese...
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="anamneseForm" (ngSubmit)="onSubmit()">
+    
+  <input type="hidden" formControlName="pacienteId">
+
+  <!-- IDENTIFICAÇÃO -->
+  <div class="form-section">
+    <h3>Identificação</h3>
+
+    <div class="form-group">
+      <label>Profissional Responsável</label>
+      <input type="text" formControlName="profissionalResponsavel">
+    </div>
+
+    <div class="form-group">
+      <label>Data do Registro</label>
+      <input type="datetime-local" formControlName="dataRegistro">
+    </div>
+  </div>
+
+
+  <!-- QUEIXA PRINCIPAL -->
+  <div class="form-section">
+
+    <h3>Queixa e História Clínica</h3>
+
+    <div class="form-group">
+      <label>Queixa Principal</label>
+      <textarea rows="3" formControlName="queixaPrincipal"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>História da Doença Atual</label>
+      <textarea rows="4" formControlName="historiaDoencaAtual"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Encaminhamentos</label>
+      <textarea rows="3" formControlName="encaminhamentos"></textarea>
+    </div>
+
+  </div>
+
+
+  <!-- ANTECEDENTES -->
+  <div class="form-section">
+
+    <h3>Antecedentes</h3>
+
+    <div class="form-group">
+      <label>Antecedentes Familiares</label>
+      <textarea rows="3" formControlName="antecedentesFamiliares"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Hábitos de Vida</label>
+      <textarea rows="3" formControlName="habitosDeVida"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Alergias</label>
+      <input type="text" formControlName="alergias">
+    </div>
+
+    <div class="form-group">
+      <label>Cirurgias</label>
+      <input type="text" formControlName="cirurgias">
+    </div>
+
+    <div class="form-group">
+      <label>Medicamentos Usados</label>
+      <textarea rows="3" formControlName="medicamentosUsados"></textarea>
+    </div>
+
+  </div>
+
+  <div class="form-section">
+    <h3>Informações Clínicas Gerais</h3>
+
+    <div class="form-group">
+      <label>Observações Gerais</label>
+      <textarea rows="3" formControlName="observacoesGerais"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Histórico de Internação</label>
+      <textarea rows="3" formControlName="historicoDeInternacao"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Observações da Gestação</label>
+      <textarea rows="3" formControlName="observacoesGestacao"></textarea>
+    </div>
+
+  </div>
+
+
+  <!-- NASCIMENTO -->
+  <div class="form-section">
+
+    <h3>Dados do Nascimento</h3>
+
+    <div class="form-row">
+
+      <div class="form-group">
+        <label>Local de Nascimento</label>
+        <input type="text" formControlName="localNascimento">
+      </div>
+
+      <div class="form-group">
+        <label>Tipo de Parto</label>
+        <input type="text" formControlName="tipoParto">
+      </div>
+
+      <div class="form-group">
+        <label>Posição ao Nascer</label>
+        <input type="text" formControlName="posicaoNascimento">
+      </div>
+
+      <div class="form-group">
+        <label>Alta Hospitalar</label>
+        <input type="text" formControlName="altaHospitalar">
+      </div>
+
+    </div>
+
+    <div class="form-row">
+
+      <label><input type="checkbox" formControlName="chorouAoNascer"> Chorou ao nascer</label>
+      <label><input type="checkbox" formControlName="nasceuVermelho"> Nasceu vermelho</label>
+      <label><input type="checkbox" formControlName="nasceuRoxo"> Nasceu roxo</label>
+      <label><input type="checkbox" formControlName="anoxia"> Anóxia</label>
+      <label><input type="checkbox" formControlName="ictericia"> Icterícia</label>
+
+    </div>
+
+    <div class="form-row">
+
+      <label><input type="checkbox" formControlName="precisouOxigenio"> Usou oxigênio</label>
+      <label><input type="checkbox" formControlName="incubadora"> Incubadora</label>
+
+    </div>
+
+  </div>
+
+
+  <!-- DESENVOLVIMENTO -->
+  <div class="form-section">
+
+    <h3>Desenvolvimento</h3>
+
+    <div class="form-row">
+
+      <div class="form-group">
+        <label>Sorriu</label>
+        <input type="text" formControlName="sorriu">
+      </div>
+
+      <div class="form-group">
+        <label>Engatinhou</label>
+        <input type="text" formControlName="engatinhou">
+      </div>
+
+      <div class="form-group">
+        <label>Sentou</label>
+        <input type="text" formControlName="sentou">
+      </div>
+
+      <div class="form-group">
+        <label>Andou</label>
+        <input type="text" formControlName="andou">
+      </div>
+
+        <div class="form-group">
+          <label>Equilibrou Pescoço</label>
+          <input type="text" formControlName="equilibrouPescoco">
+        </div>
+
+        <div class="form-group">
+          <label>Primeiras Palavras</label>
+          <input type="text" formControlName="primeirasPalavras">
+        </div>
+
+        <div class="form-group">
+          <label>Fala Correta</label>
+          <input type="text" formControlName="falaCorreta">
+        </div>
+
+        <div class="form-group">
+          <label>Trocou Letras</label>
+          <input type="text" formControlName="trocouLetras">
+        </div>
+
+        <div class="form-group">
+          <label>Gaguejou</label>
+          <input type="text" formControlName="gaguejou">
+        </div>
+
+        <div class="form-group">
+          <label>Dentição</label>
+          <input type="text" formControlName="denticao">
+        </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- HÁBITOS -->
+  <div class="form-section">
+
+    <h3>Hábitos</h3>
+
+    <div class="form-row">
+
+      <label><input type="checkbox" formControlName="usouChupeta"> Chupeta</label>
+      <label><input type="checkbox" formControlName="chupouDedo"> Chupou dedo</label>
+      <label><input type="checkbox" formControlName="roeUnhas"> Roe unhas</label>
+      <label><input type="checkbox" formControlName="arrancaCabelos"> Arranca cabelos</label>
+      <label><input type="checkbox" formControlName="puxaOrelha"> Puxa orelha</label>
+      <label><input type="checkbox" formControlName="mordeLabios"> Morde lábios</label>
+      <label><input type="checkbox" formControlName="tiques"> Tiques</label>
+
+    </div>
+
+    <div class="form-group">
+      <label>Atitude diante dos hábitos</label>
+      <textarea rows="3" formControlName="atitudeDianteHabitos"></textarea>
+    </div>
+
+  </div>
+
+  <div class="form-section">
+    <h3>Controle Esfincteriano</h3>
+
+    <div class="form-group">
+      <label>Controle Anal Diurno</label>
+      <input type="text" formControlName="controleEsfincterAnalDiurno">
+    </div>
+
+    <div class="form-group">
+      <label>Controle Vesical Diurno</label>
+      <input type="text" formControlName="controleEsfincterVesicalDiurno">
+    </div>
+
+    <div class="form-group">
+      <label>Controle Noturno</label>
+      <input type="text" formControlName="controleEsfincterNoturno">
+    </div>
+
+  </div>
+
+
+  <!-- SONO -->
+  <div class="form-section">
+
+    <h3>Sono</h3>
+
+    <div class="form-row">
+
+      <label><input type="checkbox" formControlName="dormeBem"> Dorme bem</label>
+      <label><input type="checkbox" formControlName="falaDormindo"> Fala dormindo</label>
+      <label><input type="checkbox" formControlName="gritaDormindo"> Grita dormindo</label>
+      <label><input type="checkbox" formControlName="rangeDentes"> Range dentes</label>
+      <label><input type="checkbox" formControlName="sonambulo"> Sonambulismo</label>
+      <label><input type="checkbox" formControlName="pesadelos"> Pesadelos</label>
+      <label><input type="checkbox" formControlName="pulaQuandoDorme"> Pula quando dorme</label>
+      <label><input type="checkbox" formControlName="babaNoite"> Baba à noite</label>
+      <label><input type="checkbox" formControlName="sudorese"> Sudorese</label>
+      <label><input type="checkbox" formControlName="acordaVariasVezes"> Acorda várias vezes</label>
+
+    </div>
+
+  </div>
+
+  <div class="form-section">
+    <h3>Alimentação</h3>
+
+    <div class="form-row">
+      <label><input type="checkbox" formControlName="amamentadoNoPeito"> Amamentado no peito</label>
+    </div>
+
+    <div class="form-group">
+      <label>Atitude no Desmame</label>
+      <textarea rows="3" formControlName="atitudeDesmame"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Hábitos Alimentares</label>
+      <textarea rows="3" formControlName="habitosAlimentares"></textarea>
+    </div>
+
+  </div>
+
+  <div class="form-section">
+    <h3>Cuidados</h3>
+
+    <div class="form-group">
+      <label>Cuidados por quem?</label>
+      <input type="text" formControlName="cuidadosPorQuem">
+    </div>
+
+  </div>
+
+
+  <!-- ESCOLA -->
+  <div class="form-section">
+
+    <h3>Escola</h3>
+
+    <div class="form-group">
+      <label>Comportamento na Escola</label>
+      <textarea rows="3" formControlName="comportamentoEscola"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Queixas de Comportamento</label>
+      <textarea rows="3" formControlName="queixasComportamento"></textarea>
+    </div>
+
+    <div class="form-row">
+
+      <label><input type="checkbox" formControlName="gostaEstudar"> Gosta de estudar</label>
+      <label><input type="checkbox" formControlName="gostaEscola"> Gosta da escola</label>
+      <label><input type="checkbox" formControlName="dificuldadeAprendizagem"> Dificuldade de aprendizagem</label>
+
+    </div>
+
+    <div class="form-group">
+      <label>Histórico Escolar</label>
+      <textarea rows="3" formControlName="historicoEscolar"></textarea>
+    </div>
+
+  </div>
+
+
+  <!-- COMPORTAMENTO -->
+  <div class="form-section">
+
+    <h3>Comportamento Social</h3>
+
+    <div class="form-group">
+      <label>Prefere brincar</label>
+      <input type="text" formControlName="prefereBrincar">
+    </div>
+
+    <div class="form-group">
+      <label>Ativo ou Passivo</label>
+      <input type="text" formControlName="ativoOuPassivo">
+    </div>
+
+    <div class="form-group">
+      <label>Observações do comportamento social</label>
+      <textarea rows="4" formControlName="observacoesComportamentoSocial"></textarea>
+    </div>
+
+  </div>
+
+
+  <!-- OBSERVAÇÕES -->
+  <div class="form-section">
+
+    <h3>Observações Clínicas</h3>
+
+    <div class="form-group">
+      <label>Observações Estratégicas</label>
+      <textarea rows="4" formControlName="observacoesEstrategicas"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Projeto Terapêutico Singular</label>
+      <textarea rows="4" formControlName="projetoTerapeuticoSingular"></textarea>
+    </div>
+
+  </div>
+
+
+  <div class="buttons">
+    <button type="submit" [disabled]="anamneseForm.invalid">Salvar</button>
+    <button type="button" class="cancel" (click)="cancelar()">Cancelar</button>
+  </div>
+
+  </form>
+
+</div>

@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2';
-
-
 
 import { AppHeaderComponent } from '../../app-header/app-header.component';
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
@@ -19,19 +17,22 @@ import { AnamneseService } from '../../services/anamnese/anamnese.service';
     ReactiveFormsModule,
     HttpClientModule,
     AppHeaderComponent,
-    NgxMaskDirective
   ],
   providers: [provideNgxMask()],
   templateUrl: './anamnese-infantil-cadastro.component.html',
   styleUrls: ['./anamnese-infantil-cadastro.component.css']
 })
-export class CadastroAnamneseComponent {
+export class CadastroAnamneseComponent implements OnInit {
 
   anamneseForm: FormGroup;
+
+  saving = false;
+  loading = true;
 
   constructor(
     private anamneseService: AnamneseService,
     private router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder
   ) {
 
@@ -40,7 +41,6 @@ export class CadastroAnamneseComponent {
       pacienteId: [null, Validators.required],
 
       profissionalResponsavel: ['', Validators.required],
-
       dataRegistro: [''],
 
       queixaPrincipal: ['', Validators.required],
@@ -49,14 +49,18 @@ export class CadastroAnamneseComponent {
 
       antecedentesFamiliares: [''],
       habitosDeVida: [''],
-
       alergias: [''],
       cirurgias: [''],
       medicamentosUsados: [''],
 
+      observacoesGerais: [''],
+      historicoDeInternacao: [''],
+      observacoesGestacao: [''],
+
       localNascimento: [''],
       tipoParto: [''],
       posicaoNascimento: [''],
+      altaHospitalar: [''],
 
       chorouAoNascer: [false],
       nasceuVermelho: [false],
@@ -67,13 +71,26 @@ export class CadastroAnamneseComponent {
       incubadora: [false],
 
       sorriu: [''],
+      equilibrouPescoco: [''],
       engatinhou: [''],
       sentou: [''],
       andou: [''],
+      primeirasPalavras: [''],
+      falaCorreta: [''],
+      trocouLetras: [''],
+      gaguejou: [''],
+      denticao: [''],
+
+      controleEsfincterAnalDiurno: [''],
+      controleEsfincterVesicalDiurno: [''],
+      controleEsfincterNoturno: [''],
+
+      cuidadosPorQuem: [''],
 
       usouChupeta: [false],
       chupouDedo: [false],
       roeUnhas: [false],
+      puxaOrelha: [false],
       arrancaCabelos: [false],
       mordeLabios: [false],
       tiques: [false],
@@ -81,21 +98,29 @@ export class CadastroAnamneseComponent {
       atitudeDianteHabitos: [''],
 
       dormeBem: [false],
+      pulaQuandoDorme: [false],
+      babaNoite: [false],
+      sudorese: [false],
+      acordaVariasVezes: [false],
       falaDormindo: [false],
       gritaDormindo: [false],
       rangeDentes: [false],
       sonambulo: [false],
       pesadelos: [false],
 
+      amamentadoNoPeito: [false],
+      atitudeDesmame: [''],
+      habitosAlimentares: [''],
+
       comportamentoEscola: [''],
       gostaEstudar: [false],
       gostaEscola: [false],
       dificuldadeAprendizagem: [false],
       historicoEscolar: [''],
+      queixasComportamento: [''],
 
       prefereBrincar: [''],
       ativoOuPassivo: [''],
-
       observacoesComportamentoSocial: [''],
 
       observacoesEstrategicas: [''],
@@ -105,6 +130,27 @@ export class CadastroAnamneseComponent {
 
   }
 
+  ngOnInit(): void {
+
+    const pacienteId = this.route.snapshot.queryParamMap.get('pacienteId');
+
+    // if (pacienteId) {
+    //   this.anamneseForm.patchValue({
+    //     pacienteId: +pacienteId
+    //   });
+    // } else {
+    //   Swal.fire({
+    //     icon: 'info',
+    //     title: 'Selecione um paciente',
+    //     text: 'Você precisa selecionar um paciente antes de cadastrar a anamnese.'
+    //   }).then(() => {
+    //     this.router.navigate(['/pacientes']);
+    //   });
+    //   return;
+    // }
+
+    this.loading = false;
+  }
 
   onSubmit() {
 
@@ -121,58 +167,53 @@ export class CadastroAnamneseComponent {
       return;
     }
 
-    // this.anamneseService.criarAnamnese(this.anamneseForm.value)
-    //   .subscribe({
+    if (this.saving) return;
 
-    //     next: () => {
+    this.saving = true;
 
-    //       Swal.fire({
-    //         icon: 'success',
-    //         title: 'Anamnese cadastrada!',
-    //         showConfirmButton: false,
-    //         timer: 2000
-    //       }).then(() => {
-    //         this.router.navigate(['/pacientes']);
-    //       });
+    const payload = this.anamneseForm.getRawValue();
 
-    //     },
+    this.anamneseService.criarAnamnese(payload)
+      .subscribe({
 
-    //     error: (err: any) => {
+        next: () => {
 
-    //       Swal.fire({
-    //         icon: 'error',
-    //         title: 'Erro ao cadastrar anamnese',
-    //         text: err.error
-    //       });
+          Swal.fire({
+            icon: 'success',
+            title: 'Anamnese cadastrada com sucesso!',
+            timer: 2000,
+            showConfirmButton: false
+          }).then(() => {
+            this.router.navigate(['/anamnese-infantil']);
+          });
 
-    //     }
+        },
 
-    //   });
+        error: () => {
+
+          this.saving = false;
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Erro ao cadastrar',
+            text: 'Não foi possível salvar a anamnese.'
+          });
+
+        }
+
+      });
 
   }
 
   cancelar() {
 
-    this.router.navigate(['/dashboard']);
-
-    Swal.fire({
-      icon: 'warning',
-      title: 'Cadastro cancelado',
-      showConfirmButton: false,
-      timer: 2000
-    });
+    this.router.navigate(['/anamnese-infantil']);
 
   }
 
   voltar() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/anamnese-infantil']);
   }
-
-
-  listaPacientes() {
-    this.router.navigate(['/pacientes']);
-  }
-
 
   get f() {
     return this.anamneseForm.controls as any;

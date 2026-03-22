@@ -20,6 +20,7 @@ import { AnamneseInfantilComponent } from './anamnese-infantil/anamnese-infantil
 import { RaasComponent } from './raas/raas.component';
 import { EvolucaoComponent } from './evolucao/evolucao.component';
 import { CadastroAnamneseComponent } from './anamnese-infantil/cadastrar/anamnese-infantil-cadastro.component';
+import { EdicaoAnamneseComponent } from './anamnese-infantil/editar/anamnese-infantil-editar.component';
 
 export const routes: Routes = [
   {
@@ -110,6 +111,12 @@ export const routes: Routes = [
   {
     path: 'anamnese-infantil/cadastrar',
     component: CadastroAnamneseComponent,
+    canActivate: [authGuard],
+    canMatch: [authGuard]
+  },
+  {
+    path: 'anamnese-infantil/editar/:id',
+    component: EdicaoAnamneseComponent,
     canActivate: [authGuard],
     canMatch: [authGuard]
   },

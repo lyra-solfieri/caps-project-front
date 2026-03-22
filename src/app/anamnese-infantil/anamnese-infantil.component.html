@@ -1,17 +1,53 @@
 <app-header></app-header>
 
-<div class="anamnese-container">
-    <div class="anamnese-header">
-        <h2>Lista de Anamneses</h2>
-    
-        <div class="anamnese-actions">
-          <button class="back-button" routerLink="/dashboard">
-            Voltar ao Menu
-          </button>
-    
-          <button class="add-button" (click)="addAnamnese()">
-            Nova Anamnese
-          </button>
-        </div>
-      </div>
+<div class="pacientes-container">
+
+  <div class="pacientes-header">
+    <h2>Anamneses</h2>
+
+    <div class="pacientes-actions">
+      <button class="back-button" (click)="voltar()">Voltar</button>
+      <button class="add-button" (click)="addAnamnese()">+ Nova Anamnese</button>
+    </div>
+  </div>
+
+  <div *ngIf="loading">Carregando...</div>
+
+  <table *ngIf="!loading && anamnese.length > 0" class="pacientes-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Paciente</th>
+        <th>Profissional</th>
+        <th>Data</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let a of anamnese">
+        <td>{{ a.id }}</td>
+        <td>{{ a.pacienteId }}</td>
+        <td>{{ a.profissionalResponsavel }}</td>
+        <td>{{ a.dataRegistro | date:'short' }}</td>
+
+        <td>
+          <button class="edit" (click)="editar(a)">Editar</button>
+          <button class="delete" (click)="deletar(a.id!)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && anamnese.length === 0" class="empty-message">
+    Nenhuma anamnese encontrada.
+  </div>
+
+  <div class="paginacao">
+    <button (click)="paginaAnterior()" [disabled]="pageNo === 0">Anterior</button>
+    <button (click)="proximaPagina()" [disabled]="(pageNo + 1) * pageSize >= totalElements">
+      Próxima
+    </button>
+  </div>
+
 </div>
