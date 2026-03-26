@@ -12,18 +12,6 @@
   margin-bottom: 25px;
 }
 
-.form-section h3 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  color: #333;
-  border-bottom: 2px solid #007bff;
-  padding-bottom: 10px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
 .pacientes-header {
   display: flex;
   justify-content: space-between;
@@ -45,6 +33,18 @@
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.3s;
+}
+
+.form-section h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
 }
 
 .form-group label {
@@ -157,4 +157,40 @@
 
 .error{
   color: red;
+}
+
+.info-pessoais-grid {
+  grid-template-columns: 2fr 1fr 1fr; /* Nome, CPF, RG */
+}
+
+.quatro-colunas-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.tres-colunas-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.cidade-estado-pais-grid {
+  grid-template-columns: 1.5fr 80px 1fr 1fr; 
+}
+
+.form-group textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-main);
+  font-size: 1rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  resize: vertical;
+}
+
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--caps-primary);
+  box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.15);
 }

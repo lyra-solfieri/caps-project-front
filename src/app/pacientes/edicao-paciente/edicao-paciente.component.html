@@ -1,8 +1,9 @@
 <app-header></app-header>
 <div class="cadastro-container">
+
   <div class="pacientes-header">
-     <h2>Edição de Paciente</h2>
-     <div class="pacientes-actions">
+    <h2>Edição de Paciente</h2>
+    <div class="pacientes-actions">
       <button class="back-button" (click)="cancelar()">Voltar</button>
     </div>
   </div>
@@ -14,173 +15,270 @@
     <div class="form-section">
       <h3>Informações Pessoais</h3>
       
-      <div class="form-group">
-        <label for="nome">Nome Completo <span class="required">*</span></label>
-        <input id="nome" type="text" formControlName="nome" />
-        <div class="error" *ngIf="f.nome.touched && f.nome.invalid">
-          <small *ngIf="f.nome.errors?.['required']">Nome é obrigatório.</small>
-          <small *ngIf="f.nome.errors?.['minlength']">Mínimo de 3 caracteres.</small>
+      <div class="form-row info-pessoais-grid">
+        <div class="form-group">
+          <label for="nome">Nome Completo <span class="required">*</span></label>
+          <input id="nome" type="text" formControlName="nome" />
+          <div class="error" *ngIf="f['nome'].touched && f['nome'].invalid">
+            <small *ngIf="f['nome'].errors?.['required']">Nome é obrigatório.</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cpf">CPF <span class="required">*</span></label>
+          <input id="cpf" type="text" mask="000.000.000-00" [dropSpecialCharacters]="true" formControlName="cpf"/>
+          <div class="error" *ngIf="f['cpf'].touched && f['cpf'].invalid">
+             <small *ngIf="f['cpf'].errors?.['required']">CPF é obrigatório.</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="rg">RG</label>
+          <input id="rg" type="text" formControlName="rg" />
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="cpf">CPF <span class="required">*</span></label>
-        <input id="cpf" type="text" mask="000.000.000-00" formControlName="cpf"/>
-        <div class="error" *ngIf="f.cpf.touched && f.cpf.invalid">
-          <small *ngIf="f.cpf.errors?.['required']">CPF é obrigatório.</small>
-          <small *ngIf="f.cpf.errors?.['pattern']">Digite um CPF válido.</small>
+      <div class="form-row quatro-colunas-grid">
+        <div class="form-group">
+          <label for="dataNascimento">Data de Nascimento <span class="required">*</span></label>
+          <input id="dataNascimento" type="date" formControlName="dataNascimento" />
+        </div>
+        <div class="form-group">
+          <label for="genero">Gênero <span class="required">*</span></label>
+          <select id="genero" formControlName="genero">
+            <option value="">Selecione</option>
+            <option *ngFor="let g of generos" [value]="g">{{ g }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="raca">Raça <span class="required">*</span></label>
+          <select id="raca" formControlName="raca">
+            <option value="">Selecione</option>
+            <option *ngFor="let r of racas" [value]="r">{{ r }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="etniaIndigena">Etnia Indígena</label>
+          <input id="etniaIndigena" type="text" formControlName="etniaIndigena" />
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="dataNascimento">Data de Nascimento <span class="required">*</span></label>
-        <input id="dataNascimento" type="date" formControlName="dataNascimento" />
-        <div class="error" *ngIf="f.dataNascimento.touched && f.dataNascimento.invalid">
-          <small>Data de nascimento é obrigatória.</small>
+      <div class="form-row tres-colunas-grid">
+        <div class="form-group">
+          <label for="nacionalidade">Nacionalidade</label>
+          <input id="nacionalidade" type="text" formControlName="nacionalidade" />
         </div>
-      </div>
-
-      <div class="form-group">
-        <label for="genero">Gênero <span class="required">*</span></label>
-        <select id="genero" formControlName="genero">
-          <option value="">Selecione</option>
-          <option *ngFor="let g of generos" [value]="g">{{ g }}</option>
-        </select>
-        <div class="error" *ngIf="f.genero.touched && f.genero.invalid">
-          <small>Selecione um gênero.</small>
+        <div class="form-group">
+          <label for="religiao">Religião</label>
+          <input id="religiao" type="text" formControlName="religiao" />
         </div>
-      </div>
-
-      <div class="form-group">
-        <label for="raca">Raça <span class="required">*</span></label>
-        <select id="raca" formControlName="raca">
-          <option value="">Selecione</option>
-          <option *ngFor="let r of racas" [value]="r">{{ r }}</option>
-        </select>
-        <div class="error" *ngIf="f.raca.touched && f.raca.invalid">
-          <small>Selecione uma raça.</small>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="profissao">Profissão</label>
-        <input id="profissao" type="text" formControlName="profissao" />
-      </div>
-    </div>
-
-    <div class="form-section">
-      <h3>Contato</h3>
-
-      <div class="form-group">
-        <label for="telefone">Telefone <span class="required">*</span></label>
-        <input id="telefone" type="text" mask="(00) 00000-0000" formControlName="telefone" />
-        <div class="error" *ngIf="f.telefone.touched && f.telefone.invalid">
-          <small *ngIf="f.telefone.errors?.['required']">Telefone é obrigatório.</small>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="email">E-mail <span class="required">*</span></label>
-        <input id="email" type="email" formControlName="email" />
-        <div class="error" *ngIf="f.email.touched && f.email.invalid">
-          <small *ngIf="f.email.errors?.['required']">E-mail é obrigatório.</small>
-          <small *ngIf="f.email.errors?.['email']">Digite um e-mail válido.</small>
+        <div class="form-group">
+          <label for="escolaridade">Escolaridade</label>
+          <select id="escolaridade" formControlName="escolaridade">
+            <option value="">Selecione</option>
+            <option value="Fundamental Incompleto">Fundamental Incompleto</option>
+            <option value="Fundamental Completo">Fundamental Completo</option>
+            <option value="Médio Incompleto">Médio Incompleto</option>
+            <option value="Médio Completo">Médio Completo</option>
+            <option value="Superior Incompleto">Superior Incompleto</option>
+            <option value="Superior Completo">Superior Completo</option>
+          </select>
         </div>
       </div>
     </div>
 
     <div class="form-section">
-      <h3>Filiação</h3>
+      <h3>Contato e Endereço</h3>
 
-      <div class="form-group">
-        <label for="nomeMae">Nome da Mãe</label>
-        <input id="nomeMae" type="text" formControlName="nomeMae" />
+      <div class="form-row contato-grid">
+        <div class="form-group">
+          <label for="telefone">Telefone <span class="required">*</span></label>
+          <input id="telefone" type="text" mask="(00) 00000-0000" [dropSpecialCharacters]="true" formControlName="telefone" />
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail <span class="required">*</span></label>
+          <input id="email" type="email" formControlName="email" />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="nomePai">Nome do Pai</label>
-        <input id="nomePai" type="text" formControlName="nomePai" />
+      <div formGroupName="endereco">
+        <div class="form-row cep-rua-numero-grid">
+          <div class="form-group">
+            <label for="cep">CEP <span class="required">*</span></label>
+            <input id="cep" type="text" mask="00000-000" [dropSpecialCharacters]="true" formControlName="cep" (blur)="buscarCep()" />
+          </div>
+          <div class="form-group">
+            <label for="logradouro">Rua</label>
+            <input id="logradouro" type="text" formControlName="logradouro" />
+          </div>
+          <div class="form-group small">
+            <label for="numero">Número</label>
+            <input id="numero" type="number" formControlName="numero" />
+          </div>
+        </div>
+
+        <div class="form-row complemento-bairro-grid">
+          <div class="form-group">
+            <label for="complemento">Complemento</label>
+            <input id="complemento" type="text" formControlName="complemento" />
+          </div>
+          <div class="form-group">
+            <label for="bairro">Bairro</label>
+            <input id="bairro" type="text" formControlName="bairro" />
+          </div>
+        </div>
+
+        <div class="form-row cidade-estado-pais-grid">
+          <div class="form-group">
+            <label for="cidade">Cidade</label>
+            <input id="cidade" type="text" formControlName="cidade" />
+          </div>
+          <div class="form-group small">
+            <label for="estado">Estado</label>
+            <select id="estado" formControlName="estado">
+                <option value="">UF</option>
+                <option value="AC">AC</option>
+                <option value="AL">AL</option>
+                <option value="AM">AM</option>
+                <option value="AP">AP</option>
+                <option value="BA">BA</option>
+                <option value="CE">CE</option>
+                <option value="DF">DF</option>
+                <option value="ES">ES</option>
+                <option value="GO">GO</option>
+                <option value="MA">MA</option>
+                <option value="MG">MG</option>
+                <option value="MS">MS</option>
+                <option value="MT">MT</option>
+                <option value="PA">PA</option>
+                <option value="PB">PB</option>
+                <option value="PE">PE</option>
+                <option value="PI">PI</option>
+                <option value="PR">PR</option>
+                <option value="RJ">RJ</option>
+                <option value="RN">RN</option>
+                <option value="RO">RO</option>
+                <option value="RR">RR</option>
+                <option value="RS">RS</option>
+                <option value="SC">SC</option>
+                <option value="SE">SE</option>
+                <option value="SP">SP</option>
+                <option value="TO">TO</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="pais">País</label>
+            <input id="pais" type="text" formControlName="pais" />
+          </div>
+          <div class="form-group">
+            <label for="codIBGEMunicipio">Cód. IBGE</label>
+            <input id="codIBGEMunicipio" type="text" [formControl]="f['codIBGEMunicipio']" />
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="form-section">
-      <h3>Saúde e Prontuário</h3>
+      <h3>Filiação e Responsável Legal</h3>
 
-      <div class="form-group">
-        <label for="numeroCartaoSUS">Cartão SUS</label>
-        <input id="numeroCartaoSUS" type="number" formControlName="numeroCartaoSUS" />
-      </div>
-
-      <div class="form-group">
-        <label for="numeroProntuario">Número do Prontuário</label>
-        <input id="numeroProntuario" type="number" formControlName="numeroProntuario" />
-      </div>
-    </div>
-
-    <div class="form-section" formGroupName="endereco">
-      <h3>Endereço</h3>
-
-      <div class="form-row">
+      <div class="form-row filiacao-grid">
         <div class="form-group">
-          <label for="cep">CEP 
-           <span class="required">*</span>
-          </label>
-          <input id="cep" type="text" mask="00000-000" formControlName="cep" (blur)="buscarCep()" />
+          <label for="nomeMae">Nome da Mãe</label>
+          <input id="nomeMae" type="text" formControlName="nomeMae" />
         </div>
-
         <div class="form-group">
-          <label for="logradouro">Rua</label>
-          <input id="logradouro" type="text" formControlName="logradouro" />
-        </div>
-
-        <div class="form-group small">
-          <label for="numero">Número</label>
-          <input id="numero" type="number" formControlName="numero" />
+          <label for="profissaoMae">Profissão da Mãe</label>
+          <input id="profissaoMae" type="text" formControlName="profissaoMae" />
         </div>
       </div>
 
-      <div class="form-row">
+      <div class="form-row filiacao-grid">
         <div class="form-group">
-          <label for="complemento">Complemento</label>
-          <input id="complemento" type="text" formControlName="complemento" />
+          <label for="nomePai">Nome do Pai</label>
+          <input id="nomePai" type="text" formControlName="nomePai" />
         </div>
-
         <div class="form-group">
-          <label for="bairro">Bairro</label>
-          <input id="bairro" type="text" formControlName="bairro" />
-        </div>
-
-        <div class="form-group">
-          <label for="cidade">Cidade</label>
-          <input id="cidade" type="text" formControlName="cidade" />
-        </div>
-
-        <div class="form-group small">
-          <label for="estado">Estado</label>
-          <input id="estado" type="text" maxlength="2" formControlName="estado" />
+          <label for="profissaoPai">Profissão do Pai</label>
+          <input id="profissaoPai" type="text" formControlName="profissaoPai" />
         </div>
       </div>
 
-      <div class="form-row">
+      <h4 style="color: #64748b; margin-top: 15px; margin-bottom: 10px;">Dados do Responsável (Para menores/incapazes)</h4>
+      <div class="form-row tres-colunas-grid">
         <div class="form-group">
-          <label for="pais">País</label>
-          <input id="pais" type="text" formControlName="pais" />
+          <label for="responsavelLegal">Nome do Responsável</label>
+          <input id="responsavelLegal" type="text" formControlName="responsavelLegal" />
+        </div>
+        <div class="form-group">
+          <label for="parentescoResponsavelLegal">Parentesco</label>
+          <input id="parentescoResponsavelLegal" type="text" formControlName="parentescoResponsavelLegal" />
+        </div>
+        <div class="form-group">
+          <label for="telefoneResponsavelLegal">Telefone do Responsável</label>
+          <input id="telefoneResponsavelLegal" type="text" mask="(00) 00000-0000" [dropSpecialCharacters]="true" formControlName="telefoneResponsavelLegal" />
+        </div>
+      </div>
+      <div class="form-row" style="grid-template-columns: 1fr 2fr;">
+        <div class="form-group">
+            <label for="profissaoResponsavelLegal">Profissão do Responsável</label>
+            <input id="profissaoResponsavelLegal" type="text" formControlName="profissaoResponsavelLegal" />
         </div>
       </div>
     </div>
 
     <div class="form-section">
-      <h3>Outras Informações</h3>
+      <h3>Saúde, Rede de Apoio e Socioeconômico</h3>
 
-      <div class="form-group">
-        <label>
+      <div class="form-row tres-colunas-grid">
+        <div class="form-group">
+          <label for="numeroCartaoSUS">Cartão SUS</label>
+          <input id="numeroCartaoSUS" type="number" formControlName="numeroCartaoSUS" />
+        </div>
+        <div class="form-group">
+          <label for="numeroProntuario">Número do Prontuário</label>
+          <input id="numeroProntuario" type="number" formControlName="numeroProntuario" />
+        </div>
+        <div class="form-group">
+          <label for="profissao">Profissão do Paciente</label>
+          <input id="profissao" type="text" formControlName="profissao" />
+        </div>
+      </div>
+
+      <div class="form-row tres-colunas-grid">
+        <div class="form-group">
+          <label for="unidadeBasicaSaude">Unidade Básica de Saúde (UBS)</label>
+          <input id="unidadeBasicaSaude" type="text" formControlName="unidadeBasicaSaude" />
+        </div>
+        <div class="form-group">
+          <label for="agenteSaude">Agente de Saúde</label>
+          <input id="agenteSaude" type="text" formControlName="agenteSaude" />
+        </div>
+        <div class="form-group">
+          <label for="instituicaoEnsino">Instituição de Ensino</label>
+          <input id="instituicaoEnsino" type="text" formControlName="instituicaoEnsino" />
+        </div>
+      </div>
+
+      <div class="form-row tres-colunas-grid">
+        <div class="form-group">
+          <label for="rendaFamiliar">Renda Familiar</label>
+          <input id="rendaFamiliar" type="text" formControlName="rendaFamiliar" />
+        </div>
+        <div class="form-group">
+          <label for="auxilioOuBeneficioSocial">Auxílio / Benefício Social</label>
+          <input id="auxilioOuBeneficioSocial" type="text" formControlName="auxilioOuBeneficioSocial" />
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top: 15px;">
+        <label for="contextoVulnerabilidadeSocioeconomica">Contexto de Vulnerabilidade Socioeconômica</label>
+        <textarea id="contextoVulnerabilidadeSocioeconomica" formControlName="contextoVulnerabilidadeSocioeconomica" rows="3"></textarea>
+      </div>
+
+      <div class="form-row" style="margin-top: 20px;">
+        <label class="checkbox-label">
           <input type="checkbox" formControlName="infantojuvenil" />
-          Infantojuvenil
+          Paciente Infantojuvenil
         </label>
-      </div>
-
-      <div class="form-group">
-        <label>
+        <label class="checkbox-label">
           <input type="checkbox" formControlName="emSituacaoSocioeconomica" />
           Em situação socioeconômica vulnerável
         </label>
