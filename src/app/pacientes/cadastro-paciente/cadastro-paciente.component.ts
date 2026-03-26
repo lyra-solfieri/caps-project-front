@@ -73,8 +73,8 @@ export class CadastroPacienteComponent {
       codIBGEMunicipio: [''],
       endereco: this.fb.group({
         cep: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
-        logradouro: ['',Validators.required],
-        numero: ['', Validators.required],
+        logradouro: [''],
+        numero: [''],
         complemento: [''],
         bairro: [''],
         cidade: [''],
