@@ -45,22 +45,22 @@
 
         <td class="acoes">
           <button
-            class="edit"
-            (click)="editarPaciente(paciente.id!)">
-            Editar
-          </button>
-
+            class="icon-btn edit"
+            (click)="editarPaciente(paciente.id!)"
+            data-tooltip="Editar">
+            ✏️ </button>
+        
           <button
-            class="docs"
-            (click)="abrirRaas(paciente.id!)">
-            Gerar RAAS
-          </button>
-
+            class="icon-btn docs"
+            (click)="abrirRaas(paciente.id!)"
+            data-tooltip="Gerar RAAS">
+            📄 </button>
+        
           <button
-            class="delete"
-            (click)="excluirPaciente(paciente.id!)">
-            Excluir
-          </button>
+            class="icon-btn delete"
+            (click)="excluirPaciente(paciente.id!)"
+            data-tooltip="Excluir">
+            🗑️ </button>
         </td>
       </tr>
     </tbody>
