@@ -12,8 +12,16 @@ import { Router, RouterLink } from '@angular/router';
 export class AppHeaderComponent {
    constructor(private router: Router) {}
    isMenuOpen = false;
+   isProfileMenuOpen = false;
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+    toggleProfileMenu() {
+    this.isProfileMenuOpen = !this.isProfileMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
   }
 
   logout() {
