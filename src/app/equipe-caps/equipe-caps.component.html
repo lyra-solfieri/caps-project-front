@@ -1,33 +1,47 @@
 <app-header></app-header>
 
-<div class="register-container">
-    <div class="register-card">
+<div class="register-page">
+  <div class="register-card">
+    
+    <div class="card-header">
       <h2>Criar Conta</h2>
       <p>Cadastre novos usuários para o projeto CAPS</p>
-  
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label>E-mail Corporativo</label>
-          <input type="email" formControlName="email" placeholder="exemplo@araujo.com">
-        </div>
-  
-        <div class="form-group">
-          <label>Senha</label>
-          <input type="password" formControlName="password" placeholder="••••••••">
-        </div>
-  
-        <div class="form-group">
-          <label>Nível de Acesso (Role)</label>
-          <select formControlName="role">
-            <option value="USER">Usuário Padrão</option>
-            <option value="MODERATOR">Moderador</option>
-            <option value="ADMIN">Administrador (SRE/DevOps)</option>
-          </select>
-        </div>
-  
-        <button type="submit" class="btn-register" [disabled]="registerForm.invalid">
-          Finalizar Cadastro
-        </button>
-      </form>
     </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label for="email">E-mail Corporativo</label>
+        <input 
+          id="email" 
+          type="email" 
+          formControlName="email" 
+          placeholder="exemplo@araujo.com"
+          autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input 
+          id="password" 
+          type="password" 
+          formControlName="password" 
+          placeholder="••••••••">
+      </div>
+
+      <div class="form-group">
+        <label for="role">Nível de Acesso (Role)</label>
+        <select id="role" formControlName="role">
+          <option value="USER">Usuário Padrão</option>
+          <option value="MODERATOR">Moderador</option>
+          <option value="ADMIN">Administrador (SRE/DevOps)</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="registerForm.invalid">
+        Finalizar Cadastro
+      </button>
+
+    </form>
   </div>
+</div>

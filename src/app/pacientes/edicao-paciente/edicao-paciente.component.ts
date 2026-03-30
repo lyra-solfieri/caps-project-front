@@ -11,6 +11,7 @@ import { Genero } from '../../enums/genero.enum';
 import { Raca } from '../../enums/raca.enum';
 import { ViaCepService } from '../../services/paciente/cep.service';
 import { PacienteDto } from '../../services/paciente/paciente.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-edicao-paciente',
@@ -52,6 +53,7 @@ export class EdicaoPacienteComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       telefone: ['', [Validators.required]],
       cpf: ['', [Validators.required]],
+      rg: [''],
       dataNascimento: ['', Validators.required],
       genero: ['', Validators.required],
       nomeMae: [''],
@@ -62,6 +64,24 @@ export class EdicaoPacienteComponent implements OnInit {
       numeroProntuario: [''],
       infantojuvenil: [false],
       emSituacaoSocioeconomica: [false],
+      nacionalidade: [''],
+      religiao: [''],
+      escolaridade: [''],
+      etniaIndigena: [''],
+      profissaoMae: [''],
+      profissaoPai: [''],
+      responsavelLegal: [''],
+      parentescoResponsavelLegal: [''],
+      telefoneResponsavelLegal: [''],
+      profissaoResponsavelLegal: [''],
+      unidadeBasicaSaude: [''],
+      agenteSaude: [''],
+      instituicaoEnsino: [''],
+      rendaFamiliar: [''],
+      auxilioOuBeneficioSocial: [''],
+      contextoVulnerabilidadeSocioeconomica: [''],
+      codIBGEMunicipio: [''],
+
       endereco: this.fb.group({
         cep: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
         logradouro: [''],
@@ -78,6 +98,7 @@ export class EdicaoPacienteComponent implements OnInit {
   carregarPaciente(id: number) {
     this.pacienteService.buscarPacientePorId(id).subscribe({
       next: (paciente: PacienteDto) => {
+        // O patchValue preenche automaticamente todos os campos do form com os dados do back
         this.pacienteForm.patchValue(paciente);
       },
       error: () => {
@@ -113,11 +134,15 @@ export class EdicaoPacienteComponent implements OnInit {
             this.router.navigate(['/pacientes']);
           });
         },
-        error: (err: any) => {
+        error: (err: HttpErrorResponse) => {
+          let mensagemErro = 'Erro ao atualizar paciente.';
+          if (err.error && err.error.mensagem) {
+             mensagemErro = err.error.mensagem;
+          }
           Swal.fire({
             icon: 'error',
-            title: 'Erro ao atualizar paciente',
-            text: err.error.message
+            title: 'Erro',
+            text: mensagemErro
           });
         }
       });
