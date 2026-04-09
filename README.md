@@ -91,17 +91,18 @@ Abrir no navegador: http://localhost:4200
 
 Testes End-to-End (Cypress)
 
-Abrir interface gráfica:
+1. Abrir interface gráfica:
   ```bash
   npx cypress open
 
-Rodar no terminal:
-   ``bash
-    npx cypress open
+````
 
+2. Rodar no terminal:
 
-------------------------------------------------------------------------
+```bash
+  npx cypress run
 
+  ````
 ### SEGURANÇA E LGPD
 
 Este sistema pode manipular dados sensíveis de pacientes. Portanto,
@@ -114,7 +115,7 @@ recomenda-se:
 
 ------------------------------------------------------------------------
 
-ROADMAP
+### ROADMAP
 
 -   Autenticação com JWT
 -   Controle de permissões por perfil
