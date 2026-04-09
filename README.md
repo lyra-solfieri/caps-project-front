@@ -1,59 +1,130 @@
-# AngularFrontend
+# 🏥 CAPS - Sistema de Gestão para Atenção Psicossocial
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.12.
+![Angular](https://img.shields.io/badge/Angular-19-DD0031?style=for-the-badge&logo=angular)
+![Cypress](https://img.shields.io/badge/Cypress-E2E-17202C?style=for-the-badge&logo=cypress)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript)
 
-## Development server
+O **Projeto CAPS** é uma plataforma desenvolvida para otimizar a gestão administrativa e clínica de Centros de Atenção Psicossocial. O sistema foca em usabilidade, agilidade no registro de atendimentos e conformidade com documentos obrigatórios do SUS.
 
-To start a local development server, run:
+---
+
+## ✨ Funcionalidades Principais
+
+### 📋 Gestão de Pacientes
+- **Listagem Inteligente:** Tabela dinâmica com cálculo automático de idade e visualização clara de endereços.
+- **Ações Rápidas:** Botões de ação (Editar, Excluir, Gerar RAAS) representados por ícones com **Tooltips interativos** para uma interface mais limpa.
+- **Responsividade:** Layout adaptável para facilitar o uso em diferentes dispositivos da unidade de saúde.
+
+### 🧭 Navegação & Interface
+- **Header Dinâmico:** Atalho rápido para o Dashboard através da Logo e menu lateral estilo "gaveta".
+- **Área do Usuário:** Ícones intuitivos de Perfil e Logout integrados ao design moderno utilizando *Material Icons*.
+- **Identidade Visual:** Paleta de cores baseada em tons de verde hospitalar (`#00796b`), transmitindo confiança e calma.
+
+### 📄 Documentação Técnica
+- Fluxo preparado para geração de **RAAS** (Registro de Ações Ambulatoriais de Saúde).
+- Módulos de Anamnese Infantil, Evolução e Relatórios.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Core:** Angular 19.2.x Angular 19 - TypeScript - HTML5 - CSS3 - Flexbox / Grid -
+- **Estilização:** CSS3 (Flexbox/Grid) + BEM Methodology
+- **Ícones:** Google Material Icons
+- **Testes:** Cypress (End-to-End)
+
+---
+
+ARQUITETURA DO PROJETO
+
+src ├── app │ ├── components │ │ ├── header │ │ ├── sidebar │ │ └──
+shared │ │ │ ├── pages │ │ ├── dashboard │ │ ├── pacientes │ │ ├──
+anamnese │ │ └── relatorios │ │ │ ├── services │ ├── models │ └── guards
+│ ├── assets └── environments
+
+
+## 🚀 Como Rodar o Projeto
+
+### Pré-requisitos
+Antes de começar, você vai precisar ter instalado em sua máquina:
+[Node.js](https://nodejs.org/en/) e o [Angular CLI](https://angular.io/cli).
+
+### Instalação
+
+BACKEND
+1. Clone o repositório:
+   ```bash
+   git clone [https://codeberg.org/seuusuario_codeberg/caps-project.git]
+
+2. Entre na pasta do projeto:
+    ```bash
+    cd caps-project
+
+3. Instale as dependências:
+    ```bash
+    java install
+
+4. Rodar o projeto:
+    ```bash
+    run project java
+Deploy api spring boot
+
+FRONTEND
+1. Clone o repositório:
+   ```bash
+   git clone [https://codeberg.org/seuusuario_codeberg/caps-project-front.git]
+
+2. Entre na pasta do projeto:
+    ```bash
+    cd caps-frontend
+
+3. Instale as dependências:
+    ```bash
+    npm install
+
+4. Rodar o projeto:
+    ```bash
+    ng serve
+Abrir no navegador: http://localhost:4200
+
+### TESTES AUTOMATIZADOS
+
+Testes End-to-End (Cypress)
+
+1. Abrir interface gráfica:
+  ```bash
+  npx cypress open
+
+````
+
+2. Rodar no terminal:
 
 ```bash
-ng serve
-```
+  npx cypress run
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+  ````
+### SEGURANÇA E LGPD
 
-## Code scaffolding
+Este sistema pode manipular dados sensíveis de pacientes. Portanto,
+recomenda-se:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+-   Controle de acesso
+-   Registro de auditoria
+-   Proteção de dados pessoais
+-   Conformidade com a LGPD
 
-```bash
-ng generate component component-name
-```
+------------------------------------------------------------------------
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### ROADMAP
 
-```bash
-ng generate --help
-```
+-   Autenticação com JWT
+-   Controle de permissões por perfil
+-   Dashboard com indicadores
+-   Exportação de relatórios em PDF
+-   Dark Mode
 
-## Building
+------------------------------------------------------------------------
 
-To build the project run:
+AUTOR
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Alexsander Araujo Desenvolvedor
