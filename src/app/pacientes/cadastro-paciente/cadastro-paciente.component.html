@@ -17,7 +17,7 @@
       
       <div class="form-row info-pessoais-grid">
         <div class="form-group">
-          <label for="nome">Nome Completo <span class="required">*</span></label>
+          <label for="nome" data-cy="input-nome">Nome Completo <span class="required">*</span></label>
           <input id="nome" type="text" formControlName="nome" />
           <div class="error" *ngIf="f['nome'].touched && f['nome'].invalid">
             <small *ngIf="f['nome'].errors?.['required']">Nome é obrigatório.</small>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-group">
-          <label for="cpf">CPF <span class="required">*</span></label>
+          <label for="cpf" data-cy="input-cpf">CPF <span class="required">*</span></label>
           <input id="cpf" type="text" mask="000.000.000-00" [dropSpecialCharacters]="true" formControlName="cpf"/>
           
           <div class="error" *ngIf="f['cpf'].touched && f['cpf'].invalid">
@@ -44,7 +44,7 @@
 
       <div class="form-row quatro-colunas-grid">
         <div class="form-group">
-          <label for="dataNascimento">Data de Nascimento <span class="required">*</span></label>
+          <label for="dataNascimento" data-cy="input-data-nascimento">Data de Nascimento <span class="required">*</span></label>
           <input id="dataNascimento" type="date" formControlName="dataNascimento" />
           <div class="error" *ngIf="f['dataNascimento'].touched && f['dataNascimento'].invalid">
              <small>Data obrigatória.</small>
@@ -53,7 +53,7 @@
 
         <div class="form-group">
           <label for="genero">Gênero <span class="required">*</span></label>
-          <select id="genero" formControlName="genero">
+          <select id="genero" data-cy="input-genero" formControlName="genero">
             <option value="">Selecione</option>
             <option *ngFor="let g of generos" [value]="g">{{ g }}</option>
           </select>
@@ -61,7 +61,7 @@
 
         <div class="form-group">
           <label for="raca">Raça <span class="required">*</span></label>
-          <select id="raca" formControlName="raca">
+          <select id="raca" data-cy="input-raca" formControlName="raca">
             <option value="">Selecione</option>
             <option *ngFor="let r of racas" [value]="r">{{ r }}</option>
           </select>
@@ -69,7 +69,7 @@
 
         <div class="form-group">
           <label for="etniaIndigena">Etnia Indígena</label>
-          <input id="etniaIndigena" type="text" formControlName="etniaIndigena" placeholder="Se aplicável" />
+          <input id="etniaIndigena" type="text" formControlName="etniaIndigena" placeholder="Se aplicável"/>
         </div>
       </div>
 
@@ -102,14 +102,14 @@
 
       <div class="form-row contato-grid">
         <div class="form-group">
-          <label for="telefone">Telefone <span class="required">*</span></label>
+          <label for="telefone" data-cy="input-telefone">Telefone <span class="required">*</span></label>
           <input id="telefone" type="text" mask="(00) 00000-0000" [dropSpecialCharacters]="true" formControlName="telefone" />
           <div class="error" *ngIf="f['telefone'].touched && f['telefone'].invalid">
             <small>Telefone é obrigatório.</small>
           </div>
         </div>
         <div class="form-group">
-          <label for="email">E-mail<span class="required">*</span></label>
+          <label for="email" data-cy="input-email">E-mail<span class="required">*</span></label>
           <input id="email" type="email" formControlName="email" />
         </div>
       </div>
@@ -117,7 +117,7 @@
       <div formGroupName="endereco">
         <div class="form-row cep-rua-numero-grid">
           <div class="form-group">
-            <label for="cep">CEP <span class="required">*</span></label>
+            <label for="cep" data-cy="input-cep">CEP <span class="required">*</span></label>
             <input id="cep" type="text" mask="00000-000" [dropSpecialCharacters]="true" formControlName="cep" (blur)="buscarCep()" />
              <div class="error" *ngIf="pacienteForm.get('endereco.cep')?.touched && pacienteForm.get('endereco.cep')?.invalid">
                <small>CEP inválido.</small>
@@ -199,7 +199,7 @@
 
       <div class="form-row filiacao-grid">
         <div class="form-group">
-          <label for="nomeMae">Nome da Mãe</label>
+          <label for="nomeMae" data-cy="input-nome-mae">Nome da Mãe<span class="required">*</span></label>
           <input id="nomeMae" type="text" formControlName="nomeMae" />
         </div>
         <div class="form-group">
@@ -210,7 +210,7 @@
 
       <div class="form-row filiacao-grid">
         <div class="form-group">
-          <label for="nomePai">Nome do Pai</label>
+          <label for="nomePai" data-cy="input-nome-pai">Nome do Pai<span class="required">*</span></label>
           <input id="nomePai" type="text" formControlName="nomePai" />
         </div>
         <div class="form-group">
@@ -305,7 +305,7 @@
 
     <div class="buttons">
       <button type="button" class="cancel" (click)="cancelar()">Cancelar</button>
-      <button type="submit" [disabled]="pacienteForm.invalid">Salvar Paciente</button>
+      <button type="submit" data-cy="btn-salvar">Salvar Paciente</button>
     </div>
   </form>    
 </div>
