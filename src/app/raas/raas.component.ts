@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './raas.component.css'
 })
 export class RaasComponent implements OnInit {
-  // acoesRealizadas!: FormArray;
+  acoesRealizadas!: FormArray;
   raasForm!: FormGroup;
   paciente!: PacienteDto;
 
@@ -112,32 +112,35 @@ export class RaasComponent implements OnInit {
   }
 
   removerAcao(index: number) {
+    if (this.acoes.length === 1) {
+      return;
+    }
     this.acoes.removeAt(index);
   }
 
-  // buscarPaciente(pacienteId: number) {
-  //   this.pacienteService.buscarPacientePorId(pacienteId).subscribe({
-  //     next: (paciente: PacienteDto) => {
-  //       console.log("🚀 ~ RaasComponent ~ buscarPaciente ~ paciente:", paciente);
+  buscarPaciente(pacienteId: number) {
+    this.pacienteService.buscarPacientePorId(pacienteId).subscribe({
+      next: (paciente: PacienteDto) => {
+        console.log("🚀 ~ RaasComponent ~ buscarPaciente ~ paciente:", paciente);
         
-  //       this.raasForm.patchValue({
-  //         nomeEstabelecimento: paciente.nome,
-  //         // cnes: paciente.cnes,
-  //         numeroProntuario: paciente.numeroProntuario,
-  //         nomePaciente: paciente.nome,
-  //         numeroCartaoSUS: paciente.numeroCartaoSUS,
-  //         sexo: paciente.genero,
-  //         dataNascimento: paciente.dataNascimento,
-  //         // nacionalidade: paciente.nacionalidade,
-  //         raca: paciente.raca,
-  //         nomeMae: paciente.nomeMae
-  //       });
-  //     }
-  //   })
+        this.raasForm.patchValue({
+          nomeEstabelecimento: paciente.nome,
+          // cnes: paciente.cnes,
+          numeroProntuario: paciente.numeroProntuario,
+          nomePaciente: paciente.nome,
+          numeroCartaoSUS: paciente.numeroCartaoSUS,
+          sexo: paciente.genero,
+          dataNascimento: paciente.dataNascimento,
+          // nacionalidade: paciente.nacionalidade,
+          raca: paciente.raca,
+          nomeMae: paciente.nomeMae
+        });
+      }
+    })
     
-  // }
+  }
 
-   exportarPDF() {
+  exportarPDF() {
     
   }
 
