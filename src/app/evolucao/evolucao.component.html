@@ -1,13 +1,12 @@
 <app-header></app-header>
 <div class="evolucao-container">
   <div class="evolucao-header">
-    <h2>
-      <i class="fas fa-notes-medical"></i>
+    <h2>     
       Evoluções do Paciente
     </h2>
-    <span class="badge-info" *ngIf="pacienteNome">
-      {{ pacienteNome }}
-    </span>
+    <div class="evolucao-actions">
+      <button class="back-button" (click)="voltar()">Voltar</button>
+    </div>
   </div>
 
   <div class="evolucoes-anteriores" *ngIf="evolucoes.length > 0">
@@ -64,21 +63,18 @@
     <p>Nenhuma evolução registrada ainda</p>
   </div>
 
-  <div class="form-group profissional-group">
-        <label for="profissional">
-          <i class="fas fa-user-md"></i>
-          Paciente
-        </label>
-        <input
-          type="text"
-          id="paciente"
-          formControlName="paciente"
-          placeholder="Digite o nome do paciente"
-        />
-   </div>
+  <div>
+    <button class="back-button" (click)="addPaciente()">Adicionar uma nova evolução</button>
+  </div>
+
+  <app-selecionar-paciente-modal
+    *ngIf="mostrarModal"
+    (fechado)="fecharModal()"
+    (selecionado)="onPacienteSelecionado($event)">
+  </app-selecionar-paciente-modal>
 
 
-  <div class="evolucao-form-container">
+  <div class="evolucao-form-container" *ngIf="exibirCriarEvolucao">
     <h3>
       <i class="fas" [ngClass]="evolucaoEmEdicao ? 'fa-edit' : 'fa-plus-circle'"></i>
       {{ evolucaoEmEdicao ? 'Editar Evolução' : 'Nova Evolução' }}
@@ -122,9 +118,8 @@
         
         <button 
           type="submit" 
-          class="btn btn-primary"
+          class="back-button"
           [disabled]="evolucaoForm.invalid || !evolucaoForm.dirty">
-          <i class="fas" [ngClass]="evolucaoEmEdicao ? 'fa-save' : 'fa-paper-plane'"></i>
           {{ evolucaoEmEdicao ? 'Atualizar' : 'Salvar Evolução' }}
         </button>
       </div>
