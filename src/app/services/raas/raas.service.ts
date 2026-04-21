@@ -31,6 +31,10 @@ export class RaasService {
     return this.http.get<RaasResponseDTO[]>(`${this.apiUrl}/paciente/${pacienteId}`, { headers: this.getHeaders() });
   }
 
+  listarPaginado(): Observable<RaasResponseDTO[]> {
+    return this.http.get<RaasResponseDTO[]>(`${this.apiUrl}/ultimos`, { headers: this.getHeaders() });
+  }
+
   deletar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
