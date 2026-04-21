@@ -91,3 +91,9 @@
 
   </div> -->
 </div>
+
+<app-selecionar-paciente-modal
+  *ngIf="mostrarModal"
+  (fechado)="fecharModal()"
+  (selecionado)="onPacienteSelecionado($event)">
+</app-selecionar-paciente-modal>

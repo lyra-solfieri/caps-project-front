@@ -5,13 +5,14 @@ import { PacienteService } from '../../services/paciente/paciente.service';
 import { PacienteDto } from '../../services/paciente/paciente.model';
 import { RaasService } from '../../services/raas/raas.service';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-raas',
   imports: [
     AppHeaderComponent,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
   ],
 templateUrl: './raas.component.html',
 styleUrls: ['./raas.component.css']
@@ -25,27 +26,74 @@ export class RaasComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private pacienteService: PacienteService,
-    private raasService: RaasService
+    private raasService: RaasService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
 
-    this.raasForm = this.fb.group({
-      nomeEstabelecimento: [''],
-      cnes: [''],
-      numeroProntuario: [''],
-      nomePaciente: [''],
-      cartaoSus: [''],
-      sexo: [''],
-      dataNascimento: [''],
-      nomeMae: [''],
+  this.raasForm = this.fb.group({
+    nomeEstabelecimento: [''],
+    cnes: [''],
 
-      dataAdmissao: [''],
-      mesAtendimento: [''],
-      numeroAutorizacao: [''],
+    numeroProntuario: [''],
+    nomePaciente: [''],
+    cartaoSus: [''],
+    sexo: [''],
+    dataNascimento: [''],
+    nomeMae: [''],
+    nacionalidade: [''],
+    racaCor: [''],
+    etniaIndigena: [''],
+    nomeResponsavel: [''],
+    municipio: [''],
+    uf: [''],
+    codigoIbge: [''],
+    cep: [''],
+    endereco: [''],
+    complemento: [''],
+    telefoneCelular: [''],
+    telefoneContato: [''],
 
-      acoesRealizadas: this.fb.array([])
-    });
+    dataAdmissao: [''],
+    mesAtendimento: [''],
+    numeroAutorizacao: [''],
+
+    usoDrogas: [''],
+    alcool: [false],
+    crack: [false],
+    outrasDrogas: [false],
+
+    origemDemanda: [false],
+    origemAtencaoBasica: [false],
+    origemUrgencia: [false],
+    origemCaps: [false],
+    origemHospital: [false],
+    origemPsiquiatrico: [false],
+
+    cidPrincipal: [''],
+    descricaoCidPrincipal: [''],
+    cidSecundario: [''],
+    descricaoCidSecundario: [''],
+
+    esf: [''],
+    cnesAtendimento: [''],
+
+    encaminhamentoCaps: [false],
+    encaminhamentoAB: [false],
+    alta: [false],
+    obito: [false],
+
+    dataConclusao: [''],
+
+    acoesRealizadas: this.fb.array([])
+  });
+
+    const pacienteId = this.route.snapshot.paramMap.get('id');
+
+    if (pacienteId) {
+      this.buscarPaciente(+pacienteId);
+    }
 
     this.adicionarAcao();
   }

@@ -141,6 +141,12 @@ export const routes: Routes = [
     canMatch: [authGuard]
   },
   {
+    path: 'raas/novo/:id',
+    component: RaasComponent,
+    canActivate: [authGuard],
+    canMatch: [authGuard]
+  },
+  {
     path: 'evolucao',
     component: EvolucaoComponent,
     canActivate: [authGuard],

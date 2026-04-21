@@ -1,15 +1,19 @@
-
-
 import { Component, OnInit } from '@angular/core';
 import { RaasService } from '../../services/raas/raas.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AppHeaderComponent } from '../../app-header/app-header.component';
+import { SelecionarPacienteModalComponent } from "../../modal/paciente/selecionar-paciente-modal/selecionar-paciente-modal.component";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-raas-listar',
   standalone: true,
-  imports: [CommonModule, AppHeaderComponent],
+  imports: [
+    CommonModule, 
+    AppHeaderComponent, 
+    SelecionarPacienteModalComponent
+  ],
   templateUrl: './listar.component.html',
   styleUrls: ['./listar.component.css']
 })
@@ -23,6 +27,7 @@ export class RaasListarComponent implements OnInit {
 
   isFirst = false;
   isLast = false;
+  mostrarModal = false;
 
   constructor(
     private raasService: RaasService,
@@ -49,8 +54,21 @@ export class RaasListarComponent implements OnInit {
   // }
 
   novoRaas() {
-    this.router.navigate(['/raas/novo']);
+    this.mostrarModal = true;
   }
+
+  fecharModal() {
+    this.mostrarModal = false;
+  }
+
+
+  onPacienteSelecionado(pacienteId: number) {
+    if (!pacienteId) return;
+
+    this.mostrarModal = false;
+    this.router.navigate(['/raas/novo', pacienteId]);
+  }
+
 
   editar(id: number) {
     this.router.navigate(['/raas/editar', id]);
@@ -64,11 +82,21 @@ export class RaasListarComponent implements OnInit {
   }
 
   deletar(id: number) {
-    if (!confirm('Deseja excluir este RAAS?')) return;
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Essa ação não pode ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, deletar',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
 
-    this.raasService.deletar(id).subscribe(() => {
-      // this.listarRaas();
-    });
+    if (result.isConfirmed) {
+      this.raasService.deletar(id).subscribe(() => {
+        // this.listarRaas();
+      });
+    }});
+
   }
 
   // paginaAnterior() {
