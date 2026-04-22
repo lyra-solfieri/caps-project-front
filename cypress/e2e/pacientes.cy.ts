@@ -5,8 +5,8 @@ describe('Tela de Listagem de Pacientes - CAPS', () => {
     cy.visit('http://localhost:4200/login');
 
     // Realiza o login
-    cy.get('input[name=email]').type('bob');
-    cy.get('input[name=password]').type('666157');
+    cy.get('input[name=email]').type('alexsanderthorne@gmail.com');
+    cy.get('input[name=password]').type('teste1');
     cy.get('button[type=submit]').click();
 
     // Aguarda o redirecionamento para o dashboard

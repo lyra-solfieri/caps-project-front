@@ -3,69 +3,76 @@
 <div class="pacientes-container">
   <div class="pacientes-header">
     <h2>Lista de Pacientes</h2>
-
     <div class="pacientes-actions">
-      <button class="back-button" routerLink="/dashboard">
-        Voltar ao Menu
-      </button>
+      <div class="search-box">
+        <span class="material-icons search-icon">search</span>
+        <input 
+          type="text" 
+          placeholder="Pesquisar por nome..." 
+          (input)="onSearch($event)"
+        />
+      </div>
+        <button class="back-button" routerLink="/dashboard">
+          Voltar ao Menu
+        </button>
 
-      <button class="add-button" data-cy="add-paciente-btn" (click)="addPaciente()">
-        + Novo Paciente
-        
-      </button>
+        <button class="add-button" data-cy="add-paciente-btn" (click)="addPaciente()">
+          + Novo Paciente
+          
+        </button>
     </div>
   </div>
 
-  <table class="pacientes-table" *ngIf="pacientes.length > 0">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Idade</th>
-        <th>Contato</th>
-        <th>Endereço</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
+    <table class="pacientes-table" *ngIf="pacientes.length > 0">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Idade</th>
+          <th>Contato</th>
+          <th>Endereço</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr *ngFor="let paciente of pacientes">
-        <td>{{ paciente.nome }}</td>
+      <tbody>
+        <tr *ngFor="let paciente of pacientes">
+          <td>{{ paciente.nome }}</td>
 
-        <td>{{ calcularIdade(paciente.dataNascimento) }}</td>
+          <td>{{ calcularIdade(paciente.dataNascimento) }}</td>
 
-        <td>
-          {{ paciente.telefone }} <br />
-          {{ paciente.email }}
-        </td>
+          <td>
+            {{ paciente.telefone }} <br />
+            {{ paciente.email }}
+          </td>
 
-        <td>
-          {{ paciente.endereco?.cidade }} -
-          {{ paciente.endereco?.bairro }} -
-          {{ paciente.endereco?.numero }}
-        </td>
+          <td>
+            {{ paciente.endereco?.cidade }} -
+            {{ paciente.endereco?.bairro }} -
+            {{ paciente.endereco?.numero }}
+          </td>
 
-        <td class="acoes">
-          <button
-            class="icon-btn edit"
-            (click)="editarPaciente(paciente.id!)"
-            data-tooltip="Editar">
-            ✏️ </button>
-        
-          <button
-            class="icon-btn docs"
-            (click)="abrirRaas(paciente.id!)"
-            data-tooltip="Gerar RAAS">
-            📄 </button>
-        
-          <button
-            class="icon-btn delete"
-            (click)="excluirPaciente(paciente.id!)"
-            data-tooltip="Excluir">
-            🗑️ </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <td class="acoes">
+            <button
+              class="icon-btn edit"
+              (click)="editarPaciente(paciente.id!)"
+              data-tooltip="Editar">
+              ✏️ </button>
+          
+            <button
+              class="icon-btn docs"
+              (click)="abrirRaas(paciente.id!)"
+              data-tooltip="Gerar RAAS">
+              📄 </button>
+          
+            <button
+              class="icon-btn delete"
+              (click)="excluirPaciente(paciente.id!)"
+              data-tooltip="Excluir">
+              🗑️ </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
   <div *ngIf="pacientes.length === 0" class="empty-message">
     Nenhum paciente cadastrado.

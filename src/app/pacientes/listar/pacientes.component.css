@@ -6,23 +6,34 @@
     font-family: 'Segoe UI', sans-serif;
   }
   
-  /* Cabeçalho */
-  .pacientes-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-  }
+ 
   
   .pacientes-header h2 {
     color: #004d40;
     margin: 0;
   }
 
-  .pacientes-actions {
-    display: flex;
-    gap: 10px;
-  }
+  .pacientes-header {
+  display: flex;                 /* Habilita o Flexbox */
+  justify-content: space-between; /* Titulo na esquerda, Botões na direita */
+  align-items: center;           /* Alinha verticalmente */
+  width: 100%;                   /* Garante que ocupe a largura total */
+  margin-bottom: 24px;
+}
+
+.pacientes-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  
+  /* --- REMOVA O MARGIN: AUTO --- */
+  margin: 0;                     /* Tira o alinhamento central */
+  
+  /* Opcional: força o alinhamento à direita se o space-between falhar */
+  margin-left: auto;             
+  
+  width: fit-content;
+}
 
   .back-button {
     background-color: #00796b;
@@ -198,4 +209,32 @@
     cursor: not-allowed;
   }
 
-  
+  /* Container da busca para alinhar o ícone e o input */
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  color: #666;
+  font-size: 20px;
+  pointer-events: none; /* Garante que o clique passe para o input */
+}
+
+.search-box input {
+  padding: 10px 10px 10px 38px; /* Espaço extra na esquerda para o ícone */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  width: 250px; /* Tamanho fixo ou use min-width */
+}
+
+.search-box input:focus {
+  border-color: #00796b;
+  box-shadow: 0 0 5px rgba(0, 121, 107, 0.2);
+}

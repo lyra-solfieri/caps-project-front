@@ -12,9 +12,13 @@ import { PacienteDto } from '../../services/paciente/paciente.model';
   imports: [CommonModule, AppHeaderComponent, RouterModule],
   templateUrl: './pacientes.component.html',
   styleUrls: ['./pacientes.component.css']
+  
 })
 export class PacientesComponent implements OnInit {
+  
   pacientes: PacienteDto[] = [];
+  pacientes_s: any[] = [];         // Esta lista será a exibida na tabela
+  pacientesOriginal: any[] = []; // Esta guarda todos os dados vindos do banco
   pageNo = 0;
   pageSize = 10;
 
@@ -45,6 +49,10 @@ export class PacientesComponent implements OnInit {
           this.totalElements = page.totalElements;
           this.isFirst = page.first;
           this.isLast = page.last;
+          this.pacienteService.listarPacientes(0, this.totalElements, this.sortBy, this.direction).subscribe(dados => {
+          this.pacientesOriginal = dados.content;
+          this.pacientes_s = dados.content; // Inicialmente são
+          });
         },
         error: (erro) => {
           console.error('Erro ao buscar pacientes:', erro);
@@ -130,6 +138,16 @@ export class PacientesComponent implements OnInit {
   irParaPagina(pagina: number): void {
     this.pageNo = pagina;
     this.carregarPacientes();
+  }
+
+  // Lógica da pesquisa
+  onSearch(event: Event) {
+    const valor = (event.target as HTMLInputElement).value.toLowerCase();
+    
+    // Filtra a lista original e atribui o resultado à lista exibida
+    this.pacientes = this.pacientesOriginal.filter(p => 
+      p.nome.toLowerCase().includes(valor)
+    );
   }
 
 }
