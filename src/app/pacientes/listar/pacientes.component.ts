@@ -140,14 +140,25 @@ export class PacientesComponent implements OnInit {
     this.carregarPacientes();
   }
 
-  // Lógica da pesquisa
   onSearch(event: Event) {
     const valor = (event.target as HTMLInputElement).value.toLowerCase();
-    
-    // Filtra a lista original e atribui o resultado à lista exibida
-    this.pacientes = this.pacientesOriginal.filter(p => 
-      p.nome.toLowerCase().includes(valor)
-    );
+
+    // Se o campo estiver vazio, volta a lista original completa
+    if (!valor) {
+      this.pacientes = [...this.pacientesOriginal];
+      return;
+    }
+
+    this.pacientes = this.pacientesOriginal.filter(p => {
+      // 1. Limpamos o CPF do paciente (removemos pontos e traços) para busca flexível
+      const cpfLimpo = p.cpf?.replace(/\D/g, '') || '';
+      
+      // 2. Limpamos o termo de busca (caso o usuário digite pontos/traços)
+      const termoLimpo = valor.replace(/\D/g, '');
+
+      // Verifica se o valor digitado está no Nome OU se o termo limpo está no CPF limpo
+      return p.nome.toLowerCase().includes(valor) || cpfLimpo.includes(termoLimpo);
+    });
   }
 
 }
