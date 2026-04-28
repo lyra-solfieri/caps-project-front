@@ -35,7 +35,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let paciente of pacientes">
+        <tr *ngFor="let paciente of pacientes" data-cy="paciente-row">
           <td>{{ paciente.nome }}</td>
 
           <td>{{ calcularIdade(paciente.dataNascimento) }}</td>

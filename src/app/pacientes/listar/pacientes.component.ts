@@ -150,14 +150,18 @@ export class PacientesComponent implements OnInit {
     }
 
     this.pacientes = this.pacientesOriginal.filter(p => {
-      // 1. Limpamos o CPF do paciente (removemos pontos e traços) para busca flexível
+      // 1. Verifica se bate com o nome (usando ? por segurança)
+      const matchNome = p.nome?.toLowerCase().includes(valor) || false;
+
+      // 2. Limpa o CPF e o Termo
       const cpfLimpo = p.cpf?.replace(/\D/g, '') || '';
-      
-      // 2. Limpamos o termo de busca (caso o usuário digite pontos/traços)
       const termoLimpo = valor.replace(/\D/g, '');
 
-      // Verifica se o valor digitado está no Nome OU se o termo limpo está no CPF limpo
-      return p.nome.toLowerCase().includes(valor) || cpfLimpo.includes(termoLimpo);
+      // 3. Verifica o CPF APENAS se o usuário digitou algum número
+      const matchCpf = termoLimpo.length > 0 ? cpfLimpo.includes(termoLimpo) : false;
+
+      // 4. Retorna se encontrou no nome OU no CPF
+      return matchNome || matchCpf;
     });
   }
 
