@@ -12,9 +12,13 @@ import { PacienteDto } from '../../services/paciente/paciente.model';
   imports: [CommonModule, AppHeaderComponent, RouterModule],
   templateUrl: './pacientes.component.html',
   styleUrls: ['./pacientes.component.css']
+  
 })
 export class PacientesComponent implements OnInit {
+  
   pacientes: PacienteDto[] = [];
+  pacientes_s: any[] = [];         // Esta lista será a exibida na tabela
+  pacientesOriginal: any[] = []; // Esta guarda todos os dados vindos do banco
   pageNo = 0;
   pageSize = 10;
 
@@ -45,6 +49,10 @@ export class PacientesComponent implements OnInit {
           this.totalElements = page.totalElements;
           this.isFirst = page.first;
           this.isLast = page.last;
+          this.pacienteService.listarPacientes(0, this.totalElements, this.sortBy, this.direction).subscribe(dados => {
+          this.pacientesOriginal = dados.content;
+          this.pacientes_s = dados.content; // Inicialmente são
+          });
         },
         error: (erro) => {
           console.error('Erro ao buscar pacientes:', erro);
@@ -130,6 +138,27 @@ export class PacientesComponent implements OnInit {
   irParaPagina(pagina: number): void {
     this.pageNo = pagina;
     this.carregarPacientes();
+  }
+
+  onSearch(event: Event) {
+    const valor = (event.target as HTMLInputElement).value.toLowerCase();
+
+    // Se o campo estiver vazio, volta a lista original completa
+    if (!valor) {
+      this.pacientes = [...this.pacientesOriginal];
+      return;
+    }
+
+    this.pacientes = this.pacientesOriginal.filter(p => {
+      // 1. Limpamos o CPF do paciente (removemos pontos e traços) para busca flexível
+      const cpfLimpo = p.cpf?.replace(/\D/g, '') || '';
+      
+      // 2. Limpamos o termo de busca (caso o usuário digite pontos/traços)
+      const termoLimpo = valor.replace(/\D/g, '');
+
+      // Verifica se o valor digitado está no Nome OU se o termo limpo está no CPF limpo
+      return p.nome.toLowerCase().includes(valor) || cpfLimpo.includes(termoLimpo);
+    });
   }
 
 }
