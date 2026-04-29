@@ -21,6 +21,7 @@ import { RaasComponent } from './raas/raas.component';
 import { EvolucaoComponent } from './evolucao/evolucao.component';
 import { CadastroAnamneseComponent } from './anamnese-infantil/cadastrar/anamnese-infantil-cadastro.component';
 import { EdicaoAnamneseComponent } from './anamnese-infantil/editar/anamnese-infantil-editar.component';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const routes: Routes = [
   {
@@ -156,6 +157,7 @@ export const appConfig: ApplicationConfig = {
       multi: true
     },
     provideRouter(routes),
-    provideNgxMask()
+    provideNgxMask(),
+    provideCharts(withDefaultRegisterables())
   ],
 };
