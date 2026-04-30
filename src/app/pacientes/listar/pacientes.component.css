@@ -238,3 +238,58 @@
   border-color: #00796b;
   box-shadow: 0 0 5px rgba(0, 121, 107, 0.2);
 }
+
+/* =========================================
+   RESPONSIVIDADE (Telas menores que 900px)
+   ========================================= */
+@media (max-width: 900px) {
+  
+  /* 1. Reduz o padding lateral para ganhar espaço na tela */
+  .pacientes-container {
+    padding: 16px;
+  }
+
+  /* 2. Empilha o Título e as Ações */
+  .pacientes-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  /* 3. Empilha a Busca e os Botões para ocuparem 100% da largura */
+  .pacientes-actions {
+    flex-direction: column;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .back-button, .add-button {
+    width: 100%;
+    text-align: center; /* Centraliza o texto do botão */
+  }
+
+  /* 4. A Mágica da Tabela: Scroll Horizontal */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto; /* Habilita a barra de rolagem horizontal */
+    -webkit-overflow-scrolling: touch; /* Rolagem suave em iPhones */
+    margin-bottom: 20px;
+  }
+
+  .pacientes-table {
+    /* Força um tamanho mínimo para não espremer as colunas.
+       Se a tela for menor que isso, o scroll é ativado automaticamente. */
+    min-width: 800px; 
+  }
+
+  /* Reduz o tamanho dos ícones na tabela do mobile */
+  .pacientes-table .icon-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+}
