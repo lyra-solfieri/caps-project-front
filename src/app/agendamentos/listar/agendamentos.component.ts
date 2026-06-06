@@ -23,17 +23,20 @@ export class AgendamentosComponent {
     this.carregarAgendamentos();
   }
 
-  carregarAgendamentos() {
-    this.agendamentoService.listarAgendamentos().subscribe({
-      next: (dados) => {
-        console.log("🚀 ~ AgendamentosComponent ~ carregarAgendamentos ~ dados:", dados);
-        this.agendamentos = dados;
-      },
-      error: (erro) => {
-        console.error('Erro ao buscar agendamentos:', erro);
-      }
-    });
-  }
+ carregarAgendamentos() {
+  this.agendamentoService.listarAgendamentos().subscribe({
+    next: (dados) => {
+      this.agendamentos = dados.map((a: any) => ({
+        id: a.id,
+        paciente: a.paciente?.nome ?? '-',
+        profissional: a.profissional?.nome ?? '-',
+        dataHoraAtendimento: a.dataHoraAtendimento,
+        tipoComunicacao: a.tipoComunicacao,
+        statusAgendamento: a.statusAgendamento
+      }));
+    }
+  });
+}
 
   addAgendamento() {
     this.router.navigate(['/agendamentos/novo']);
