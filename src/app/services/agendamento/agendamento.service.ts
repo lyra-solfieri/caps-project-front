@@ -39,6 +39,13 @@ export class AgendamentoService {
     );
   }
 
+  listarAgendamentPorId(id: number): Observable<AgendamentoResponseDto> {
+    return this.http.get<AgendamentoResponseDto>(
+      `${this.apiUrl}/${id}`,
+      { headers: this.getHeaders() }
+    );
+  }
+
 
   deletarAgendamento(id: number): Observable<void> {
     return this.http.delete<void>(
