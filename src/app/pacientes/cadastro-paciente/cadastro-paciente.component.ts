@@ -85,37 +85,42 @@ export class CadastroPacienteComponent {
   }
 
   onSubmit() {
+    
     if (this.pacienteForm.invalid) {
-      
       return;
     }
 
-    this.pacienteService.criarPaciente(this.pacienteForm.value).subscribe({
-      next: (response) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Sucesso',
-          text: 'Paciente cadastrado com sucesso!',
-          showConfirmButton: false,
-          timer: 2000
-        }).then(() => {
-          this.router.navigate(['/pacientes']);
-        });
-      },
-      error: (err: HttpErrorResponse) => {
-        let mensagemErro = 'Ocorreu um erro ao tentar conectar com o servidor.';
-  
-        if (err.status === 400 || err.status === 409) {
-          mensagemErro = err.error?.message || err.error || 'Este CPF já está cadastrado no sistema.';
-          
-          this.pacienteForm.get('cpf')?.setErrors({ cpfDuplicado: true });
-        }
-  
-        Swal.fire({
-          icon: 'error',
-          title: 'Erro ao cadastrar paciente',
-          text: typeof mensagemErro === 'string' ? mensagemErro : 'Verifique os dados enviados.'
-        });
+  this.pacienteService.criarPaciente(this.pacienteForm.value).subscribe({
+    next: (response) => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Sucesso',
+        text: 'Paciente cadastrado com sucesso!',
+        showConfirmButton: false,
+        timer: 2000
+      }).then(() => {
+        this.router.navigate(['/pacientes']);
+      });
+    },
+
+    error: (err: HttpErrorResponse) => {
+      // Mensagem genérica caso seja um erro 500 ou queda de servidor
+      let mensagemErro = 'Ocorreu um erro ao tentar conectar com o servidor.';
+
+      // Agora o backend vai enviar corretamente o status 409
+      if (err.status === 400 || err.status === 409) {
+        // O Spring Boot envia a mensagem dentro de err.error.message quando usamos ResponseStatusException
+        mensagemErro = err.error?.message || err.error || 'Este CPF já está cadastrado no sistema.';
+        
+        // Marca o input do CPF como inválido para feedback visual no formulário (se você tiver css para isso)
+        this.pacienteForm.get('cpf')?.setErrors({ cpfDuplicado: true });
+      }
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro no Cadastro', // Título ajustado
+        text: typeof mensagemErro === 'string' ? mensagemErro : 'Verifique os dados enviados.'
+      });
       }
     });
   }
