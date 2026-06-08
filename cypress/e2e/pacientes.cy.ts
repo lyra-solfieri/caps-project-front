@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Tela de Listagem de Pacientes - CAPS', () => {
   
   beforeEach(() => {
@@ -13,7 +15,7 @@ describe('Tela de Listagem de Pacientes - CAPS', () => {
     cy.url().should('include', '/dashboard');
 
     // Clica no card de pacientes para acessar a tela de pacientes
-    cy.get('.card[routerLink="/pacientes"]').click();
+    cy.get('.nav-card[routerLink="/pacientes"]').click();
 
     // Verifica se a URL foi alterada para a tela de pacientes
     cy.url().should('include', '/pacientes');
