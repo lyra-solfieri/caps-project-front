@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppHeaderComponent } from "../app-header/app-header.component";
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SelecionarPacienteModalComponent } from "../modal/paciente/selecionar-paciente-modal/selecionar-paciente-modal.component";
+import { Router } from '@angular/router';
 
 interface Evolucao {
   id?: number;
@@ -17,7 +19,7 @@ interface Evolucao {
   selector: 'app-evolucao',
   templateUrl: './evolucao.component.html',
   styleUrls: ['./evolucao.component.css'],
-  imports: [AppHeaderComponent,ReactiveFormsModule,CommonModule]
+  imports: [AppHeaderComponent, ReactiveFormsModule, CommonModule, SelecionarPacienteModalComponent]
 })
 export class EvolucaoComponent implements OnInit {
   @Input() pacienteId?: number;
@@ -27,19 +29,22 @@ export class EvolucaoComponent implements OnInit {
   evolucoes: Evolucao[] = [];
   evolucaoEmEdicao: Evolucao | null = null;
   evolucaoForm: FormGroup;
+  mostrarModal = false;
+  exibirCriarEvolucao = false;
 
-  constructor(private fb: FormBuilder) {
-    this.evolucaoForm = this.fb.group({
-      texto: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
-      paciente: ['']      
-    });
+  constructor(
+    private fb: FormBuilder,
+    private router: Router) {
+      this.evolucaoForm = this.fb.group({
+        texto: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
+        paciente: ['']      
+      });
   }
 
   ngOnInit(): void {
     this.carregarEvolucoes();
   }
 
-  // Getter para facilitar acesso no template
   get texto() { return this.evolucaoForm.get('texto'); }
 
   carregarEvolucoes(): void {
@@ -77,14 +82,13 @@ export class EvolucaoComponent implements OnInit {
   }
 
   selecionarEvolucao(evolucao: Evolucao): void {
-    // Se clicar em uma evolução que não está sendo editada, faz nada
     if (!this.evolucaoEmEdicao || this.evolucaoEmEdicao.id !== evolucao.id) {
       return;
     }
   }
 
   editarEvolucao(evolucao: Evolucao, event: Event): void {
-    event.stopPropagation(); // Previne o clique no card
+    event.stopPropagation();
     this.evolucaoEmEdicao = { ...evolucao };
     this.evolucaoForm.patchValue({
       texto: evolucao.texto,
@@ -93,12 +97,11 @@ export class EvolucaoComponent implements OnInit {
   }
 
   excluirEvolucao(evolucao: Evolucao, event: Event): void {
-    event.stopPropagation(); // Previne o clique no card
+    event.stopPropagation();
     
     if (confirm('Tem certeza que deseja excluir esta evolução?')) {
       this.evolucoes = this.evolucoes.filter(e => e.id !== evolucao.id);
       
-      // Se estava editando esta evolução, cancelar edição
       if (this.evolucaoEmEdicao?.id === evolucao.id) {
         this.cancelarEdicao();
       }
@@ -110,7 +113,6 @@ export class EvolucaoComponent implements OnInit {
       const dadosForm = this.evolucaoForm.value;
       
       if (this.evolucaoEmEdicao) {
-        // Atualizar evolução existente
         const index = this.evolucoes.findIndex(e => e.id === this.evolucaoEmEdicao?.id);
         if (index !== -1) {
           this.evolucoes[index] = {
@@ -120,7 +122,6 @@ export class EvolucaoComponent implements OnInit {
           };
         }
       } else {
-        // Criar nova evolução
         const novaEvolucao: Evolucao = {
           id: this.evolucoes.length + 1,
           pacienteId: this.pacienteId,
@@ -130,12 +131,30 @@ export class EvolucaoComponent implements OnInit {
           dataEvolucao: new Date()
         };
         
-        this.evolucoes.unshift(novaEvolucao); // Adiciona no início
+        this.evolucoes.unshift(novaEvolucao);
       }
 
-      // Resetar formulário
       this.cancelarEdicao();
     }
+  }
+
+  onPacienteSelecionado(id: number) {
+    this.mostrarModal = false;
+
+    this.router.navigate(['/evolucao/cadastrar'], {
+      queryParams: { pacienteId: id }
+    });
+  }
+
+  fecharModal() {
+    this.mostrarModal = false;
+  }
+
+  addPaciente() {
+    this.mostrarModal = true;
+  }
+  voltar() {
+    this.router.navigate(['/dashboard']);
   }
 
   cancelarEdicao(): void {

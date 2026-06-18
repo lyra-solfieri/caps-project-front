@@ -1,82 +1,254 @@
 .cadastro-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  .cadastro-container h2 {
-    color: #004d40;
-    margin-bottom: 24px;
-    text-align: center;
-  }
-  
-  .form-group {
-    margin-bottom: 18px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 6px;
-    color: #333;
-    font-weight: 500;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    outline: none;
-    transition: border-color 0.3s;
-    font-size: 14px;
-  }
-  
-  .form-group input:focus {
-    border-color: #26a69a;
-  }
-  
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 24px;
-  }
-  
-  .buttons button {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 14px;
-    transition: background-color 0.3s;
-  }
-  
-  .buttons button[type="submit"] {
-    background-color: #00796b;
-    color: white;
-  }
-  
-  .buttons button[type="submit"]:hover {
-    background-color: #004d40;
-  }
-  
-  .buttons .cancel {
-    background-color: #d32f2f;
-    color: white;
-  }
-  
-  .buttons .cancel:hover {
-    background-color: #b71c1c;
-  }
-  
-  @media (max-width: 480px) {
-    .buttons {
-      flex-direction: column;
-      gap: 10px;
-    }
-  }
-  
+  max-width: 720px;
+  margin: 32px auto;
+  padding: 0 24px 48px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #1e293b;
+}
+
+.agendamento-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.agendamento-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #00796b;
+  margin: 0;
+}
+
+.back-button {
+  background-color: #00796b;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color:#004d40;
+}
+
+.required-legend {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+.required {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* ── Form sections ── */
+.form-section {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+
+.form-section h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* ── Unified input styles ── */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.form-group input[type="text"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  height: 42px;
+  padding: 0 14px;
+  font-size: 0.9rem;
+  color: #1e293b;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  appearance: none;
+}
+
+.form-group textarea {
+  height: auto;
+  padding: 10px 14px;
+  resize: vertical;
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+  background: #fff;
+}
+
+
+.datetime-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.datetime-wrapper .calendar-icon {
+  position: absolute;
+  left: 12px;
+  width: 18px;
+  height: 18px;
+  color: #3b82f6;
+  pointer-events: none;
+}
+
+.form-group input[type="datetime-local"] {
+  width: 100%;
+  box-sizing: border-box;
+  height: 48px;
+  padding: 0 14px 0 40px;
+  font-size: 0.9rem;
+  color: #1e293b;
+  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+  border: 1.5px solid #93c5fd;
+  border-radius: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.form-group input[type="datetime-local"]:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.2);
+  background: #fff;
+}
+
+
+.paciente-selecionado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.paciente-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.875rem;
+  color: #166534;
+}
+
+/* ── Error messages ── */
+.error {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.78rem;
+  color: #ef4444;
+}
+
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.buttons button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.buttons button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.buttons button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.buttons button.cancel {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.buttons button.cancel:hover {
+  background-color: #5a6268;
+}
+
+.buttons button[type="submit"]:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.buttons button.cancel {
+  height: 42px;
+  padding: 0 24px;
+  background: none;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.buttons button.cancel:hover {
+  background: #f1f5f9;
+}
+
+.add-paciente-button {
+  height: 42px;
+  padding: 0 16px;
+  background: none;
+   color: #475569;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.add-paciente-button:hover {
+  background: #f1f5f9;
+}

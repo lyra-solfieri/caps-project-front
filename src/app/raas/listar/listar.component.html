@@ -1,0 +1,99 @@
+<app-header></app-header>
+
+<div class="raas-container">
+  <div class="raas-header">
+    <h2>Lista de RAAS gerados</h2>
+
+    <div class="raas-actions">
+      <button class="back-button" routerLink="/dashboard">
+        Voltar ao Menu
+      </button>
+
+      <button class="add-button" (click)="novoRaas()">
+        + Novo RAAS
+      </button>
+    </div>
+  </div>
+
+  <table class="raas-table" *ngIf="raasList.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Paciente</th>
+        <th>Estabelecimento</th>
+        <th>Mês Atendimento</th>
+        <th>Data Geração</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let raas of raasList">
+        <td>{{ raas.id }}</td>
+
+        <td>{{ raas.paciente?.nome }}</td>
+
+        <td>{{ raas.nomeEstabelecimento }}</td>
+
+        <td>{{ raas.mesAtendimento }}</td>
+
+        <td>{{ raas.dataGeracao | date:'dd/MM/yyyy' }}</td>
+
+        <td class="acoes">
+
+          <button
+            class="edit"
+            (click)="editar(raas.id)">
+            Editar
+          </button>
+
+          <button
+            class="docs"
+            (click)="gerarPdf(raas.id)">
+            PDF
+          </button>
+
+          <button
+            class="delete"
+            (click)="deletar(raas.id)">
+            Excluir
+          </button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="raasList.length === 0" class="empty-message">
+    Nenhum RAAS gerado.
+  </div>
+
+  <!-- <div class="paginacao" *ngIf="totalPages > 1">
+
+    <button
+      (click)="paginaAnterior()"
+      [disabled]="isFirst">
+      ⬅ Anterior
+    </button>
+
+    <button
+      *ngFor="let p of [].constructor(totalPages); let i = index"
+      (click)="irParaPagina(i)"
+      [class.ativo]="i === pageNo">
+      {{ i + 1 }}
+    </button>
+
+    <button
+      (click)="proximaPagina()"
+      [disabled]="isLast">
+      Próxima ➡
+    </button>
+
+  </div> -->
+</div>
+
+<app-selecionar-paciente-modal
+  *ngIf="mostrarModal"
+  (fechado)="fecharModal()"
+  (selecionado)="onPacienteSelecionado($event)">
+</app-selecionar-paciente-modal>

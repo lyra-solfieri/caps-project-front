@@ -6,11 +6,16 @@ import { AgendamentoService } from '../../services/agendamento/agendamento.servi
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { PacienteService } from '../../services/paciente/paciente.service';
+import { SelecionarPacienteModalComponent } from "../../modal/paciente/selecionar-paciente-modal/selecionar-paciente-modal.component";
 
 @Component({
   selector: 'app-agendamentos',
   standalone: true,
-  imports: [CommonModule, AppHeaderComponent, RouterModule, ReactiveFormsModule],
+  imports: [
+    CommonModule, AppHeaderComponent, 
+    RouterModule, ReactiveFormsModule, 
+    SelecionarPacienteModalComponent
+  ],
   templateUrl: './cadastro-agendamento.component.html',
   styleUrls: ['./cadastro-agendamento.component.css']
 })
@@ -18,6 +23,9 @@ export class CadastroAgendamentoComponent implements OnInit {
 
   agendamentosForm!: FormGroup;
   pacientes: any[] = [];
+  mostrarModal = false;
+  mostrarDetalheAtendimento = false;
+  pacienteSelecionado: any = null;
 
   constructor(
     private router: Router,
@@ -32,11 +40,11 @@ export class CadastroAgendamentoComponent implements OnInit {
 
   private criarFormulario(): void {
     this.agendamentosForm = this.fb.group({
-      idPaciente: [null],
+      pacienteId: [null, Validators.required],
       tipoComunicacao: [null, Validators.required],
       destinatario: ['', Validators.required],
       message: [''],
-      dataHoraAtendimento: ['', Validators.required]
+      dataHoraAtendimento: ['']
     });
   }
 
@@ -46,7 +54,6 @@ export class CadastroAgendamentoComponent implements OnInit {
       return;
     }
 
-    console.log("🚀 ~ CadastroAgendamentoComponent ~ salvar ~ this.agendamentosForm.value:", this.agendamentosForm.value)
     this.agendamentoService.cadastrarAgendamento(this.agendamentosForm.value)
     .subscribe({
         next: () => {
@@ -58,7 +65,7 @@ export class CadastroAgendamentoComponent implements OnInit {
           });
           this.router.navigate(['/agendamentos']);          
         },
-        error: ( erro) => {
+        error: ( erro) => {          
           Swal.fire({
             icon: 'error',
             title: 'Erro ao cadastrar agendamento'
@@ -68,22 +75,36 @@ export class CadastroAgendamentoComponent implements OnInit {
      
   }
 
-  // listarPacientes(): void {
-
-  //   this.pacientesService.listarPacientes().subscribe({
-  //     next: (dados) => {
-  //       console.log("🚀 ~ CadastroAgendamentoComponent ~ listarPacientes ~ dados:", dados);
-  //       this.pacientes = dados;
-  //     },
-  //     error: (erro) => {
-  //       console.error('Erro ao buscar pacientes:', erro);
-  //     }
-  //   })
-    
-  // }
+  buscarPaciente(paciente: number) {
+     this.pacientesService.buscarPacientePorId(paciente).subscribe({
+      next: (paciente: any) => {
+        this.pacienteSelecionado = paciente;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar paciente', err);
+      }
+    });
+  }
 
   cancelar(): void {
     this.router.navigate(['/agendamentos']);
+  }
+
+  fecharModal() {
+    this.mostrarModal = false;
+  }
+
+  onPacienteSelecionado(paciente: number) {
+    
+    this.pacienteSelecionado = paciente;
+
+    this.agendamentosForm.patchValue({
+      pacienteId: paciente
+    });
+
+    this.buscarPaciente(paciente);
+    this.mostrarModal = false;
+    this.mostrarDetalheAtendimento = true;
   }
 
 }

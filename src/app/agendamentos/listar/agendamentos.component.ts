@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AppHeaderComponent } from '../../app-header/app-header.component';
 import { AppFooterComponent } from '../../app-footer/app-footer.component';
 import { AgendamentoService } from '../../services/agendamento/agendamento.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-agendamentos',
   standalone: true,
@@ -23,17 +24,21 @@ export class AgendamentosComponent {
     this.carregarAgendamentos();
   }
 
-  carregarAgendamentos() {
-    this.agendamentoService.listarAgendamentos().subscribe({
-      next: (dados) => {
-        console.log("🚀 ~ AgendamentosComponent ~ carregarAgendamentos ~ dados:", dados);
-        this.agendamentos = dados;
-      },
-      error: (erro) => {
-        console.error('Erro ao buscar agendamentos:', erro);
-      }
-    });
-  }
+ carregarAgendamentos() {
+  this.agendamentoService.listarAgendamentos().subscribe({
+    next: (dados) => {
+      console.log("🚀 ~ AgendamentosComponent ~ carregarAgendamentos ~ dados:", dados);
+      this.agendamentos = dados.map((a: any) => ({
+        id: a.id,
+        paciente: a.paciente?.nome ?? '-',
+        profissional: a.profissional?.nome ?? '-',
+        dataHoraAtendimento: a.dataHoraAtendimento,
+        tipoComunicacao: a.tipoComunicacao,
+        statusAgendamento: a.statusAgendamento
+      }));
+    }
+  });
+}
 
   addAgendamento() {
     this.router.navigate(['/agendamentos/novo']);
@@ -44,7 +49,36 @@ export class AgendamentosComponent {
   }
 
   excluirAgendamento(agendamento: any) {
-   
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: `Deseja excluir o agendamento de ${agendamento.paciente.nome ?? '-'}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d32f2f',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.agendamentoService.deletarAgendamento(agendamento.id).subscribe({
+          next: () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Excluído!',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            this.carregarAgendamentos();
+          },
+          error: () => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Erro ao excluir agendamento'
+            });
+          }
+        });
+      }
+    });
   }
 }
 

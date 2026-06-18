@@ -9,7 +9,6 @@
 
 export interface AgendamentoRequestDto {
   pacienteId: number;
-  userId: number;
   destinatario: string;
   message: string;
   tipoComunicacao: 'EMAIL' | 'SMS' | 'WHATSAPP';

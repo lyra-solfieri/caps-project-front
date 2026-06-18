@@ -17,11 +17,12 @@ import { ConfiguracoesComponent } from './configuracoes/configuracoes.component'
 import { AuditoriaComponent } from './auditoria/auditoria.component';
 import { RegisterComponent } from './equipe-caps/equipe-caps.component';
 import { AnamneseInfantilComponent } from './anamnese-infantil/anamnese-infantil.component';
-import { RaasComponent } from './raas/raas.component';
+import { RaasComponent } from './raas/form/raas.component';
 import { EvolucaoComponent } from './evolucao/evolucao.component';
 import { CadastroAnamneseComponent } from './anamnese-infantil/cadastrar/anamnese-infantil-cadastro.component';
 import { EdicaoAnamneseComponent } from './anamnese-infantil/editar/anamnese-infantil-editar.component';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { RaasListarComponent } from './raas/listar/listar.component';
 
 export const routes: Routes = [
   {
@@ -124,12 +125,24 @@ export const routes: Routes = [
 
   {
     path: 'raas',
+    component: RaasListarComponent,
+    canActivate: [authGuard],
+    canMatch: [authGuard]
+  },
+  {
+    path: 'raas/novo',
     component: RaasComponent,
     canActivate: [authGuard],
     canMatch: [authGuard]
   },
   {
-    path: 'raas/:id',
+    path: 'raas/editar/:id',
+    component: RaasComponent,
+    canActivate: [authGuard],
+    canMatch: [authGuard]
+  },
+  {
+    path: 'raas/novo/:id',
     component: RaasComponent,
     canActivate: [authGuard],
     canMatch: [authGuard]
