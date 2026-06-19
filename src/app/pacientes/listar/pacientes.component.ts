@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { PacienteService } from '../../services/paciente/paciente.service';
-import { AppHeaderComponent } from '../../app-header/app-header.component';
 import Swal from 'sweetalert2';
 import { PacienteDto } from '../../services/paciente/paciente.model';
 
 @Component({
   selector: 'app-pacientes',
   standalone: true,
-  imports: [CommonModule, AppHeaderComponent, RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './pacientes.component.html',
   styleUrls: ['./pacientes.component.css']
   

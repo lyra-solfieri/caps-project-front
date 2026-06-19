@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AppHeaderComponent } from "../app-header/app-header.component";
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SelecionarPacienteModalComponent } from "../modal/paciente/selecionar-paciente-modal/selecionar-paciente-modal.component";
@@ -19,7 +18,7 @@ interface Evolucao {
   selector: 'app-evolucao',
   templateUrl: './evolucao.component.html',
   styleUrls: ['./evolucao.component.css'],
-  imports: [AppHeaderComponent, ReactiveFormsModule, CommonModule, SelecionarPacienteModalComponent]
+  imports: [ReactiveFormsModule, CommonModule, SelecionarPacienteModalComponent]
 })
 export class EvolucaoComponent implements OnInit {
   @Input() pacienteId?: number;

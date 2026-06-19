@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import Swal from 'sweetalert2';
 
 import { PacienteService } from '../../services/paciente/paciente.service';
-import { AppHeaderComponent } from "../../app-header/app-header.component";
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { Genero } from '../../enums/genero.enum';
 import { Raca } from '../../enums/raca.enum';
@@ -19,7 +18,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    AppHeaderComponent,
     NgxMaskDirective,
   ],
   providers: [provideNgxMask()],

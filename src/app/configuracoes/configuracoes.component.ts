@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-import { AppHeaderComponent } from "../app-header/app-header.component";
-
-
 @Component({
   selector: 'app-configuracoes',
-  imports: [AppHeaderComponent],
+  imports: [],
   templateUrl: './configuracoes.component.html',
   styleUrl: './configuracoes.component.css'
 })

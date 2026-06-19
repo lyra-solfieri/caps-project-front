@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { AppHeaderComponent } from '../../app-header/app-header.component';
 import { AgendamentoService } from '../../services/agendamento/agendamento.service';
 import { PacienteService } from '../../services/paciente/paciente.service';
 import { SelecionarPacienteModalComponent } from '../../modal/paciente/selecionar-paciente-modal/selecionar-paciente-modal.component';
@@ -13,7 +12,6 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [
     CommonModule,
-    AppHeaderComponent,
     RouterModule,
     ReactiveFormsModule,
     SelecionarPacienteModalComponent

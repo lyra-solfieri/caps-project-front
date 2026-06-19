@@ -42,7 +42,7 @@
 /* Charts Section */
 .charts-section {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Gráfico de barras maior que o de rosca */
+  grid-template-columns: 1fr;
   gap: 24px;
   margin-bottom: 40px;
 }
@@ -59,7 +59,18 @@
 .canvas-wrapper { height: 300px; position: relative; }
 
 /* Navigation Quick Access */
-.section-title { color: #004d40; margin-bottom: 20px; font-size: 20px; }
+.section-title {
+  color: #004d40;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.section-divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 32px 0;
+}
 
 .navigation-grid {
   display: grid;
@@ -69,18 +80,21 @@
 
 .nav-card {
   background: white;
-  padding: 16px;
-  border-radius: 10px;
+  padding: 20px 16px;
+  border-radius: 12px;
   text-align: center;
   cursor: pointer;
   transition: 0.3s;
-  border: 1px solid #eee;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-.nav-card:hover { border-color: #00796b; background: #e0f2f1; }
-.nav-card i { display: block; font-size: 24px; color: #00796b; margin-bottom: 8px; }
+.nav-card:hover {
+  border-color: #00796b;
+  background: #e0f2f1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,121,107,0.12);
+}
+
+.nav-card i { display: block; font-size: 26px; color: #00796b; margin-bottom: 10px; }
 .nav-card span { font-weight: 600; color: #004d40; font-size: 14px; }
-
-@media (max-width: 992px) {
-  .charts-section { grid-template-columns: 1fr; }
-}

@@ -23,6 +23,7 @@ import { CadastroAnamneseComponent } from './anamnese-infantil/cadastrar/anamnes
 import { EdicaoAnamneseComponent } from './anamnese-infantil/editar/anamnese-infantil-editar.component';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { RaasListarComponent } from './raas/listar/listar.component';
+import { RelatoriosComponent } from './relatorios/relatorios.component';
 
 export const routes: Routes = [
   {
@@ -150,6 +151,13 @@ export const routes: Routes = [
   {
     path: 'evolucao',
     component: EvolucaoComponent,
+    canActivate: [authGuard],
+    canMatch: [authGuard]
+  },
+
+  {
+    path: 'relatorios',
+    component: RelatoriosComponent,
     canActivate: [authGuard],
     canMatch: [authGuard]
   },

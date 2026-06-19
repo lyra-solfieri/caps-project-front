@@ -4,12 +4,10 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
-import { AppHeaderComponent } from '../app-header/app-header.component';
-
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule,RouterModule, AppHeaderComponent],
+  imports: [ReactiveFormsModule,CommonModule,RouterModule],
   templateUrl: './equipe-caps.component.html',
   styleUrls: ['./equipe-caps.component.css']
 })

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AppHeaderComponent } from "../app-header/app-header.component";
 import { AnamneseDTO } from '../services/anamnese/anamnese.model';
 import { Router } from '@angular/router';
 import { AnamneseService } from '../services/anamnese/anamnese.service';
@@ -11,7 +10,7 @@ import { SelecionarPacienteModalComponent } from "../modal/paciente/selecionar-p
 @Component({
   selector: 'app-anamnese-infantil',
   standalone: true,
-  imports: [CommonModule, AppHeaderComponent, SelecionarPacienteModalComponent],
+  imports: [CommonModule, SelecionarPacienteModalComponent],
   templateUrl: './anamnese-infantil.component.html',
   styleUrl: './anamnese-infantil.component.css'
 })

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { RaasService } from '../../services/raas/raas.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AppHeaderComponent } from '../../app-header/app-header.component';
 import { SelecionarPacienteModalComponent } from "../../modal/paciente/selecionar-paciente-modal/selecionar-paciente-modal.component";
 import Swal from 'sweetalert2';
 
@@ -11,7 +10,6 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [
     CommonModule, 
-    AppHeaderComponent, 
     SelecionarPacienteModalComponent
   ],
   templateUrl: './listar.component.html',

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AppHeaderComponent } from '../../app-header/app-header.component'
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PacienteService } from '../../services/paciente/paciente.service';
 import { PacienteDto } from '../../services/paciente/paciente.model';
@@ -10,7 +9,6 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-raas',
   imports: [
-    AppHeaderComponent,
     ReactiveFormsModule,
     CommonModule,
   ],

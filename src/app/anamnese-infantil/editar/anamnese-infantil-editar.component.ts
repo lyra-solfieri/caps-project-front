@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2';
 
-import { AppHeaderComponent } from '../../app-header/app-header.component';
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { AnamneseService } from '../../services/anamnese/anamnese.service';
 
@@ -16,7 +15,6 @@ import { AnamneseService } from '../../services/anamnese/anamnese.service';
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppHeaderComponent,
   ],
   providers: [provideNgxMask()],
   templateUrl: './anamnese-infantil-editar.component.html',

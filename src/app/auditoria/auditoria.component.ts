@@ -1,12 +1,118 @@
-import { Component } from '@angular/core';
-import { AppHeaderComponent } from "../app-header/app-header.component";
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { AuditoriaService } from '../services/auditoria/auditoria.service';
+import { AuditoriaLog, AcaoAuditoria, ACAO_LABELS, ACAO_CORES } from '../services/auditoria/auditoria.model';
 
 @Component({
-  selector: 'app-autitoria',
-  imports: [AppHeaderComponent],
+  selector: 'app-auditoria',
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './auditoria.component.html',
-  styleUrl: './auditoria.component.css'
+  styleUrls: ['./auditoria.component.css'],
 })
-export class AuditoriaComponent {
+export class AuditoriaComponent implements OnInit {
+  logs: AuditoriaLog[] = [];
+  logSelecionado: AuditoriaLog | null = null;
 
+  pageNo = 0;
+  pageSize = 15;
+  totalPages = 0;
+  totalElements = 0;
+  isFirst = true;
+  isLast = false;
+
+  filtroAcao = '';
+  filtroEntidade = '';
+  filtroUsuario = '';
+  filtroDataInicio = '';
+  filtroDataFim = '';
+
+  acoesDisponiveis: AcaoAuditoria[] = ['LOGIN', 'LOGOUT', 'CRIACAO', 'ATUALIZACAO', 'EXCLUSAO', 'ACESSO', 'CONFIGURACAO'];
+  entidadesDisponiveis = ['PACIENTE', 'AGENDAMENTO', 'EVOLUCAO', 'RAAS', 'ANAMNESE', 'USUARIO'];
+  ACAO_LABELS = ACAO_LABELS;
+  ACAO_CORES = ACAO_CORES;
+
+  usandoMock = true;
+
+  constructor(private service: AuditoriaService) {}
+
+  ngOnInit(): void {
+    this.carregarLogs();
+  }
+
+  carregarLogs(): void {
+    const filtros: any = {};
+    if (this.filtroAcao) filtros.acao = this.filtroAcao;
+    if (this.filtroEntidade) filtros.entidade = this.filtroEntidade;
+    if (this.filtroUsuario) filtros.usuario = this.filtroUsuario;
+    if (this.filtroDataInicio) filtros.dataInicio = this.filtroDataInicio;
+    if (this.filtroDataFim) filtros.dataFim = this.filtroDataFim;
+
+    this.service.getMockLogs(this.pageNo, this.pageSize, filtros).subscribe({
+      next: (page) => {
+        this.logs = page.content;
+        this.totalPages = page.totalPages;
+        this.totalElements = page.totalElements;
+        this.isFirst = page.first;
+        this.isLast = page.last;
+      },
+      error: () => {
+        this.service.getMockLogs(this.pageNo, this.pageSize, filtros).subscribe((page) => {
+          this.logs = page.content;
+          this.totalPages = page.totalPages;
+          this.totalElements = page.totalElements;
+          this.isFirst = page.first;
+          this.isLast = page.last;
+        });
+      },
+    });
+  }
+
+  aplicarFiltros(): void {
+    this.pageNo = 0;
+    this.carregarLogs();
+  }
+
+  limparFiltros(): void {
+    this.filtroAcao = '';
+    this.filtroEntidade = '';
+    this.filtroUsuario = '';
+    this.filtroDataInicio = '';
+    this.filtroDataFim = '';
+    this.pageNo = 0;
+    this.carregarLogs();
+  }
+
+  verDetalhe(log: AuditoriaLog): void {
+    this.logSelecionado = log;
+  }
+
+  fecharDetalhe(): void {
+    this.logSelecionado = null;
+  }
+
+  proximaPagina(): void {
+    if (!this.isLast) {
+      this.pageNo++;
+      this.carregarLogs();
+    }
+  }
+
+  paginaAnterior(): void {
+    if (!this.isFirst) {
+      this.pageNo--;
+      this.carregarLogs();
+    }
+  }
+
+  irParaPagina(pagina: number): void {
+    this.pageNo = pagina;
+    this.carregarLogs();
+  }
+
+  formatarData(data: string): string {
+    return new Date(data).toLocaleString('pt-BR');
+  }
 }

@@ -1,57 +1,7 @@
 <div class="dashboard-container">
-  <app-header></app-header>
+  <!-- <app-header></app-header> -->
 
   <main class="dashboard-content">
-    
-    <section class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon comparecimento"><i class="fas fa-check-circle"></i></div>
-        <div class="stat-info">
-          <p>Taxa de Comparecimento</p>
-          <span class="value">{{ stats.taxaComparecimento }}</span>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon consultas"><i class="fas fa-calendar-alt"></i></div>
-        <div class="stat-info">
-          <p>Consultas no Mês</p>
-          <span class="value">{{ stats.totalConsultasMes }}</span>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon cancelamentos"><i class="fas fa-times-circle"></i></div>
-        <div class="stat-info">
-          <p>Cancelamentos</p>
-          <span class="value">{{ stats.cancelamentosMes }}</span>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon satisfacao"><i class="fas fa-star"></i></div>
-        <div class="stat-info">
-          <p>Satisfação (NPS)</p>
-          <span class="value">{{ stats.satisfacaoMedia }}/5</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="charts-section">
-      <div class="chart-container">
-        <h3>Frequência Semanal (Presença vs Faltas)</h3>
-        <div class="canvas-wrapper">
-          <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
-        </div>
-      </div>
-
-      <div class="chart-container">
-        <h3>Motivos de Cancelamento</h3>
-        <div class="canvas-wrapper">
-          <canvas baseChart [data]="doughnutChartData" [type]="'doughnut'"></canvas>
-        </div>
-      </div>
-    </section>
 
     <h2 class="section-title">Acesso Rápido</h2>
     <div class="navigation-grid">
@@ -88,5 +38,54 @@
         <span>Relatórios</span>
       </div>
     </div>
+    <div class="section-divider"></div>
+
+    <h2 class="section-title">Indicadores</h2>
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon comparecimento"><i class="fas fa-check-circle"></i></div>
+        <div class="stat-info">
+          <p>Taxa de Comparecimento</p>
+          <span class="value">{{ stats.taxaComparecimento }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon consultas"><i class="fas fa-calendar-alt"></i></div>
+        <div class="stat-info">
+          <p>Consultas no Mês</p>
+          <span class="value">{{ stats.totalConsultasMes }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon cancelamentos"><i class="fas fa-times-circle"></i></div>
+        <div class="stat-info">
+          <p>Cancelamentos</p>
+          <span class="value">{{ stats.cancelamentosMes }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon satisfacao"><i class="fas fa-star"></i></div>
+        <div class="stat-info">
+          <p>Satisfação (NPS)</p>
+          <span class="value">{{ stats.satisfacaoMedia }}/5</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <h2 class="section-title">Gráficos</h2>
+    <section class="charts-section">
+      <div class="chart-container">
+        <h3>Frequência Semanal (Presença vs Faltas)</h3>
+        <div class="canvas-wrapper">
+          <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
+        </div>
+      </div>
+    </section>
+    
   </main>
 </div>
