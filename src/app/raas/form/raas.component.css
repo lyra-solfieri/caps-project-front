@@ -183,6 +183,24 @@ small {
   accent-color: #17365d;
 }
 
+/* ── TOOLBAR ── */
+.raas-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 10px 16px;
+  background: #f5f7fa;
+  border-radius: 8px;
+  border: 1px solid #e0e3e8;
+}
+
+.raas-toolbar-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
 /* ── BOTÕES ── */
 .raas-actions {
   display: flex;
@@ -209,6 +227,11 @@ small {
   background: #0f2642;
 }
 
+.btn-acao:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .btn-acao.outline {
   background: transparent;
   color: #17365d;
@@ -225,6 +248,27 @@ small {
 
 .btn-acao.danger:hover {
   background: #b71c1c;
+}
+
+.btn-acao.voltar {
+  background: transparent;
+  color: #555;
+  border: 1px solid #ccc;
+  padding: 6px 14px;
+  font-size: 12px;
+}
+
+.btn-acao.voltar:hover {
+  background: #e8edf3;
+  color: #333;
+}
+
+.btn-acao.pdf {
+  background: #1b7a2b;
+}
+
+.btn-acao.pdf:hover {
+  background: #13601f;
 }
 
 /* ── RODAPÉ ── */
@@ -255,11 +299,14 @@ small {
 }
 
 @media print {
+  .raas-toolbar {
+    display: none;
+  }
   .raas-container {
     width: 100%;
     padding: 0;
   }
-  .btn-acao {
+  .raas-actions {
     display: none;
   }
   input, select {

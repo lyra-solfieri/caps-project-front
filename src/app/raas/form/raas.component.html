@@ -1,3 +1,8 @@
+<div class="raas-toolbar">
+  <button class="btn-acao voltar" type="button" (click)="voltar()">← Voltar</button>
+  <span class="raas-toolbar-title">Registro das Ações Ambulatoriais Especializadas</span>
+</div>
+
 <form [formGroup]="raasForm" class="raas-container">
 
   <!-- ─── CABEÇALHO ─── -->
@@ -276,6 +281,12 @@
   <div class="raas-actions">
     <button class="btn-acao outline" type="button" (click)="adicionarAcao()">+ Adicionar Ação</button>
     <button class="btn-acao danger" type="button" (click)="removerAcao(acoes.controls.length - 1)">- Remover Ação</button>
+    <button class="btn-acao" type="button" (click)="salvarRaas()" [disabled]="salvando">
+      {{ salvando ? 'Salvando...' : '💾 Salvar RAAS' }}
+    </button>
+    <button class="btn-acao pdf" type="button" (click)="exportarPDF()" [disabled]="!raasId">
+      📄 Exportar PDF
+    </button>
   </div>
 
   <!-- ─── RODAPÉ ─── -->
