@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import { Genero } from '../../enums/genero.enum';
 import { Raca } from '../../enums/raca.enum';
 import { PacienteService } from '../../services/paciente/paciente.service';
-import { AppHeaderComponent } from '../../app-header/app-header.component';
 import { AppFooterComponent } from '../../app-footer/app-footer.component';
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { ViaCepService } from '../../services/paciente/cep.service';
@@ -19,7 +18,6 @@ import { ViaCepService } from '../../services/paciente/cep.service';
      CommonModule,
      ReactiveFormsModule,
      HttpClientModule,
-     AppHeaderComponent,
      NgxMaskDirective
     ],
   providers: [provideNgxMask()],

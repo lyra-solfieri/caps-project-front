@@ -1,0 +1,158 @@
+.perfil-page {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: calc(100vh - 80px);
+  background: #f1f5f9;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.perfil-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.perfil-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.perfil-avatar {
+  font-size: 56px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.perfil-header h2 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 1.5rem;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.info-label {
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.info-value {
+  color: #1e293b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.info-value.role {
+  text-transform: uppercase;
+  font-size: 12px;
+  background: #e2e8f0;
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+
+.btn-editar,
+.btn-admin,
+.btn-salvar,
+.btn-cancelar {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 16px;
+  border: none;
+}
+
+.btn-editar {
+  background: #2E7D6F;
+  color: #fff;
+}
+
+.btn-editar:hover {
+  background: #24665a;
+}
+
+.btn-admin {
+  background: #f8fafc;
+  color: #2E7D6F;
+  border: 1px solid #2E7D6F;
+}
+
+.btn-admin:hover {
+  background: #f0fdf4;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 13px;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2E7D6F;
+  box-shadow: 0 0 0 3px rgba(46,125,111,0.15);
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.btn-salvar {
+  flex: 1;
+  background: #2E7D6F;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-salvar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-cancelar {
+  flex: 1;
+  background: #fff;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-cancelar:hover {
+  background: #f8fafc;
+}

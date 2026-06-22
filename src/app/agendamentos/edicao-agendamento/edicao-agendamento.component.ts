@@ -1,60 +1,122 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HeaderComponent } from "../../shared/header/header.component";
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AgendamentoService } from '../../services/agendamento/agendamento.service';
+import { PacienteService } from '../../services/paciente/paciente.service';
+import { SelecionarPacienteModalComponent } from '../../modal/paciente/selecionar-paciente-modal/selecionar-paciente-modal.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edicao-agendamento',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    SelecionarPacienteModalComponent
+  ],
   templateUrl: './edicao-agendamento.component.html',
   styleUrls: ['./edicao-agendamento.component.css']
 })
 export class EdicaoAgendamentoComponent implements OnInit {
-  agendamento: any = {
-    id: null,
-    paciente: '',
-    profissional: '',
-    data: '',
-    hora: '',
-    tipo: ''
-  };
+  agendamentoForm!: FormGroup;
+  mostrarModal = false;
+  pacienteSelecionado: any = null;
+  agendamentoId: any = null;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder,
+    private agendamentoService: AgendamentoService,
+    private pacienteService: PacienteService
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.carregarAgendamento(id);
+    // this.criarFormulario();
+    // const id = this.route.snapshot.paramMap.get('id');
+    // if (id) {
+    //   this.agendamentoId = id;
+    //   this.carregarAgendamento(id);
+    // }
   }
 
-  carregarAgendamento(id: any) {
-        const dadosMock = [
-      { id: 1, paciente: 'João Silva', profissional: 'Dra. Maria', data: '2025-06-22', hora: '09:00', tipo: 'Psicoterapia' },
-      { id: 2, paciente: 'Ana Souza', profissional: 'Dr. Carlos', data: '2025-06-23', hora: '10:30', tipo: 'Fonoaudiologia' },
-      { id: 3, paciente: 'Pedro Lima', profissional: 'Enf. Fernanda', data: '2025-06-24', hora: '14:00', tipo: 'Enfermagem' },
-    ];
-
-    const encontrado = dadosMock.find(a => a.id == id);
-
-    if (encontrado) {
-      this.agendamento = { ...encontrado };
-    } else {
-      alert('Agendamento não encontrado!');
-      this.router.navigate(['/agendamentos']);
-    }
+  private criarFormulario(): void {
+    this.agendamentoForm = this.fb.group({
+      pacienteId: [null, Validators.required],
+      tipoComunicacao: [null, Validators.required],
+      destinatario: ['', Validators.required],
+      message: [''],
+      dataHoraAtendimento: ['', Validators.required]
+    });
   }
 
-  onSubmit() {
-    console.log('Agendamento atualizado:', this.agendamento);
-    alert('Agendamento atualizado com sucesso!');
-    this.router.navigate(['/agendamentos']);
+  carregarAgendamento(id: number): void {
+    this.agendamentoService.listarAgendamentPorId(id).subscribe({
+      next: (agendamento: any) => {
+        this.agendamentoForm.patchValue({
+          pacienteId: agendamento.pacienteId,
+          tipoComunicacao: agendamento.tipoComunicacao,
+          destinatario: agendamento.destinatario,
+          message: agendamento.message,
+          dataHoraAtendimento: agendamento.dataHoraAtendimento
+        });
+        this.buscarPaciente(agendamento.pacienteId);
+      },
+      error: () => {
+        Swal.fire({ icon: 'error', title: 'Agendamento não encontrado!' });
+        this.router.navigate(['/agendamentos']);
+      }
+    });
   }
 
-  cancelar() {
+  buscarPaciente(pacienteId: number): void {
+    this.pacienteService.buscarPacientePorId(pacienteId).subscribe({
+      next: (paciente: any) => {
+        this.pacienteSelecionado = paciente;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar paciente', err);
+      }
+    });
+  }
+
+  onPacienteSelecionado(paciente: any): void {
+    this.pacienteSelecionado = paciente;
+    this.agendamentoForm.patchValue({ pacienteId: paciente });
+    this.buscarPaciente(paciente);
+    this.mostrarModal = false;
+  }
+
+  fecharModal(): void {
+    this.mostrarModal = false;
+  }
+
+  // salvar(): void {
+  //   if (this.agendamentoForm.invalid) {
+  //     this.agendamentoForm.markAllAsTouched();
+  //     return;
+  //   }
+
+  //   this.agendamentoService.atualizarAgendamento(this.agendamentoId, this.agendamentoForm.value)
+  //     .subscribe({
+  //       next: () => {
+  //         Swal.fire({
+  //           icon: 'success',
+  //           title: 'Agendamento atualizado!',
+  //           showConfirmButton: false,
+  //           timer: 2000
+  //         });
+  //         this.router.navigate(['/agendamentos']);
+  //       },
+  //       error: () => {
+  //         Swal.fire({ icon: 'error', title: 'Erro ao atualizar agendamento' });
+  //       }
+  //     });
+  // }
+
+  cancelar(): void {
     this.router.navigate(['/agendamentos']);
   }
 }

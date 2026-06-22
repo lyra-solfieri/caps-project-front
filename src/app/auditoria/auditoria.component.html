@@ -1,1 +1,141 @@
-<app-header></app-header>
+<div class="auditoria-container">
+  <div class="page-header">
+    <div class="page-header-left">
+      <h2>Auditoria do Sistema</h2>
+      <span class="total-badge">{{ totalElements }} registro{{ totalElements !== 1 ? 's' : '' }}</span>
+    </div>
+    <button class="back-button" routerLink="/dashboard">Voltar ao Menu</button>
+  </div>
+
+  <div class="filtros-card">
+    <div class="filtros-grid">
+      <div class="filtro-group">
+        <label>Ação</label>
+        <select [(ngModel)]="filtroAcao">
+          <option value="">Todas</option>
+          <option *ngFor="let acao of acoesDisponiveis" [value]="acao">{{ ACAO_LABELS[acao] }}</option>
+        </select>
+      </div>
+      <div class="filtro-group">
+        <label>Entidade</label>
+        <select [(ngModel)]="filtroEntidade">
+          <option value="">Todas</option>
+          <option *ngFor="let ent of entidadesDisponiveis" [value]="ent">{{ ent }}</option>
+        </select>
+      </div>
+      <div class="filtro-group">
+        <label>Usuário</label>
+        <input type="text" [(ngModel)]="filtroUsuario" placeholder="Filtrar por usuário..." />
+      </div>
+      <div class="filtro-group">
+        <label>Data início</label>
+        <input type="date" [(ngModel)]="filtroDataInicio" />
+      </div>
+      <div class="filtro-group">
+        <label>Data fim</label>
+        <input type="date" [(ngModel)]="filtroDataFim" />
+      </div>
+      <div class="filtro-actions">
+        <button class="btn-filter" (click)="aplicarFiltros()">Filtrar</button>
+        <button class="btn-clear" (click)="limparFiltros()">Limpar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabela-card">
+    <div class="table-responsive">
+      <table class="auditoria-table" *ngIf="logs.length > 0">
+        <thead>
+          <tr>
+            <th>Data/Hora</th>
+            <th>Usuário</th>
+            <th>Ação</th>
+            <th>Entidade</th>
+            <th>IP</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let log of logs">
+            <td class="cell-data">{{ formatarData(log.dataHora) }}</td>
+            <td>
+              <span class="usuario-tag">{{ log.usuario }}</span>
+            </td>
+            <td>
+              <span class="acao-badge" [style.background]="ACAO_CORES[log.acao]">
+                {{ ACAO_LABELS[log.acao] }}
+              </span>
+            </td>
+            <td>
+              <span *ngIf="log.entidade !== '-'" class="entidade-tag">{{ log.entidade }}</span>
+              <span *ngIf="log.entidade === '-'" class="text-muted">—</span>
+            </td>
+            <td class="cell-ip">{{ log.ip }}</td>
+            <td>
+              <button class="btn-detalhe" (click)="verDetalhe(log)">Detalhes</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="logs.length === 0" class="empty-message">
+      Nenhum registro de auditoria encontrado.
+    </div>
+
+    <div class="paginacao" *ngIf="totalPages > 1">
+      <button (click)="paginaAnterior()" [disabled]="isFirst">⬅ Anterior</button>
+      <button
+        *ngFor="let p of [].constructor(totalPages); let i = index"
+        (click)="irParaPagina(i)"
+        [class.ativo]="i === pageNo"
+      >{{ i + 1 }}</button>
+      <button (click)="proximaPagina()" [disabled]="isLast">Próxima ➡</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="logSelecionado" (click)="fecharDetalhe()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Detalhe da Auditoria</h3>
+      <button class="modal-close" (click)="fecharDetalhe()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">ID</span>
+          <span class="detail-value">#{{ logSelecionado.id }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Data/Hora</span>
+          <span class="detail-value">{{ formatarData(logSelecionado.dataHora) }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Usuário</span>
+          <span class="detail-value">{{ logSelecionado.usuario }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Ação</span>
+          <span class="acao-badge" [style.background]="ACAO_CORES[logSelecionado.acao]">{{ ACAO_LABELS[logSelecionado.acao] }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Entidade</span>
+          <span class="detail-value">{{ logSelecionado.entidade }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">ID da Entidade</span>
+          <span class="detail-value">{{ logSelecionado.entidadeId ?? '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">IP</span>
+          <span class="detail-value">{{ logSelecionado.ip }}</span>
+        </div>
+        <div class="detail-item full-width">
+          <span class="detail-label">Detalhes</span>
+          <p class="detail-desc">{{ logSelecionado.detalhes }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

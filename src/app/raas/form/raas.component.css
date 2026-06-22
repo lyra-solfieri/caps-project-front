@@ -1,0 +1,315 @@
+.raas-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+/* ── CABEÇALHO ── */
+.header-raas {
+  display: flex;
+  align-items: center;
+  border: 2px solid #000;
+  padding: 12px 16px;
+  margin-bottom: 6px;
+  background: #fff;
+}
+
+.logo-sus img {
+  max-height: 60px;
+}
+
+.titulo-central {
+  flex: 1;
+  text-align: center;
+}
+
+.titulo-central h2 {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 0 2px;
+  letter-spacing: 1px;
+}
+
+.titulo-central h1 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 2px;
+}
+
+.titulo-central p {
+  font-size: 11px;
+  font-weight: normal;
+  margin: 0;
+  color: #444;
+}
+
+/* ── SEÇÕES ── */
+.section-title {
+  background: #17365d;
+  border: 1px solid #000;
+  border-bottom: none;
+  font-size: 11px;
+  font-weight: bold;
+  color: #fff;
+  padding: 4px 8px;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+/* ── GRID ── */
+.row {
+  display: flex;
+  width: 100%;
+}
+
+.border-box {
+  border: 1px solid #000;
+}
+
+.bt-none {
+  border-top: none;
+}
+
+.br {
+  border-right: 1px solid #000;
+}
+
+.col-1  { width: 8.33%;  min-height: 42px; }
+.col-2  { width: 16.66%; min-height: 42px; }
+.col-3  { width: 25%;    min-height: 42px; }
+.col-4  { width: 33.33%; min-height: 42px; }
+.col-5  { width: 41.66%; min-height: 42px; }
+.col-6  { width: 50%;    min-height: 42px; }
+.col-8  { width: 66.66%; min-height: 42px; }
+.col-9  { width: 75%;    min-height: 42px; }
+.col-10 { width: 83.33%; min-height: 42px; }
+
+/* ── LABELS ── */
+label {
+  display: block;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 3px 6px;
+  color: #000;
+}
+
+/* ── INPUTS ── */
+input, select {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 3px 6px 4px;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: transparent;
+  box-sizing: border-box;
+  border-bottom: 1px dotted #ccc;
+}
+
+input:focus, select:focus {
+  border-bottom: 1px solid #17365d;
+}
+
+select {
+  cursor: pointer;
+}
+
+/* ── CAMPOS DE AÇÃO ── */
+.campo-raas {
+  padding: 0;
+}
+
+.campo-raas label {
+  font-size: 9px;
+  padding-left: 4px;
+}
+
+/* ── CHECKBOX / RADIO ── */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  padding: 4px 6px;
+}
+
+.checkbox-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: normal;
+  padding: 2px 0;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"],
+.checkbox-group input[type="radio"] {
+  width: auto;
+  border: none;
+  margin: 0;
+  accent-color: #17365d;
+}
+
+small {
+  display: block;
+  font-size: 9px;
+  font-style: italic;
+  color: #555;
+  padding: 0 6px 4px;
+}
+
+.checkbox-raas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.checkbox-raas label {
+  font-size: 9px;
+  text-align: center;
+}
+
+.checkbox-raas input {
+  width: auto;
+  margin-top: 4px;
+  accent-color: #17365d;
+}
+
+/* ── TOOLBAR ── */
+.raas-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 10px 16px;
+  background: #f5f7fa;
+  border-radius: 8px;
+  border: 1px solid #e0e3e8;
+}
+
+.raas-toolbar-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ── BOTÕES ── */
+.raas-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px 0;
+  border-top: 1px solid #ccc;
+}
+
+.btn-acao {
+  background: #17365d;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-acao:hover {
+  background: #0f2642;
+}
+
+.btn-acao:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-acao.outline {
+  background: transparent;
+  color: #17365d;
+  border: 1px solid #17365d;
+}
+
+.btn-acao.outline:hover {
+  background: #e8edf3;
+}
+
+.btn-acao.danger {
+  background: #d32f2f;
+}
+
+.btn-acao.danger:hover {
+  background: #b71c1c;
+}
+
+.btn-acao.voltar {
+  background: transparent;
+  color: #555;
+  border: 1px solid #ccc;
+  padding: 6px 14px;
+  font-size: 12px;
+}
+
+.btn-acao.voltar:hover {
+  background: #e8edf3;
+  color: #333;
+}
+
+.btn-acao.pdf {
+  background: #1b7a2b;
+}
+
+.btn-acao.pdf:hover {
+  background: #13601f;
+}
+
+/* ── RODAPÉ ── */
+.raas-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 8px 0;
+  margin-top: 8px;
+  border-top: 1px solid #000;
+  font-size: 10px;
+  color: #555;
+}
+
+/* ── RESPONSIVO ── */
+@media screen and (max-width: 900px) {
+  .row {
+    flex-wrap: wrap;
+  }
+  .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-8, .col-9, .col-10 {
+    width: 100%;
+    min-height: auto;
+    border-right: none;
+  }
+  .br {
+    border-right: none;
+  }
+}
+
+@media print {
+  .raas-toolbar {
+    display: none;
+  }
+  .raas-container {
+    width: 100%;
+    padding: 0;
+  }
+  .raas-actions {
+    display: none;
+  }
+  input, select {
+    border-bottom: 1px solid #000;
+  }
+}
