@@ -34,8 +34,6 @@ export class AuditoriaComponent implements OnInit {
   ACAO_LABELS = ACAO_LABELS;
   ACAO_CORES = ACAO_CORES;
 
-  usandoMock = true;
-
   constructor(private service: AuditoriaService) {}
 
   ngOnInit(): void {
@@ -47,10 +45,10 @@ export class AuditoriaComponent implements OnInit {
     if (this.filtroAcao) filtros.acao = this.filtroAcao;
     if (this.filtroEntidade) filtros.entidade = this.filtroEntidade;
     if (this.filtroUsuario) filtros.usuario = this.filtroUsuario;
-    if (this.filtroDataInicio) filtros.dataInicio = this.filtroDataInicio;
-    if (this.filtroDataFim) filtros.dataFim = this.filtroDataFim;
+    if (this.filtroDataInicio) filtros.dataInicio = this.filtroDataInicio + 'T00:00:00';
+    if (this.filtroDataFim) filtros.dataFim = this.filtroDataFim + 'T23:59:59';
 
-    this.service.getMockLogs(this.pageNo, this.pageSize, filtros).subscribe({
+    this.service.listarLogs(this.pageNo, this.pageSize, filtros).subscribe({
       next: (page) => {
         this.logs = page.content;
         this.totalPages = page.totalPages;
@@ -58,14 +56,8 @@ export class AuditoriaComponent implements OnInit {
         this.isFirst = page.first;
         this.isLast = page.last;
       },
-      error: () => {
-        this.service.getMockLogs(this.pageNo, this.pageSize, filtros).subscribe((page) => {
-          this.logs = page.content;
-          this.totalPages = page.totalPages;
-          this.totalElements = page.totalElements;
-          this.isFirst = page.first;
-          this.isLast = page.last;
-        });
+      error: (err) => {
+        console.error('Erro ao carregar logs de auditoria:', err);
       },
     });
   }
