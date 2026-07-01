@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { AppHeaderComponent } from '../../app-header/app-header.component';
 import { AgendamentoService } from '../../services/agendamento/agendamento.service';
 import { PacienteService } from '../../services/paciente/paciente.service';
 import { SelecionarPacienteModalComponent } from '../../modal/paciente/selecionar-paciente-modal/selecionar-paciente-modal.component';
@@ -13,7 +12,6 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [
     CommonModule,
-    AppHeaderComponent,
     RouterModule,
     ReactiveFormsModule,
     SelecionarPacienteModalComponent
@@ -25,7 +23,7 @@ export class EdicaoAgendamentoComponent implements OnInit {
   agendamentoForm!: FormGroup;
   mostrarModal = false;
   pacienteSelecionado: any = null;
-  agendamentoId: any = null;
+  agendamentoId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,18 +34,18 @@ export class EdicaoAgendamentoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.criarFormulario();
-    // const id = this.route.snapshot.paramMap.get('id');
-    // if (id) {
-    //   this.agendamentoId = id;
-    //   this.carregarAgendamento(id);
-    // }
+    this.criarFormulario();
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+       this.agendamentoId = Number(id);
+       this.carregarAgendamento(this.agendamentoId);
+    }
   }
 
   private criarFormulario(): void {
     this.agendamentoForm = this.fb.group({
       pacienteId: [null, Validators.required],
-      tipoComunicacao: [null, Validators.required],
+      tipoComunicacao: ['', Validators.required],
       destinatario: ['', Validators.required],
       message: [''],
       dataHoraAtendimento: ['', Validators.required]
@@ -57,16 +55,25 @@ export class EdicaoAgendamentoComponent implements OnInit {
   carregarAgendamento(id: number): void {
     this.agendamentoService.listarAgendamentPorId(id).subscribe({
       next: (agendamento: any) => {
+        let dataFormatada = '';
+        if (agendamento.dataHoraAtendimento) {
+          dataFormatada = agendamento.dataHoraAtendimento.substring(0, 16);
+        }
+
+        if (agendamento.paciente) {
+          this.pacienteSelecionado = agendamento.paciente;
+        }
         this.agendamentoForm.patchValue({
-          pacienteId: agendamento.pacienteId,
+          pacienteId: agendamento.paciente?.id,
           tipoComunicacao: agendamento.tipoComunicacao,
           destinatario: agendamento.destinatario,
           message: agendamento.message,
-          dataHoraAtendimento: agendamento.dataHoraAtendimento
+          dataHoraAtendimento: dataFormatada
         });
-        this.buscarPaciente(agendamento.pacienteId);
+       
       },
       error: () => {
+        //Swal.fire({ icon: 'error', title: 'Acesso Negado (403)', text: 'Verifique as permissões no Backend!' });
         Swal.fire({ icon: 'error', title: 'Agendamento não encontrado!' });
         this.router.navigate(['/agendamentos']);
       }
@@ -95,28 +102,29 @@ export class EdicaoAgendamentoComponent implements OnInit {
     this.mostrarModal = false;
   }
 
-  // salvar(): void {
-  //   if (this.agendamentoForm.invalid) {
-  //     this.agendamentoForm.markAllAsTouched();
-  //     return;
-  //   }
+  salvar(): void {
+    if (this.agendamentoForm.invalid || !this.agendamentoId) {
+      this.agendamentoForm.markAllAsTouched();
+      return;
+    }
 
-  //   this.agendamentoService.atualizarAgendamento(this.agendamentoId, this.agendamentoForm.value)
-  //     .subscribe({
-  //       next: () => {
-  //         Swal.fire({
-  //           icon: 'success',
-  //           title: 'Agendamento atualizado!',
-  //           showConfirmButton: false,
-  //           timer: 2000
-  //         });
-  //         this.router.navigate(['/agendamentos']);
-  //       },
-  //       error: () => {
-  //         Swal.fire({ icon: 'error', title: 'Erro ao atualizar agendamento' });
-  //       }
-  //     });
-  // }
+    this.agendamentoService.atualizarAgendamento(this.agendamentoId, this.agendamentoForm.value)
+      .subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Agendamento atualizado!',
+            showConfirmButton: false,
+            timer: 2000
+          }).then(() => {
+            this.router.navigate(['/agendamentos']);
+          });
+        },
+        error: () => {
+          Swal.fire({ icon: 'error', title: 'Erro ao atualizar agendamento' });
+        }
+      });
+  }
 
   cancelar(): void {
     this.router.navigate(['/agendamentos']);

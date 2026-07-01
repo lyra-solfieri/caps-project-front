@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AppHeaderComponent } from '../app-header/app-header.component';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, AppHeaderComponent, BaseChartDirective],
+  imports: [CommonModule, RouterLink, BaseChartDirective],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -20,17 +19,6 @@ export class DashboardComponent implements OnInit {
     totalConsultasMes: 1240,
     cancelamentosMes: 42,
     satisfacaoMedia: 4.8
-  };
-
-  // Configuração do Gráfico de Rosca (Motivos de Cancelamento)
-  public doughnutChartData: ChartData<'doughnut'> = {
-    labels: ['Falta de Transporte', 'Motivos Clínicos', 'Esquecimento', 'Outros'],
-    datasets: [
-      { 
-        data: [15, 10, 12, 5],
-        backgroundColor: ['#00796b', '#004d40', '#ffc107', '#d32f2f'] 
-      }
-    ]
   };
 
   // Configuração do Gráfico de Barras (Comparecimento Semanal)

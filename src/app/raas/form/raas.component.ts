@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { AppHeaderComponent } from '../../app-header/app-header.component'
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PacienteService } from '../../services/paciente/paciente.service';
 import { PacienteDto } from '../../services/paciente/paciente.model';
 import { RaasService } from '../../services/raas/raas.service';
+import { RaasRequestDTO } from '../../services/raas/raas.model';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-raas',
   imports: [
-    AppHeaderComponent,
     ReactiveFormsModule,
     CommonModule,
   ],
@@ -22,12 +21,14 @@ export class RaasComponent implements OnInit {
   raasForm!: FormGroup;
   paciente!: PacienteDto;
   raasId!: number;
+  salvando = false;
 
   constructor(
     private fb: FormBuilder,
     private pacienteService: PacienteService,
     private raasService: RaasService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -89,7 +90,8 @@ export class RaasComponent implements OnInit {
     acoesRealizadas: this.fb.array([])
   });
 
-    const pacienteId = this.route.snapshot.paramMap.get('id');
+    const pacienteId = this.route.snapshot.paramMap.get('id')
+      ?? this.route.snapshot.queryParamMap.get('pacienteId');
 
     if (pacienteId) {
       this.buscarPaciente(+pacienteId);
@@ -155,27 +157,29 @@ export class RaasComponent implements OnInit {
 
 
   salvarRaas() {
+    if (this.salvando || !this.paciente?.id) return;
 
-    const dto = {
-      pacienteId: this.paciente.id,
+    this.salvando = true;
+    const dto: RaasRequestDTO = {
+      pacienteId: this.paciente.id!,
       atendimentoId: 1,
-
       nomeEstabelecimento: this.raasForm.value.nomeEstabelecimento,
       cnes: this.raasForm.value.cnes,
-
       acoes: this.raasForm.value.acoesRealizadas
     };
 
-    // this.raasService.criar(dto).subscribe({
-    //   next: (res) => {
-    //     console.log('RAAS criado:', res);
-    //     this.raasId = res.id;
-    //   }
-    // });
+    this.raasService.criar(dto).subscribe({
+      next: (res) => {
+        this.raasId = res.id;
+        this.salvando = false;
+      },
+      error: () => {
+        this.salvando = false;
+      }
+    });
   }
 
   exportarPDF() {
-
     if (!this.raasId) {
       alert('Salve o RAAS antes de gerar o PDF');
       return;
@@ -190,6 +194,10 @@ export class RaasComponent implements OnInit {
         console.error('Erro ao gerar PDF', err);
       }
     });
+  }
+
+  voltar() {
+    this.router.navigate(['/raas']);
   }
 
 }

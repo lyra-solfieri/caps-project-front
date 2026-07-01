@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,14 +10,25 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.css']
 })
-export class AppHeaderComponent {
-   constructor(private router: Router) {}
-   isMenuOpen = false;
-   isProfileMenuOpen = false;
+export class AppHeaderComponent implements OnInit {
+  isAdmin = false;
+  isMenuOpen = false;
+  isProfileMenuOpen = false;
+
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    this.isAdmin = this.authService.isAdmin();
+  }
+
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
-    toggleProfileMenu() {
+
+  toggleProfileMenu() {
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
   }
 
@@ -24,8 +36,13 @@ export class AppHeaderComponent {
     this.isMenuOpen = false;
   }
 
+  fecharDropdown() {
+    this.isProfileMenuOpen = false;
+  }
+
   logout() {
-    this.isMenuOpen = false;
+    this.closeMenu();
+    this.fecharDropdown();
     localStorage.removeItem('auth_token');
     localStorage.clear();
     this.router.navigate(['/login']);

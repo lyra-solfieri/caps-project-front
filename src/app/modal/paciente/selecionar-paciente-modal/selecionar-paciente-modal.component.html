@@ -1,29 +1,58 @@
-<div class="modal-backdrop">
-
-  <div class="modal">
-
-    <h2>Selecionar Paciente</h2>
-
-    <input
-      type="text"
-      [(ngModel)]="termo"
-      (input)="onSearch()"
-      placeholder="Digite o nome do paciente..."
-      class="search-input"
-    />
-
-    <div *ngIf="loading">Buscando...</div>
-
-    <ul *ngIf="!loading">
-      <li *ngFor="let p of pacientes" (click)="selecionar(p.id)">
-        {{ p.nome }}
-      </li>
-    </ul>
-
-    <div class="actions">
-      <button (click)="fechar()">Cancelar</button>
+<div class="modal-backdrop" (click)="fechar()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Selecionar Paciente</h3>
+      <button class="modal-close" (click)="fechar()">&times;</button>
     </div>
 
-  </div>
+    <div class="modal-body">
+      <div class="search-box">
+        <span class="material-icons search-icon">search</span>
+        <input
+          type="text"
+          [(ngModel)]="termo"
+          (input)="onSearch()"
+          placeholder="Pesquisar por nome ou CPF..."
+          class="search-input"
+          autofocus
+        />
+      </div>
 
+      <div class="loading-indicator" *ngIf="loading">
+        <span class="spinner"></span>
+        Carregando pacientes...
+      </div>
+
+      <div class="results-list" *ngIf="!loading">
+        <div
+          class="result-item"
+          *ngFor="let p of filtrados"
+          (click)="selecionar(p)"
+        >
+          <div class="result-avatar">
+            <span class="material-icons">person</span>
+          </div>
+          <div class="result-info">
+            <span class="result-nome">{{ p.nome }}</span>
+            <span class="result-cpf">CPF: {{ p.cpf }}</span>
+          </div>
+          <div class="result-meta">
+            <span *ngIf="p.numeroProntuario" class="meta-prontuario">#{{ p.numeroProntuario }}</span>
+          </div>
+        </div>
+
+        <div class="empty-state" *ngIf="filtrados.length === 0">
+          <span class="material-icons empty-icon">search_off</span>
+          <p>Nenhum paciente encontrado</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <span class="footer-count" *ngIf="!loading">
+        {{ filtrados.length }} de {{ pacientes.length }} paciente{{ pacientes.length !== 1 ? 's' : '' }}
+      </span>
+      <button class="btn-cancel" (click)="fechar()">Cancelar</button>
+    </div>
+  </div>
 </div>

@@ -1,47 +1,60 @@
-<app-header></app-header>
+<div class="equipe-page">
+  <div class="equipe-header">
+    <h2>Equipe CAPS</h2>
+    <button *ngIf="isAdmin" class="btn-add" (click)="alternarFormulario()">
+      {{ exibirFormulario ? '✕ Fechar' : '+ Novo Usuário' }}
+    </button>
+  </div>
 
-<div class="register-page">
-  <div class="register-card">
-    
+  <div *ngIf="exibirFormulario" class="register-card">
     <div class="card-header">
-      <h2>Criar Conta</h2>
-      <p>Cadastre novos usuários para o projeto CAPS</p>
+      <h3>Cadastrar Novo Usuário</h3>
     </div>
-
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      
       <div class="form-group">
-        <label for="email">E-mail Corporativo</label>
-        <input 
-          id="email" 
-          type="email" 
-          formControlName="email" 
-          placeholder="exemplo@araujo.com"
-          autocomplete="off">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" formControlName="email" placeholder="email@exemplo.com" autocomplete="off">
       </div>
-
       <div class="form-group">
         <label for="password">Senha</label>
-        <input 
-          id="password" 
-          type="password" 
-          formControlName="password" 
-          placeholder="••••••••">
+        <input id="password" type="password" formControlName="password" placeholder="Mínimo 6 caracteres">
       </div>
-
       <div class="form-group">
-        <label for="role">Nível de Acesso (Role)</label>
+        <label for="role">Nível de Acesso</label>
         <select id="role" formControlName="role">
-          <option value="USER">Usuário Padrão</option>
-          <option value="MODERATOR">Moderador</option>
-          <option value="ADMIN">Administrador (SRE/DevOps)</option>
+          <option value="ROLE_USER">Usuário Padrão</option>
+          <option value="ROLE_MODERATOR">Moderador</option>
+          <option value="ROLE_ADMIN">Administrador</option>
         </select>
       </div>
-
-      <button type="submit" class="btn-submit" [disabled]="registerForm.invalid">
-        Finalizar Cadastro
-      </button>
-
+      <button type="submit" class="btn-submit" [disabled]="registerForm.invalid">Cadastrar</button>
     </form>
+  </div>
+
+  <div class="equipe-list">
+    <div *ngIf="loading" class="loading">Carregando...</div>
+
+    <div *ngIf="!loading && usuarios.length === 0" class="empty">
+      Nenhum usuário encontrado.
+    </div>
+
+    <table *ngIf="!loading && usuarios.length > 0" class="usuarios-table">
+      <thead>
+        <tr>
+          <th>E-mail</th>
+          <th>Nome</th>
+          <th>Nível de Acesso</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of usuarios">
+          <td>{{ user.email }}</td>
+          <td>{{ user.nome || '-' }}</td>
+          <td><span class="role-badge" [class.admin]="user.role === 'ADMIN'">{{ user.role }}</span></td>
+          <td>{{ user.ativo !== false ? 'Ativo' : 'Inativo' }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

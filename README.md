@@ -127,4 +127,5 @@ recomenda-se:
 
 AUTOR
 
-Alexsander Araujo Desenvolvedor
+Alexsander Araujo Desenvolvedor  
+Bruno Lyra Bezerra

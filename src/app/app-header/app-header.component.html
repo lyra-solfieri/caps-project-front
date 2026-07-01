@@ -15,7 +15,10 @@
       </button>
 
       <div class="profile-dropdown" *ngIf="isProfileMenuOpen">
-        <button (click)="logout()">Logout</button>
+        <a routerLink="/perfil" (click)="fecharDropdown()">Meu Perfil</a>
+        <a *ngIf="isAdmin" routerLink="/register" (click)="fecharDropdown()">Gerenciar Equipe</a>
+        <div class="dropdown-divider"></div>
+        <button (click)="logout()">Sair</button>
       </div>
     </div>
 

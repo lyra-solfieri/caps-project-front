@@ -1,4 +1,3 @@
-<app-header></app-header>
 
 <div class="cadastro-container">
 
@@ -11,8 +10,7 @@
     Os campos marcados com <span class="required">*</span> são obrigatórios.
   </p>
   
-  <!-- (ngSubmit)="salvar() -->
-  <form [formGroup]="agendamentoForm">
+  <form [formGroup]="agendamentoForm" (ngSubmit)="salvar()">
 
     <div class="form-section">
       <h3>Informações do Agendamento</h3>
@@ -34,10 +32,11 @@
 
         <div *ngIf="pacienteSelecionado" class="paciente-selecionado">
           <div class="paciente-info">
-            <span>Nome: {{ pacienteSelecionado.nome }}</span>
-            <span>CPF: {{ pacienteSelecionado.cpf }}</span>
+            <span><strong>Nome:</strong> {{ pacienteSelecionado?.nome }}</span>
+            <span><strong>CPF:</strong> {{ pacienteSelecionado?.cpf }}</span>
           </div>
-          <button class="add-paciente-button" type="button" (click)="mostrarModal = true">
+          
+          <button class="add-paciente-button" type="button" (click)="mostrarModal = true" style="margin-top: 10px;">
             Trocar Paciente
           </button>
         </div>
