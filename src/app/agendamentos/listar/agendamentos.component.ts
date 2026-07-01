@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AppFooterComponent } from '../../app-footer/app-footer.component';
 import { AgendamentoService } from '../../services/agendamento/agendamento.service';
 import Swal from 'sweetalert2';
+import { PacienteService } from '../../services/paciente/paciente.service';
 @Component({
   selector: 'app-agendamentos',
   standalone: true,
@@ -23,14 +24,18 @@ export class AgendamentosComponent {
     this.carregarAgendamentos();
   }
 
- carregarAgendamentos() {
+carregarAgendamentos() {
   this.agendamentoService.listarAgendamentos().subscribe({
     next: (dados) => {
-      console.log("🚀 ~ AgendamentosComponent ~ carregarAgendamentos ~ dados:", dados);
+      
       this.agendamentos = dados.map((a: any) => ({
         id: a.id,
-        paciente: a.paciente?.nome ?? '-',
-        profissional: a.profissional?.nome ?? '-',
+        // Mantém a busca pelo nome, mas tenta outro identificador se for null
+        paciente: a.paciente?.nome ?? 'Paciente Sem Nome',
+        pacienteCpf: a.paciente?.cpf ?? 'CPF não disponível',
+        // Se o nome vier null, mostra o email provisoriamente
+        profissional: a.user?.nome ?? a.user?.email ?? 'Profissional não identificado',
+        
         dataHoraAtendimento: a.dataHoraAtendimento,
         tipoComunicacao: a.tipoComunicacao,
         statusAgendamento: a.statusAgendamento
