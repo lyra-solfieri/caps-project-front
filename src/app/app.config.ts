@@ -13,6 +13,7 @@ import { AtendimentoComponent } from './atendimento/atendimento.component';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { provideNgxMask } from 'ngx-mask';
 import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 import { ConfiguracoesComponent } from './configuracoes/configuracoes.component';
 import { AuditoriaComponent } from './auditoria/auditoria.component';
 import { RegisterComponent } from './equipe-caps/equipe-caps.component';
@@ -97,8 +98,8 @@ export const routes: Routes = [
   {
     path: 'auditoria',
     component: AuditoriaComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, adminGuard],
+    canMatch: [authGuard, adminGuard]
   },
   {
     path: 'register',

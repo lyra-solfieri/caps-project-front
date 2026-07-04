@@ -13,7 +13,7 @@
         <i class="fas fa-calendar-check"></i>
         <span>Agendamentos</span>
       </div>
-      <div class="nav-card" routerLink="/auditoria">
+      <div class="nav-card" routerLink="/auditoria" *ngIf="isAdmin">
         <i class="fas fa-search"></i>
         <span>Auditoria</span>
       </div>

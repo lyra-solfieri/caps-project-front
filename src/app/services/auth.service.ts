@@ -53,6 +53,7 @@ export class AuthService {
     if (!token) return null;
     
     const decoded: any = jwtDecode(token);
+    console.log(" 🚀 ~ getUserRole ~ decoded:",decoded);
     return decoded.role; 
   }
 
