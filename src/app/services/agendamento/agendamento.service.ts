@@ -61,4 +61,18 @@ export class AgendamentoService {
       { headers: this.getHeaders() }
     );
   }
+
+  /**
+   * @param id ID do agendamento a ser editado
+   * @param agendamento Dados atualizados vindos do formulário
+   */
+  atualizarAgendamento(id: number, agendamento: any): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    
+    return this.http.put<any>(
+      url, 
+      agendamento, 
+      { headers: this.getHeaders() }
+    );
+  }
 }

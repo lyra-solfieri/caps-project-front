@@ -8,7 +8,6 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "cy:open": "cypress open"
-
   },
   "private": true,
   "dependencies": {
@@ -34,7 +33,7 @@
     "@angular/compiler-cli": "^19.2.0",
     "@types/jasmine": "~5.1.0",
     "@types/jwt-decode": "^2.2.1",
-    "cypress": "^15.13.1",
+    "cypress": "^15.16.0",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -42,5 +41,14 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.7.2"
-  }
+  },
+  "description": "![Angular](https://img.shields.io/badge/Angular-19-DD0031?style=for-the-badge&logo=angular)\r ![Cypress](https://img.shields.io/badge/Cypress-E2E-17202C?style=for-the-badge&logo=cypress)\r ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://codeberg.org/alexsanderthorne/caps-project-front.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
