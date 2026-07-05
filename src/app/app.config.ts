@@ -104,8 +104,8 @@ export const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, adminGuard],
+    canMatch: [authGuard, adminGuard]
   },
   {
     path: 'anamnese-infantil',

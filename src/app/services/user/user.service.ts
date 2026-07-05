@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserDto, UpdateUserDto } from './user.model';
 
@@ -8,28 +8,23 @@ import { UserDto, UpdateUserDto } from './user.model';
 })
 export class UserService {
 
-  private readonly apiUrl = 'http://localhost:8080/api/users';
+  private readonly apiUrl = 'http://localhost:8080/api/usuarios';
 
   constructor(private http: HttpClient) {}
 
-  private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('auth_token');
-    return new HttpHeaders({ Authorization: `bearer ${token}` });
-  }
-
   getProfile(): Observable<UserDto> {
-    return this.http.get<UserDto>(`${this.apiUrl}/me`, { headers: this.getHeaders() });
+    return this.http.get<UserDto>(`${this.apiUrl}/me`);
   }
 
   updateProfile(data: UpdateUserDto): Observable<UserDto> {
-    return this.http.put<UserDto>(`${this.apiUrl}/me`, data, { headers: this.getHeaders() });
+    return this.http.put<UserDto>(`${this.apiUrl}/me`, data);
   }
 
   listarUsuarios(): Observable<UserDto[]> {
-    return this.http.get<UserDto[]>(this.apiUrl, { headers: this.getHeaders() });
+    return this.http.get<UserDto[]>(this.apiUrl);
   }
 
   listarPorRole(role: string): Observable<UserDto[]> {
-    return this.http.get<UserDto[]>(`${this.apiUrl}?role=${role}`, { headers: this.getHeaders() });
+    return this.http.get<UserDto[]>(`${this.apiUrl}?role=${role}`);
   }
 }

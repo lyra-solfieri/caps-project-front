@@ -22,16 +22,16 @@
       <div class="form-group">
         <label for="role">Nível de Acesso</label>
         <select id="role" formControlName="role">
-          <option value="ROLE_USER">Usuário Padrão</option>
-          <option value="ROLE_MODERATOR">Moderador</option>
-          <option value="ROLE_ADMIN">Administrador</option>
+          <option value="USER">Usuário Padrão</option>
+          <option value="GUEST">Convidado</option>
+          <option value="ADMIN">Administrador</option>
         </select>
       </div>
       <button type="submit" class="btn-submit" [disabled]="registerForm.invalid">Cadastrar</button>
     </form>
   </div>
 
-  <div class="equipe-list">
+  <div  class="equipe-list">
     <div *ngIf="loading" class="loading">Carregando...</div>
 
     <div *ngIf="!loading && usuarios.length === 0" class="empty">

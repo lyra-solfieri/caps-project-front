@@ -42,7 +42,7 @@
     <a routerLink="/atendimento" routerLinkActive="active" (click)="closeMenu()">Atendimento</a>
     <a routerLink="/pacientes" routerLinkActive="active" (click)="closeMenu()">Pacientes</a>
     <a routerLink="/agendamentos" routerLinkActive="active" (click)="closeMenu()">Agendamentos</a>
-    <a routerLink="/register" routerLinkActive="active" (click)="closeMenu()">Equipe</a>
+    <a *ngIf="isAdmin" routerLink="/register" routerLinkActive="active" (click)="closeMenu()">Equipe</a>
     <a routerLink="/auditoria" routerLinkActive="active" (click)="closeMenu()" *ngIf="isAdmin">Auditoria</a>
     <a routerLink="/configuracoes" routerLinkActive="active" (click)="closeMenu()">Configurações</a>
     <a routerLink="/raas" routerLinkActive="active" (click)="closeMenu()">RAAS</a>
