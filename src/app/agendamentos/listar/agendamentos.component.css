@@ -55,10 +55,27 @@
   .agendamento-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: white;
-    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .agendamento-table .icon-btn{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    margin-right: 8px;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
   }
   
   .agendamento-table th,
