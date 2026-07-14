@@ -1,69 +1,79 @@
 <div class="evolucao-container">
   <div class="evolucao-header">
-    <h2>     
-      Evoluções do Paciente
-    </h2>
+    <h2>Evoluções do Paciente</h2>
     <div class="evolucao-actions">
       <button class="back-button" (click)="voltar()">Voltar</button>
     </div>
   </div>
 
-  <div class="evolucoes-anteriores" *ngIf="evolucoes.length > 0">
-    <h3>
-      <i class="fas fa-history"></i>
-      Evoluções Anteriores
-    </h3>
-    
-    <div class="evolucoes-list">
-      <div *ngFor="let evol of evolucoes" 
-           class="evolucao-card" 
-           [class.editando]="evolucaoEmEdicao?.id === evol.id"
-           (click)="selecionarEvolucao(evol)">
-        
-        <div class="evolucao-card-header">
-          <div class="evolucao-info">
-            <i class="fas fa-calendar-alt"></i>
-            <span class="data">{{ evol.dataEvolucao | date:'dd/MM/yyyy HH:mm' }}</span>
-            <span class="profissional" *ngIf="evol.profissional">
-              <i class="fas fa-user-md"></i>
-              {{ evol.profissional }}
-            </span>
-            <span>
-              <i class="fas fa-user-circle"></i>
-              {{ getPaciente() }}
-            </span>
+  <div *ngIf="!pacienteSelecionado" class="empty-state">
+    <i class="fas fa-user-plus fa-3x"></i>
+    <p>Selecione um paciente para ver ou registrar evoluções</p>
+    <button class="back-button" (click)="mostrarModal = true">
+      <i class="fas fa-search"></i> Selecionar Paciente
+    </button>
+  </div>
+
+  <div *ngIf="pacienteSelecionado">
+    <div class="paciente-info">
+      <i class="fas fa-user-circle"></i>
+      <span><strong>Paciente:</strong> {{ pacienteNome }}</span>
+      <button class="btn-link" (click)="selecionarOutroPaciente()">Trocar paciente</button>
+    </div>
+
+    <div class="evolucoes-anteriores" *ngIf="evolucoes.length > 0">
+      <h3><i class="fas fa-history"></i> Evoluções Anteriores</h3>
+
+      <div class="evolucoes-list">
+        <div *ngFor="let evol of evolucoes"
+             class="evolucao-card"
+             [class.editando]="evolucaoEmEdicao?.id === evol.id">
+
+          <div class="evolucao-card-header">
+            <div class="evolucao-info">
+              <i class="fas fa-calendar-alt"></i>
+              <span class="data">{{ evol.dataHoraEdicao | date:'dd/MM/yyyy HH:mm' }}</span>
+              <span class="profissional" *ngIf="evol.nomeProfissional">
+                <i class="fas fa-user-md"></i> {{ evol.nomeProfissional }}
+              </span>
+            </div>
+
+            <div class="evolucao-actions" *ngIf="!evolucaoEmEdicao">
+              <button class="btn-icon" (click)="editarEvolucao(evol, $event)" title="Editar">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn-icon" (click)="excluirEvolucao(evol, $event)" title="Excluir">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
           </div>
-          
-          <div class="evolucao-actions" *ngIf="!evolucaoEmEdicao">
-            <button class="btn-icon" (click)="editarEvolucao(evol, $event)" 
-                    title="Editar evolução">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="btn-icon" (click)="excluirEvolucao(evol, $event)" 
-                    title="Excluir evolução">
-              <i class="fas fa-trash-alt"></i>
-            </button>
+
+          <div class="evolucao-card-content">
+            <p>{{ evol.texto }}</p>
           </div>
-        </div>
-        
-        <div class="evolucao-card-content">
-          <p>{{ evol.texto }}</p>
-        </div>
-        
-        <div class="editando-badge" *ngIf="evolucaoEmEdicao?.id === evol.id">
-          <i class="fas fa-pencil-alt"></i> Editando...
+
+          <div class="editando-badge" *ngIf="evolucaoEmEdicao?.id === evol.id">
+            <i class="fas fa-pencil-alt"></i> Editando...
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="empty-state" *ngIf="evolucoes.length === 0">
-    <i class="fas fa-notes-medical fa-3x"></i>
-    <p>Nenhuma evolução registrada ainda</p>
-  </div>
+    <div class="empty-state" *ngIf="loading">
+      <i class="fas fa-spinner fa-pulse fa-3x"></i>
+      <p>Carregando...</p>
+    </div>
 
-  <div>
-    <button class="back-button" (click)="addPaciente()">Adicionar uma nova evolução</button>
+    <div class="empty-state" *ngIf="!loading && evolucoes.length === 0">
+      <i class="fas fa-notes-medical fa-3x"></i>
+      <p>Nenhuma evolução registrada para este paciente</p>
+    </div>
+
+    <div class="form-actions-row">
+      <button class="back-button" (click)="abrirFormulario()" *ngIf="!exibirCriarEvolucao">
+        <i class="fas fa-plus-circle"></i> Nova Evolução
+      </button>
+    </div>
   </div>
 
   <app-selecionar-paciente-modal
@@ -72,7 +82,6 @@
     (selecionado)="onPacienteSelecionado($event)">
   </app-selecionar-paciente-modal>
 
-
   <div class="evolucao-form-container" *ngIf="exibirCriarEvolucao">
     <h3>
       <i class="fas" [ngClass]="evolucaoEmEdicao ? 'fa-edit' : 'fa-plus-circle'"></i>
@@ -80,7 +89,7 @@
     </h3>
 
     <form [formGroup]="evolucaoForm" (ngSubmit)="salvarEvolucao()" class="evolucao-form">
-      
+
       <div class="form-group">
         <label for="evolucaoTexto">
           <i class="fas fa-pen"></i>
@@ -93,11 +102,9 @@
           placeholder="Ex: Paciente apresenta melhora significativa, relata redução da dor..."
           [class.error]="texto?.invalid && texto?.touched">
         </textarea>
-        
+
         <div class="field-info">
-          <span class="char-counter">
-            {{ texto?.value?.length || 0 }}/1000
-          </span>
+          <span class="char-counter">{{ texto?.value?.length || 0 }}/1000</span>
           <span class="error-message" *ngIf="texto?.invalid && texto?.touched">
             <i class="fas fa-exclamation-circle"></i>
             A evolução deve ter entre 10 e 1000 caracteres
@@ -106,19 +113,10 @@
       </div>
 
       <div class="form-actions">
-        <button 
-          type="button" 
-          class="btn btn-secondary" 
-          (click)="cancelarEdicao()"
-          *ngIf="evolucaoEmEdicao">
-          <i class="fas fa-times"></i>
-          Cancelar
+        <button type="button" class="btn btn-secondary" (click)="cancelarEdicao()">
+          <i class="fas fa-times"></i> Cancelar
         </button>
-        
-        <button 
-          type="submit" 
-          class="back-button"
-          [disabled]="evolucaoForm.invalid || !evolucaoForm.dirty">
+        <button type="submit" class="back-button" [disabled]="evolucaoForm.invalid">
           {{ evolucaoEmEdicao ? 'Atualizar' : 'Salvar Evolução' }}
         </button>
       </div>

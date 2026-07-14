@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EvolucaoDTO } from './evolucao-dto.model';
 
@@ -13,48 +13,24 @@ export class EvolucaoService {
 
   constructor(private http: HttpClient) {}
 
-  private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('auth_token');
-
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
+  salvar(data: EvolucaoDTO): Observable<EvolucaoDTO> {
+    return this.http.post<EvolucaoDTO>(this.API, data);
   }
 
-  salvarEvolucao(data: EvolucaoDTO): Observable<EvolucaoDTO> {
-    return this.http.post<EvolucaoDTO>(this.API, data, {
-      headers: this.getHeaders()
-    });
-  }
-
-  atualizarEvolucao(id: number, data: EvolucaoDTO): Observable<EvolucaoDTO> {
-    return this.http.post<EvolucaoDTO>(this.API, data, {
-      headers: this.getHeaders()
-    });
+  atualizar(id: number, data: EvolucaoDTO): Observable<EvolucaoDTO> {
+    return this.http.put<EvolucaoDTO>(`${this.API}/${id}`, data);
   }
 
   buscarPorId(id: number): Observable<EvolucaoDTO> {
-    return this.http.get<EvolucaoDTO>(`${this.API}/${id}`, {
-      headers: this.getHeaders(),
-      params: { id: id.toString() }
-    });
+    return this.http.get<EvolucaoDTO>(`${this.API}/${id}`);
   }
 
-  listarEvolucoes(page: number, size: number): Observable<EvolucaoDTO[]> {
-    return this.http.get<EvolucaoDTO[]>(`${this.API}/listar`, {
-      headers: this.getHeaders(),
-      params: {
-        page: page.toString(),
-        size: size.toString()
-      }
-    });
+  listarPorPaciente(pacienteId: number): Observable<EvolucaoDTO[]> {
+    return this.http.get<EvolucaoDTO[]>(`${this.API}?pacienteId=${pacienteId}`);
   }
 
-  excluirEvolucao(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.API}/${id}`, {
-      headers: this.getHeaders()
-    });
+  excluir(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.API}/${id}`);
   }
 
 }

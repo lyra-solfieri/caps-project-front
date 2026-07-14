@@ -1,9 +1,9 @@
-
 export interface EvolucaoDTO {
   id?: number;
-  descricao?: string;
-  dataEvolucao?: Date;
   pacienteId?: number;
-  anamneseId?: number;
-
+  pacienteNome?: string;
+  codProntuario?: number;
+  dataHoraEdicao?: string;
+  nomeProfissional?: string;
+  texto: string;
 }

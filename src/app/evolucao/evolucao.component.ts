@@ -1,18 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SelecionarPacienteModalComponent } from "../modal/paciente/selecionar-paciente-modal/selecionar-paciente-modal.component";
-import { Router } from '@angular/router';
-
-interface Evolucao {
-  id?: number;
-  pacienteId?: number;
-  codProntuario?: number;
-  texto: string;
-  profissional?: string;
-  dataEvolucao: Date;
-}
+import { EvolucaoService } from '../services/evolucao/evolucao.service';
+import { PacienteService } from '../services/paciente/paciente.service';
+import { EvolucaoDTO } from '../services/evolucao/evolucao-dto.model';
+import { AuthService } from '../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-evolucao',
@@ -21,143 +16,208 @@ interface Evolucao {
   imports: [ReactiveFormsModule, CommonModule, SelecionarPacienteModalComponent]
 })
 export class EvolucaoComponent implements OnInit {
-  @Input() pacienteId?: number;
-  @Input() pacienteNome?: string;
-  @Input() codProntuario?: number;
-
-  evolucoes: Evolucao[] = [];
-  evolucaoEmEdicao: Evolucao | null = null;
+  evolucoes: EvolucaoDTO[] = [];
+  evolucaoEmEdicao: EvolucaoDTO | null = null;
   evolucaoForm: FormGroup;
   mostrarModal = false;
   exibirCriarEvolucao = false;
+  loading = false;
+  error = '';
+
+  pacienteId?: number;
+  pacienteNome?: string;
+  pacienteSelecionado = false;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router) {
-      this.evolucaoForm = this.fb.group({
-        texto: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
-        paciente: ['']      
-      });
+    private router: Router,
+    private route: ActivatedRoute,
+    private evolucaoService: EvolucaoService,
+    private pacienteService: PacienteService,
+    private authService: AuthService
+  ) {
+    this.evolucaoForm = this.fb.group({
+      texto: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]]
+    });
   }
 
   ngOnInit(): void {
-    this.carregarEvolucoes();
+    this.route.queryParams.subscribe(params => {
+      const id = params['pacienteId'];
+      if (id) {
+        this.pacienteId = Number(id);
+        this.pacienteSelecionado = true;
+        this.carregarPaciente();
+        this.carregarEvolucoes();
+      }
+    });
   }
 
   get texto() { return this.evolucaoForm.get('texto'); }
 
-  carregarEvolucoes(): void {
-    // Simulando dados iniciais - substituir por chamada HTTP real
-    // this.evolucoes = [
-    //   {
-    //     id: 1,
-    //     texto: 'Paciente relatou melhora significativa após início do novo medicamento. Sinais vitais estáveis e bem orientado.',
-    //     profissional: 'Dra. Ana Silva',
-    //     dataEvolucao: new Date('2024-03-15T10:30:00'),
-       
-    //   },
-    //   {
-    //     id: 2,
-    //     texto: 'Paciente apresenta boa evolução, sem queixas. Foi orientado sobre a continuidade do tratamento.',
-    //     profissional: 'Dr. Carlos Santos',
-    //     dataEvolucao: new Date('2024-03-14T14:20:00')
-    //   },
-    //   {
-    //     id: 3,
-    //     texto: 'Paciente internado para observação. Exames laboratoriais solicitados. Aguardando resultados.',
-    //     profissional: 'Dra. Ana Silva',
-    //     dataEvolucao: new Date('2024-03-13T09:15:00')
-    //   }
-    // ];
-
-    // Ordenar por data decrescente
-    this.evolucoes.sort((a, b) => 
-      new Date(b.dataEvolucao).getTime() - new Date(a.dataEvolucao).getTime()
-    );
-  }
-
-  getPaciente(): string {
-    return this.pacienteNome || '';
-  }
-
-  selecionarEvolucao(evolucao: Evolucao): void {
-    if (!this.evolucaoEmEdicao || this.evolucaoEmEdicao.id !== evolucao.id) {
-      return;
-    }
-  }
-
-  editarEvolucao(evolucao: Evolucao, event: Event): void {
-    event.stopPropagation();
-    this.evolucaoEmEdicao = { ...evolucao };
-    this.evolucaoForm.patchValue({
-      texto: evolucao.texto,
-      profissional: evolucao.profissional
+  carregarPaciente(): void {
+    if (!this.pacienteId) return;
+    this.pacienteService.buscarPacientePorId(this.pacienteId).subscribe({
+      next: (p) => this.pacienteNome = p.nome,
+      error: () => this.pacienteNome = 'Paciente'
     });
   }
 
-  excluirEvolucao(evolucao: Evolucao, event: Event): void {
-    event.stopPropagation();
-    
-    if (confirm('Tem certeza que deseja excluir esta evolução?')) {
-      this.evolucoes = this.evolucoes.filter(e => e.id !== evolucao.id);
-      
-      if (this.evolucaoEmEdicao?.id === evolucao.id) {
-        this.cancelarEdicao();
+  carregarEvolucoes(): void {
+    if (!this.pacienteId) return;
+    this.loading = true;
+    this.error = '';
+    this.evolucaoService.listarPorPaciente(this.pacienteId).subscribe({
+      next: (data) => {
+        this.evolucoes = data.sort((a, b) => {
+          const dateA = a.dataHoraEdicao ? new Date(a.dataHoraEdicao).getTime() : 0;
+          const dateB = b.dataHoraEdicao ? new Date(b.dataHoraEdicao).getTime() : 0;
+          return dateB - dateA;
+        });
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao carregar evoluções'
+        });
       }
+    });
+  }
+
+  onPacienteSelecionado(id: number): void {
+    this.mostrarModal = false;
+    this.pacienteId = id;
+    this.pacienteSelecionado = true;
+    this.exibirCriarEvolucao = true;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { pacienteId: id },
+      queryParamsHandling: 'merge'
+    });
+    this.carregarPaciente();
+    this.carregarEvolucoes();
+  }
+
+  fecharModal(): void {
+    this.mostrarModal = false;
+  }
+
+  abrirFormulario(): void {
+    if (!this.pacienteSelecionado) {
+      this.mostrarModal = true;
+      return;
     }
+    this.exibirCriarEvolucao = true;
+  }
+
+  editarEvolucao(evolucao: EvolucaoDTO, event: Event): void {
+    event.stopPropagation();
+    this.evolucaoEmEdicao = { ...evolucao };
+    this.evolucaoForm.patchValue({ texto: evolucao.texto });
+    this.exibirCriarEvolucao = true;
+  }
+
+  excluirEvolucao(evolucao: EvolucaoDTO, event: Event): void {
+    event.stopPropagation();
+    if (!evolucao.id) return;
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'Excluir evolução',
+      text: 'Tem certeza que deseja excluir esta evolução?',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.evolucaoService.excluir(evolucao.id || 0).subscribe({
+          next: () => {
+            this.evolucoes = this.evolucoes.filter(e => e.id !== evolucao.id);
+            if (this.evolucaoEmEdicao?.id === evolucao.id) {
+              this.cancelarEdicao();
+            }
+            Swal.fire({
+              icon: 'success',
+              title: 'Evolução excluída com sucesso!',
+              showConfirmButton: false,
+              timer: 2000
+            });
+          },
+          error: () => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Erro ao excluir evolução'
+            });
+          }
+        });
+      }
+    });
   }
 
   salvarEvolucao(): void {
-    if (this.evolucaoForm.valid) {
-      const dadosForm = this.evolucaoForm.value;
-      
-      if (this.evolucaoEmEdicao) {
-        const index = this.evolucoes.findIndex(e => e.id === this.evolucaoEmEdicao?.id);
-        if (index !== -1) {
-          this.evolucoes[index] = {
-            ...this.evolucoes[index],
-            texto: dadosForm.texto,
-            profissional: dadosForm.profissional
-          };
-        }
-      } else {
-        const novaEvolucao: Evolucao = {
-          id: this.evolucoes.length + 1,
-          pacienteId: this.pacienteId,
-          codProntuario: this.codProntuario,
-          texto: dadosForm.texto,
-          profissional: dadosForm.profissional,
-          dataEvolucao: new Date()
-        };
-        
-        this.evolucoes.unshift(novaEvolucao);
-      }
+    if (!this.evolucaoForm.valid || !this.pacienteId) return;
 
-      this.cancelarEdicao();
+    const data: EvolucaoDTO = {
+      texto: this.evolucaoForm.value.texto,
+      pacienteId: this.pacienteId,
+      nomeProfissional: this.authService.getUserName() || undefined
+    };
+
+    if (this.evolucaoEmEdicao && this.evolucaoEmEdicao.id) {
+      data.id = this.evolucaoEmEdicao.id;
+      this.evolucaoService.atualizar(this.evolucaoEmEdicao.id, data).subscribe({
+        next: () => {
+          this.cancelarEdicao();
+          this.carregarEvolucoes();
+          Swal.fire({
+            icon: 'success',
+            title: 'Evolução atualizada com sucesso!',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        },
+        error: () => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Erro ao atualizar evolução'
+          });
+        }
+      });
+    } else {
+      this.evolucaoService.salvar(data).subscribe({
+        next: () => {
+          this.cancelarEdicao();
+          this.carregarEvolucoes();
+          Swal.fire({
+            icon: 'success',
+            title: 'Evolução cadastrada com sucesso!',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        },
+        error: () => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Erro ao salvar evolução'
+          });
+        }
+      });
     }
   }
 
-  onPacienteSelecionado(id: number) {
-    this.mostrarModal = false;
-
-    this.router.navigate(['/evolucao/cadastrar'], {
-      queryParams: { pacienteId: id }
-    });
-  }
-
-  fecharModal() {
-    this.mostrarModal = false;
-  }
-
-  addPaciente() {
+  selecionarOutroPaciente(): void {
     this.mostrarModal = true;
   }
-  voltar() {
+
+  voltar(): void {
     this.router.navigate(['/dashboard']);
   }
 
   cancelarEdicao(): void {
     this.evolucaoEmEdicao = null;
     this.evolucaoForm.reset();
+    this.exibirCriarEvolucao = false;
   }
 }
