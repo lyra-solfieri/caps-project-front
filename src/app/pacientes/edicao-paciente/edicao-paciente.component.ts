@@ -40,9 +40,14 @@ export class EdicaoPacienteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.pacienteId = Number(this.route.snapshot.paramMap.get('id'));
     this.criarFormulario();
-    this.carregarPaciente(this.pacienteId);
+
+    const idParam = this.route.snapshot.paramMap.get('id');
+
+    if (idParam) {
+      this.pacienteId = Number(idParam);
+      this.carregarPaciente(this.pacienteId);
+    }
   }
 
   criarFormulario() {
@@ -93,17 +98,34 @@ export class EdicaoPacienteComponent implements OnInit {
     });
   }
 
-  carregarPaciente(id: number) {
+  carregarPaciente(id: number): void {
     this.pacienteService.buscarPacientePorId(id).subscribe({
-      next: (paciente: PacienteDto) => {
-        // O patchValue preenche automaticamente todos os campos do form com os dados do back
-        this.pacienteForm.patchValue(paciente);
+      next: (paciente: any) => {
+        
+        console.log("🕵️ Dados do Paciente recebidos da API:", paciente);
+
+        // 1. Trata a data de nascimento
+        let dataFormatada = '';
+        if (paciente.dataNascimento) {
+          dataFormatada = paciente.dataNascimento.substring(0, 10);
+        }
+
+        // 2. A MÁGICA AQUI: Usamos os 3 pontinhos (...paciente) para espalhar
+        // todas as propriedades e sobrescrevemos a dataNascimento com a formatada
+        this.pacienteForm.patchValue({
+          ...paciente, 
+          dataNascimento: dataFormatada
+        });
+
+        // 3. Força a atualização do endereço (objeto aninhado)
+        if (paciente.endereco) {
+          this.pacienteForm.get('endereco')?.patchValue(paciente.endereco);
+        }
+
+        console.log("📝 Valores do Form após Patch:", this.pacienteForm.value);
       },
       error: () => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Erro ao carregar paciente'
-        });
+        Swal.fire('Erro', 'Paciente não encontrado', 'error');
         this.router.navigate(['/pacientes']);
       }
     });
