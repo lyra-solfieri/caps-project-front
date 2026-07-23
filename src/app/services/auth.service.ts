@@ -4,20 +4,13 @@ import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
 
-enum RolerRegister {
-  ROLE_ADMIN = 'ADMIN',
-  ROLE_USER = 'USER',
-  ROLE_GUEST = 'GUEST'
-}
-
-interface RegisterData {  
-  email?: string;
+interface RegisterData {
+  email: string;
   password: string;
-  role: RolerRegister;
 }
 
 interface LoginRequest {
-  username: string;
+  email: string;
   password: string;
 }
 

@@ -15,7 +15,6 @@ import { UserDto } from '../services/user/user.model';
 export class RegisterComponent implements OnInit {
   usuarios: UserDto[] = [];
   registerForm: FormGroup;
-  roles = ['USER', 'ADMIN', 'GUEST'];
   isAdmin = false;
   loading = false;
   exibirFormulario = false;
@@ -27,8 +26,7 @@ export class RegisterComponent implements OnInit {
   ) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
@@ -65,7 +63,7 @@ export class RegisterComponent implements OnInit {
       this.authService.register(this.registerForm.value).subscribe({
         next: () => {
           alert('Usuário registrado com sucesso!');
-          this.registerForm.reset({ role: 'ROLE_USER' });
+          this.registerForm.reset();
           this.exibirFormulario = false;
           this.carregarUsuarios();
         },

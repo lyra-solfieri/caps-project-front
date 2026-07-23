@@ -7,14 +7,19 @@
     <div>
       <label for="email">Usuário E-mail</label>
       <input
-        type="text"
+        type="email"
         id="email"
         required
+        email
+        #emailField="ngModel"
         [(ngModel)]="loginData.email"
         name="email"
-        placeholder="Digite seu usuário"
+        placeholder="Digite seu e-mail"
         data-cy="input-email"
       />
+      <div *ngIf="emailField.invalid && emailField.touched" class="field-error">
+        Informe um e-mail válido
+      </div>
     </div>
 
     <div>

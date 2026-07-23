@@ -17,8 +17,7 @@
 
   <table *ngIf="!loading && anamnese.length > 0" class="pacientes-table">
     <thead>
-      <tr>
-        <th>ID</th>
+      <tr>        
         <th>Paciente</th>
         <th>Profissional</th>
         <th>Data</th>
@@ -28,8 +27,7 @@
 
     <tbody>
       <tr *ngFor="let a of anamnese">
-        <td>{{ a.id }}</td>
-        <td>{{ a.pacienteId }}</td>
+        <td>{{ a.pacienteId}}</td>
         <td>{{ a.profissionalResponsavel }}</td>
         <td>{{ a.dataRegistro | date:'short' }}</td>
 

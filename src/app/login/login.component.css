@@ -79,6 +79,14 @@
   margin-top: 10px;
 }
 
+.field-error {
+  color: #d32f2f;
+  font-size: 12px;
+  margin-top: -15px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
 /* Responsivo */
 @media (max-width: 480px) {
   .login-container {
