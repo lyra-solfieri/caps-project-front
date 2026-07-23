@@ -7,6 +7,8 @@ import { jwtDecode } from 'jwt-decode';
 interface RegisterData {
   email: string;
   password: string;
+  nome: string;
+  profissao: string;
 }
 
 interface LoginRequest {
