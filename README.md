@@ -62,7 +62,7 @@ BACKEND
 
 3. Instale as dependências:
     ```bash
-    java install
+    maven install
 
 4. Rodar o projeto:
     ```bash
