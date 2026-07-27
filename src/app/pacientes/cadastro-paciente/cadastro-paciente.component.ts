@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import { Genero } from '../../enums/genero.enum';
 import { Raca } from '../../enums/raca.enum';
 import { PacienteService } from '../../services/paciente/paciente.service';
-import { AppFooterComponent } from '../../app-footer/app-footer.component';
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { ViaCepService } from '../../services/paciente/cep.service';
 
@@ -24,7 +23,17 @@ import { ViaCepService } from '../../services/paciente/cep.service';
   templateUrl: './cadastro-paciente.component.html',
   styleUrls: ['./cadastro-paciente.component.css']
 })
-export class CadastroPacienteComponent {
+export class CadastroPacienteComponent implements OnInit {
+
+  ngOnInit(): void {
+  this.pacienteForm.get('cpf')?.valueChanges.subscribe(() => {
+    if (this.pacienteForm.get('cpf')?.hasError('cpfDuplicado')) {
+      this.pacienteForm.get('cpf')?.setErrors(null);
+      this.pacienteForm.get('cpf')?.updateValueAndValidity({ onlySelf: true });
+    }
+  });
+}
+
   generos = Object.values(Genero);
   racas = Object.values(Raca);
 
@@ -83,42 +92,55 @@ export class CadastroPacienteComponent {
   }
 
   onSubmit() {
-    
     if (this.pacienteForm.invalid) {
+      this.pacienteForm.markAllAsTouched();
       return;
     }
 
-  this.pacienteService.criarPaciente(this.pacienteForm.value).subscribe({
-    next: (response) => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Sucesso',
-        text: 'Paciente cadastrado com sucesso!',
-        showConfirmButton: false,
-        timer: 2000
-      }).then(() => {
-        this.router.navigate(['/pacientes']);
-      });
-    },
+    this.pacienteService.criarPaciente(this.pacienteForm.value).subscribe({
+      next: (response) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Sucesso',
+          text: 'Paciente cadastrado com sucesso!',
+          showConfirmButton: false,
+          timer: 2000
+        }).then(() => {
+          this.router.navigate(['/pacientes']);
+        });
+      },
 
-    error: (err: HttpErrorResponse) => {
-      // Mensagem genérica caso seja um erro 500 ou queda de servidor
-      let mensagemErro = 'Ocorreu um erro ao tentar conectar com o servidor.';
+      error: (err: HttpErrorResponse) => {
+        let mensagemErro = 'Ocorreu um erro ao validar os dados.';
 
-      // Agora o backend vai enviar corretamente o status 409
-      if (err.status === 400 || err.status === 409) {
-        // O Spring Boot envia a mensagem dentro de err.error.message quando usamos ResponseStatusException
-        mensagemErro = err.error?.message || err.error || 'Este CPF já está cadastrado no sistema.';
-        
-        // Marca o input do CPF como inválido para feedback visual no formulário (se você tiver css para isso)
-        this.pacienteForm.get('cpf')?.setErrors({ cpfDuplicado: true });
-      }
+        if (err.status === 400 || err.status === 409) {
+          
+          if (typeof err.error === 'string') {
+            mensagemErro = err.error;
+          } else if (err.error?.message) {
+            mensagemErro = err.error.message;
+          } else if (err.error && typeof err.error === 'object') {
+            mensagemErro = Object.values(err.error).join(' | ');
+          }
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Erro no Cadastro', // Título ajustado
-        text: typeof mensagemErro === 'string' ? mensagemErro : 'Verifique os dados enviados.'
-      });
+          const msgMinuscula = String(mensagemErro).toLowerCase();
+
+          if (err.status === 409 || msgMinuscula.includes('cadastrado') || msgMinuscula.includes('duplicado')) {
+            this.pacienteForm.get('cpf')?.setErrors({ cpfDuplicado: true });
+            mensagemErro = 'Este CPF já está cadastrado no sistema.';
+            
+          } else if (msgMinuscula.includes('cpf')) {
+            this.pacienteForm.get('cpf')?.setErrors({ pattern: true });
+          }
+          
+          document.getElementById('cpf')?.focus();
+        }
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro no Cadastro',
+          text: mensagemErro
+        });
       }
     });
   }

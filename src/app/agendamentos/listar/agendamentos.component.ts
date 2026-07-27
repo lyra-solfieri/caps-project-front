@@ -55,7 +55,7 @@ carregarAgendamentos() {
   excluirAgendamento(agendamento: any) {
     Swal.fire({
       title: 'Tem certeza?',
-      text: `Deseja excluir o agendamento de ${agendamento.paciente.nome ?? '-'}?`,
+      text: `Deseja excluir o agendamento de ${agendamento.paciente ?? '-'}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d32f2f',
