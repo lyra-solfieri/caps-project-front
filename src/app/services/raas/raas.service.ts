@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RaasRequestDTO, RaasResponseDTO } from './raas.model';
 
@@ -14,35 +14,27 @@ export class RaasService {
 
   constructor(private http: HttpClient) {}
 
-  private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('auth_token');
-    return new HttpHeaders({ Authorization: `bearer ${token}` });
-  }
-
   criar(raas: RaasRequestDTO): Observable<RaasResponseDTO> {
-    return this.http.post<RaasResponseDTO>(this.apiUrl, raas, { headers: this.getHeaders() });
+    return this.http.post<RaasResponseDTO>(this.apiUrl, raas);
   }
 
   buscarPorId(id: number): Observable<RaasResponseDTO> {
-    return this.http.get<RaasResponseDTO>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.get<RaasResponseDTO>(`${this.apiUrl}/${id}`);
   }
 
   listarPorPaciente(pacienteId: number): Observable<RaasResponseDTO[]> {
-    return this.http.get<RaasResponseDTO[]>(`${this.apiUrl}/paciente/${pacienteId}`, { headers: this.getHeaders() });
+    return this.http.get<RaasResponseDTO[]>(`${this.apiUrl}/paciente/${pacienteId}`);
   }
 
   listarPaginado(): Observable<RaasResponseDTO[]> {
-    return this.http.get<RaasResponseDTO[]>(`${this.apiUrl}/ultimos`, { headers: this.getHeaders() });
+    return this.http.get<RaasResponseDTO[]>(`${this.apiUrl}/ultimos`);
   }
 
   deletar(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   gerarPdf(id: number): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/${id}/pdf`, {
-      headers: this.getHeaders(),
-      responseType: 'blob'
-    });
+    return this.http.get(`${this.apiUrl}/${id}/pdf`, { responseType: 'blob' });
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AnamneseDTO } from './anamnese.model';
 
@@ -12,50 +12,29 @@ export class AnamneseService {
 
   constructor(private http: HttpClient) {}
 
-  private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('auth_token');
-
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-  }
-
   criarAnamnese(data: AnamneseDTO): Observable<AnamneseDTO> {
-    return this.http.post<AnamneseDTO>(this.API, data, {
-      headers: this.getHeaders()
-    });
+    return this.http.post<AnamneseDTO>(this.API, data);
   }
 
   buscarPorId(id: number): Observable<AnamneseDTO> {
-    return this.http.get<AnamneseDTO>(`${this.API}/${id}`, {
-      headers: this.getHeaders()
-    });
+    return this.http.get<AnamneseDTO>(`${this.API}/${id}`);
   }
 
 
   buscarPorPacienteId(pacienteId: number): Observable<AnamneseDTO> {
-    return this.http.get<AnamneseDTO>(`${this.API}/paciente/${pacienteId}`, {
-      headers: this.getHeaders()
-    });
+    return this.http.get<AnamneseDTO>(`${this.API}/paciente/${pacienteId}`);
   }
 
   listarAnamneses(page: number,size: number): Observable<AnamneseDTO[]> {
-    return this.http.get<AnamneseDTO[]>(this.API, {
-      headers: this.getHeaders()
-    });
+    return this.http.get<AnamneseDTO[]>(this.API);
   }
 
   editarAnamnese(id: number, data: AnamneseDTO): Observable<AnamneseDTO> {
-    return this.http.put<AnamneseDTO>(`${this.API}/${id}`, data, {
-      headers: this.getHeaders()
-    });
+    return this.http.put<AnamneseDTO>(`${this.API}/${id}`, data);
   }
 
   excluirAnamnese(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.API}/${id}`, {
-      headers: this.getHeaders()
-    });
+    return this.http.delete<void>(`${this.API}/${id}`);
   }
 
 }

@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClientModule ,HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,13 +21,16 @@ export class LoginComponent {
 
   errorMessage = '';
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   onSubmit() {
-    this.http.post<{ token: string }>('http://localhost:8080/auth/login', this.loginData)
+    this.authService.login(this.loginData)
       .subscribe({
         next: (response) => {
-          localStorage.setItem('auth_token', response.token);
+          this.authService.saveToken(response.token);
           this.errorMessage = '';
           Swal.fire({
             icon: 'success',
@@ -36,8 +40,12 @@ export class LoginComponent {
           });
           this.router.navigate(['/dashboard']);
         },
-        error: () => {
-          this.errorMessage = 'Usuário ou senha inválidos';
+        error: (err) => {
+          if (err.status === 429) {
+            this.errorMessage = err.error?.message || 'Muitas tentativas. Aguarde alguns minutos.';
+          } else {
+            this.errorMessage = 'Usuário ou senha inválidos';
+          }
         }
       });
   }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AgendamentoRequestDto } from './agendamento-request.dto';
@@ -14,65 +14,31 @@ export class AgendamentoService {
 
   constructor(private http: HttpClient) {}
 
-  private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('auth_token');
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-  }
-
 
   cadastrarAgendamento(agendamento: AgendamentoRequestDto): Observable<string> {
-    return this.http.post<string>(
-      this.apiUrl,
-      agendamento,
-      { headers: this.getHeaders() }
-    );
+    return this.http.post<string>(this.apiUrl, agendamento);
   }
 
 
   listarAgendamentos(): Observable<AgendamentoResponseDto[]> {
-    return this.http.get<AgendamentoResponseDto[]>(
-      this.apiUrl,
-      { headers: this.getHeaders() }
-    );
+    return this.http.get<AgendamentoResponseDto[]>(this.apiUrl);
   }
 
   listarAgendamentPorId(id: number): Observable<AgendamentoResponseDto> {
-    return this.http.get<AgendamentoResponseDto>(
-      `${this.apiUrl}/${id}`,
-      { headers: this.getHeaders() }
-    );
+    return this.http.get<AgendamentoResponseDto>(`${this.apiUrl}/${id}`);
   }
 
 
   deletarAgendamento(id: number): Observable<void> {
-    return this.http.delete<void>(
-      `${this.apiUrl}/${id}`,
-      { headers: this.getHeaders() }
-    );
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
 
   alertarAgendamento(id: number): Observable<string> {
-    return this.http.get<string>(
-      `${this.apiUrl}/alertar/${id}`,
-      { headers: this.getHeaders() }
-    );
+    return this.http.get<string>(`${this.apiUrl}/alertar/${id}`);
   }
 
-  /**
-   * @param id ID do agendamento a ser editado
-   * @param agendamento Dados atualizados vindos do formulário
-   */
   atualizarAgendamento(id: number, agendamento: any): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    
-    return this.http.put<any>(
-      url, 
-      agendamento, 
-      { headers: this.getHeaders() }
-    );
+    return this.http.put<any>(`${this.apiUrl}/${id}`, agendamento);
   }
 }
