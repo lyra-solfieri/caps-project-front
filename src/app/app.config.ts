@@ -1,6 +1,7 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter, Routes } from '@angular/router';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PacientesComponent } from './pacientes/listar/pacientes.component';
@@ -13,7 +14,7 @@ import { AtendimentoComponent } from './atendimento/atendimento.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideNgxMask } from 'ngx-mask';
 import { authGuard } from './core/guards/auth.guard';
-import { adminGuard } from './core/guards/admin.guard';
+import { roleGuard } from './core/guards/admin.guard';
 import { ConfiguracoesComponent } from './configuracoes/configuracoes.component';
 import { AuditoriaComponent } from './auditoria/auditoria.component';
 import { RegisterComponent } from './equipe-caps/equipe-caps.component';
@@ -25,6 +26,9 @@ import { EdicaoAnamneseComponent } from './anamnese-infantil/editar/anamnese-inf
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { RaasListarComponent } from './raas/listar/listar.component';
 import { PerfilComponent } from './perfil/perfil.component';
+
+const adminRole = roleGuard(['ADMIN']);
+const clinicalRole = roleGuard(['ADMIN', 'MODERATOR', 'EDITOR']);
 
 export const routes: Routes = [
   {
@@ -49,44 +53,44 @@ export const routes: Routes = [
   {
     path: 'pacientes',
     component: PacientesComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'pacientes/cadastro',
     component: CadastroPacienteComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'pacientes/editar/:id',
     component: EdicaoPacienteComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'agendamentos',
     component: AgendamentosComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'agendamentos/novo',
     component: CadastroAgendamentoComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'agendamentos/editar/:id',
     component: EdicaoAgendamentoComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'atendimento',
     component: AtendimentoComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'configuracoes',
@@ -97,63 +101,63 @@ export const routes: Routes = [
   {
     path: 'auditoria',
     component: AuditoriaComponent,
-    canActivate: [authGuard, adminGuard],
-    canMatch: [authGuard, adminGuard]
+    canActivate: [authGuard, adminRole],
+    canMatch: [authGuard, adminRole]
   },
   {
     path: 'register',
     component: RegisterComponent,
-    canActivate: [authGuard, adminGuard],
-    canMatch: [authGuard, adminGuard]
+    canActivate: [authGuard, adminRole],
+    canMatch: [authGuard, adminRole]
   },
   {
     path: 'anamnese-infantil',
     component: AnamneseInfantilComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'anamnese-infantil/cadastrar',
     component: CadastroAnamneseComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'anamnese-infantil/editar/:id',
     component: EdicaoAnamneseComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
 
   {
     path: 'raas',
     component: RaasListarComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'raas/novo',
     component: RaasComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'raas/editar/:id',
     component: RaasComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'raas/novo/:id',
     component: RaasComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
   {
     path: 'evolucao',
     component: EvolucaoComponent,
-    canActivate: [authGuard],
-    canMatch: [authGuard]
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
 
 
@@ -177,6 +181,11 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true
     },
     provideRouter(routes),

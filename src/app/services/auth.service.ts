@@ -50,16 +50,26 @@ export class AuthService {
   register(userData: RegisterData): Observable<void> {  
     return this.http.post<void>(`${this.apiUrlRegister}`, userData);
   }
+
   getUserRole(): string | null {
     const token = this.getToken();
     if (!token) return null;
-    
+
     const decoded: any = jwtDecode(token);
-    return decoded.role; 
+    return decoded.role;
   }
 
   isAdmin(): boolean {
     return this.getUserRole() === 'ADMIN';
+  }
+
+  hasRole(role: string): boolean {
+    return this.getUserRole() === role;
+  }
+
+  hasAnyRole(roles: string[]): boolean {
+    const userRole = this.getUserRole();
+    return roles.includes(userRole ?? '');
   }
 
   getUserName(): string | null {

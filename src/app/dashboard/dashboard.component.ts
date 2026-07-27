@@ -22,6 +22,7 @@ import { downloadPDF } from '../relatorios/utils/pdf-export.util';
 export class DashboardComponent implements OnInit {
 
   isAdmin = false;
+  hasClinicalAccess = false;
   mostrarModalExportar = false;
 
   // KPIs Mockados
@@ -56,6 +57,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isAdmin();
+    this.hasClinicalAccess = this.authService.hasAnyRole(['ADMIN', 'MODERATOR', 'EDITOR']);
   }
 
   abrirModalExportar(): void {

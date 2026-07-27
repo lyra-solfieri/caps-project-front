@@ -12,6 +12,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class AppHeaderComponent implements OnInit {
   isAdmin = false;
+  hasClinicalAccess = false;
   isMenuOpen = false;
   isProfileMenuOpen = false;
 
@@ -22,6 +23,7 @@ export class AppHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isAdmin();
+    this.hasClinicalAccess = this.authService.hasAnyRole(['ADMIN', 'MODERATOR', 'EDITOR']);
   }
 
   toggleMenu() {

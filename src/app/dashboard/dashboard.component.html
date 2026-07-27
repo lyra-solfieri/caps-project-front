@@ -5,11 +5,11 @@
 
     <h2 class="section-title">Acesso Rápido</h2>
     <div class="navigation-grid">
-      <div class="nav-card" routerLink="/anamnese-infantil">
+      <div class="nav-card" routerLink="/anamnese-infantil" *ngIf="hasClinicalAccess">
         <i class="fas fa-home"></i>
         <span>Acolhimento Infantojuvenil</span>
       </div>
-      <div class="nav-card" routerLink="/agendamentos">
+      <div class="nav-card" routerLink="/agendamentos" *ngIf="hasClinicalAccess">
         <i class="fas fa-calendar-check"></i>
         <span>Agendamentos</span>
       </div>
@@ -17,7 +17,7 @@
         <i class="fas fa-search"></i>
         <span>Auditoria</span>
       </div>
-      <div class="nav-card" routerLink="/evolucao">
+      <div class="nav-card" routerLink="/evolucao" *ngIf="hasClinicalAccess">
         <i class="fas fa-star"></i>
         <span>Evolução Infantojuvenil</span>
       </div>
@@ -25,11 +25,11 @@
         <i class="fas fa-hands-helping"></i>
         <span>Equipe CAPS</span>
       </div>
-      <div class="nav-card" routerLink="/pacientes">
+      <div class="nav-card" routerLink="/pacientes" *ngIf="hasClinicalAccess">
         <i class="fas fa-user-circle"></i>
         <span>Pacientes</span>
       </div>
-      <div class="nav-card" routerLink="/raas">
+      <div class="nav-card" routerLink="/raas" *ngIf="hasClinicalAccess">
         <i class="fas fa-file-alt"></i>
         <span>RAAS</span>
       </div>
