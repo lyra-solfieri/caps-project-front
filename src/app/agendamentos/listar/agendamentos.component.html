@@ -29,10 +29,19 @@
           <td>{{ agendamento.dataHoraAtendimento | date:'dd/MM/yyyy' }}</td>
           <td>{{ agendamento.dataHoraAtendimento | date:'HH:mm' }}</td>
           <td>{{ agendamento.tipoComunicacao }}</td>
-          <td>
-            <button class="edit" (click)="editarAgendamento(agendamento)">Editar</button>
-            <button class="delete" (click)="excluirAgendamento(agendamento)">Excluir</button>
-          </td>
+           <td class="acoes">
+              <button
+                class="icon-btn edit"
+                (click)="editarAgendamento(agendamento)"
+                data-tooltip="Editar">
+                ✏️ </button>
+            
+              <button
+                class="icon-btn delete"
+                (click)="excluirAgendamento(agendamento)"
+                data-tooltip="Excluir">
+                🗑️ </button>
+            </td>
         </tr>
       </tbody>
     </table>
