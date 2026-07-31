@@ -30,6 +30,7 @@ export class EdicaoPacienteComponent implements OnInit {
   generos = Object.values(Genero);
   racas = Object.values(Raca);
   pacienteId!: number;
+  private pacienteOriginal: Record<string, any> = {};
 
   constructor(
     private fb: FormBuilder,
@@ -101,6 +102,7 @@ export class EdicaoPacienteComponent implements OnInit {
   carregarPaciente(id: number): void {
     this.pacienteService.buscarPacientePorId(id).subscribe({
       next: (paciente: any) => {
+        this.pacienteOriginal = paciente;
         
         console.log("🕵️ Dados do Paciente recebidos da API:", paciente);
 
@@ -142,7 +144,20 @@ export class EdicaoPacienteComponent implements OnInit {
       return;
     }
 
-    this.pacienteService.atualizarPaciente(this.pacienteId, this.pacienteForm.value)
+    // A API pode devolver propriedades que ainda não possuem campo nesta tela.
+    // Em um PUT, enviá-las novamente impede que sejam apagadas ao salvar uma edição.
+    const { id: _id, endereco: enderecoOriginal, ...dadosOriginais } = this.pacienteOriginal;
+    const { endereco, ...dadosFormulario } = this.pacienteForm.getRawValue();
+    const pacienteAtualizado: PacienteDto = {
+      ...dadosOriginais,
+      ...dadosFormulario,
+      endereco: {
+        ...(enderecoOriginal ?? {}),
+        ...endereco
+      }
+    };
+
+    this.pacienteService.atualizarPaciente(this.pacienteId, pacienteAtualizado)
       .subscribe({
         next: () => {
           Swal.fire({
