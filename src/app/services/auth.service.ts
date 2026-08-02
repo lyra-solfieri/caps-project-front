@@ -9,6 +9,7 @@ interface RegisterData {
   password: string;
   nome: string;
   profissao: string;
+  role?: 'ADMIN' | 'USER';
 }
 
 interface LoginRequest {

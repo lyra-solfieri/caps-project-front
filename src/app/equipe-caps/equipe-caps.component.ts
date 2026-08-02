@@ -28,7 +28,8 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       nome: ['', Validators.required],
-      profissao: ['', Validators.required]
+      profissao: ['', Validators.required],
+      role: ['USER', Validators.required]
     });
   }
 
@@ -39,25 +40,13 @@ export class RegisterComponent implements OnInit {
 
   carregarUsuarios(): void {
     this.loading = true;
-    const role = this.authService.getUserRole();
-
-    if (this.isAdmin) {
-      this.userService.listarUsuarios().subscribe({
-        next: (users) => {
-          this.usuarios = users;
-          this.loading = false;
-        },
-        error: () => this.loading = false
-      });
-    } else {
-      this.userService.listarPorRole(role ?? 'USER').subscribe({
-        next: (users) => {
-          this.usuarios = users;
-          this.loading = false;
-        },
-        error: () => this.loading = false
-      });
-    }
+    this.userService.listarUsuarios().subscribe({
+      next: (users) => {
+        this.usuarios = users;
+        this.loading = false;
+      },
+      error: () => this.loading = false
+    });
   }
 
   onSubmit() {
