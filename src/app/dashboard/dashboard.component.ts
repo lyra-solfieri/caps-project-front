@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isAdmin();
-    this.hasClinicalAccess = this.authService.hasAnyRole(['ADMIN', 'MODERATOR', 'EDITOR']);
+    this.hasClinicalAccess = this.authService.hasAnyRole(['ADMIN', 'USER']);
   }
 
   abrirModalExportar(): void {

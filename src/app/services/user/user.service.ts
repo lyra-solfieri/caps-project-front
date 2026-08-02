@@ -23,8 +23,4 @@ export class UserService {
   listarUsuarios(): Observable<UserDto[]> {
     return this.http.get<UserDto[]>(this.apiUrl);
   }
-
-  listarPorRole(role: string): Observable<UserDto[]> {
-    return this.http.get<UserDto[]>(`${this.apiUrl}?role=${role}`);
-  }
 }

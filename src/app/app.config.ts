@@ -28,7 +28,7 @@ import { RaasListarComponent } from './raas/listar/listar.component';
 import { PerfilComponent } from './perfil/perfil.component';
 
 const adminRole = roleGuard(['ADMIN']);
-const clinicalRole = roleGuard(['ADMIN', 'MODERATOR', 'EDITOR']);
+const clinicalRole = roleGuard(['ADMIN', 'USER']);
 
 export const routes: Routes = [
   {
