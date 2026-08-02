@@ -3,6 +3,20 @@
   <span class="raas-toolbar-title">Registro das Ações Ambulatoriais Especializadas</span>
 </div>
 
+<div *ngIf="origemOcr" class="ocr-banner">
+  <div class="ocr-banner-icon">📄</div>
+  <div class="ocr-banner-content">
+    <strong>Dados extraídos por OCR</strong> —
+    Confiança geral: <strong>{{ confidenceGeral | percent:'1.0-0' }}</strong>
+    <span *ngIf="camposBaixaConfianca.length > 0">
+      <br><small>⚠ Campos para revisar: {{ camposBaixaConfianca.join(', ') }}</small>
+    </span>
+    <span *ngIf="camposNaoReconhecidos.length > 0">
+      <br><small>🚫 Não reconhecidos: {{ camposNaoReconhecidos.join(', ') }}</small>
+    </span>
+  </div>
+</div>
+
 <form [formGroup]="raasForm" class="raas-container">
 
   <!-- ─── CABEÇALHO ─── -->
@@ -256,21 +270,32 @@
       </div>
 
       <div class="row border-box bt-none">
-        <div class="col-3 br">
+        <div class="col-2 br campo-raas">
+          <label>CID10</label>
+          <input formControlName="cid10">
+        </div>
+        <div class="col-3 br campo-raas">
           <label>CBO DO EXECUTANTE</label>
           <input formControlName="cboExecutor">
         </div>
-        <div class="col-6 br">
+        <div class="col-5 br campo-raas">
           <label>CARTÃO NACIONAL DE SAÚDE DO PROFISSIONAL EXECUTANTE</label>
           <input formControlName="cartaoProfissional">
         </div>
+        <div class="col-2 campo-raas">
+          <label>CÓDIGO DE IDENTIFICAÇÃO DA EQUIPE</label>
+          <input formControlName="codigoEquipe">
+        </div>
+      </div>
+
+      <div class="row border-box bt-none">
         <div class="col-1 br checkbox-raas">
           <label>CAPS</label>
-          <input type="checkbox" formControlName="acaoCaps">
+          <input type="checkbox" formControlName="caps">
         </div>
         <div class="col-2 checkbox-raas">
           <label>TERRITÓRIO</label>
-          <input type="checkbox" formControlName="acaoTerritorio">
+          <input type="checkbox" formControlName="territorio">
         </div>
       </div>
 
