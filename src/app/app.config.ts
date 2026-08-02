@@ -154,6 +154,12 @@ export const routes: Routes = [
     canMatch: [authGuard, clinicalRole]
   },
   {
+    path: 'raas/importar/:correlationId',
+    component: RaasComponent,
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
+  },
+  {
     path: 'evolucao',
     component: EvolucaoComponent,
     canActivate: [authGuard, clinicalRole],
