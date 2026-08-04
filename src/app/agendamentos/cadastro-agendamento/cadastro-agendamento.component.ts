@@ -35,6 +35,8 @@ export class CadastroAgendamentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.criarFormulario();
+    this.listarPacientes();
+    //this.listarProfissionais();
   }
 
   private criarFormulario(): void {
@@ -74,16 +76,20 @@ export class CadastroAgendamentoComponent implements OnInit {
      
   }
 
-  buscarPaciente(paciente: number) {
-     this.pacientesService.buscarPacientePorId(paciente).subscribe({
-      next: (paciente: any) => {
-        this.pacienteSelecionado = paciente;
-      },
-      error: (err) => {
-        console.error('Erro ao buscar paciente', err);
-      }
-    });
-  }
+   listarPacientes(): void {
+
+      this.pacientesService.listarPacientes(0, 10, 'nome', 'asc').subscribe({
+        next: (dados) => {
+          // Atribui o array que vem do backend para a variável local
+          this.pacientes = dados.content.sort((a, b) => a.nome.localeCompare(b.nome));
+          console.log('Pacientes carregados com sucesso:', this.pacientes);
+        },
+        error: (erro) => {
+          console.error('Erro ao buscar pacientes:', erro);
+          Swal.fire('Erro', 'Não foi possível carregar a lista de pacientes.', 'error');
+        }
+      });
+    }
 
   cancelar(): void {
     this.router.navigate(['/agendamentos']);
