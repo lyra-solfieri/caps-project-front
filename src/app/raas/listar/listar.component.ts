@@ -3,6 +3,7 @@ import { RaasService } from '../../services/raas/raas.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SelecionarPacienteModalComponent } from "../../modal/paciente/selecionar-paciente-modal/selecionar-paciente-modal.component";
+import { OcrService } from '../../services/raas/ocr.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -26,9 +27,11 @@ export class RaasListarComponent implements OnInit {
   isFirst = false;
   isLast = false;
   mostrarModal = false;
+  processandoOcr = false;
 
   constructor(
     private raasService: RaasService,
+    private ocrService: OcrService,
     private router: Router
   ) {}
 
@@ -67,6 +70,80 @@ export class RaasListarComponent implements OnInit {
     this.router.navigate(['/raas/novo', pacienteId]);
   }
 
+  importarRaasEscaneado() {
+    if (this.processandoOcr) return;
+
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.pdf,.png,.jpg,.jpeg,.tiff';
+    input.onchange = (e: any) => {
+      const file = e.target?.files?.[0];
+      if (!file) return;
+
+      this.processandoOcr = true;
+      this.ocrService.upload(file).subscribe({
+        next: (resp) => {
+          const correlationId = resp.correlationId;
+          Swal.fire({
+            title: 'Processando RAAS',
+            html: 'Extraindo dados do documento escaneado...<br><small>Isso pode levar alguns segundos</small>',
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+          });
+
+          let tentativas = 0;
+          const maxTentativas = 30;
+          const interval = setInterval(() => {
+            tentativas++;
+
+            if (tentativas > maxTentativas) {
+              clearInterval(interval);
+              this.processandoOcr = false;
+              Swal.fire('Tempo esgotado', 'O processamento demorou mais do que o esperado. Tente novamente.', 'warning');
+              return;
+            }
+
+            this.ocrService.status(correlationId).subscribe({
+              next: (status) => {
+                if (status.status === 'CONCLUIDO' || status.status === 'REVISAO_MANUAL') {
+                  clearInterval(interval);
+                  this.processandoOcr = false;
+                  Swal.close();
+                  this.router.navigate(['/raas/importar', correlationId]);
+                } else if (status.status === 'FALHA') {
+                  clearInterval(interval);
+                  this.processandoOcr = false;
+                  this.mostrarErroFalha(correlationId);
+                }
+              },
+              error: () => {
+                clearInterval(interval);
+                this.processandoOcr = false;
+                Swal.fire('Erro', 'Falha ao consultar status do processamento', 'error');
+              }
+            });
+          }, 3000);
+        },
+        error: () => {
+          this.processandoOcr = false;
+          Swal.fire('Erro', 'Falha ao enviar o documento para processamento', 'error');
+        }
+      });
+    };
+    input.click();
+  }
+
+  private mostrarErroFalha(correlationId: string) {
+    this.ocrService.resultado(correlationId).subscribe({
+      next: (result) => {
+        const erros = result?.erros?.join(', ') || 'erro desconhecido';
+        Swal.fire('Erro', 'Falha ao processar o documento: ' + erros, 'error');
+      },
+      error: () => {
+        Swal.fire('Erro', 'Falha ao processar o documento: erro desconhecido', 'error');
+      }
+    });
+  }
 
   editar(id: number) {
     this.router.navigate(['/raas/editar', id]);

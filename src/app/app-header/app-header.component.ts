@@ -23,7 +23,7 @@ export class AppHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isAdmin();
-    this.hasClinicalAccess = this.authService.hasAnyRole(['ADMIN', 'MODERATOR', 'EDITOR']);
+    this.hasClinicalAccess = this.authService.hasAnyRole(['ADMIN', 'USER']);
   }
 
   toggleMenu() {

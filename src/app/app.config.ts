@@ -28,7 +28,7 @@ import { RaasListarComponent } from './raas/listar/listar.component';
 import { PerfilComponent } from './perfil/perfil.component';
 
 const adminRole = roleGuard(['ADMIN']);
-const clinicalRole = roleGuard(['ADMIN', 'MODERATOR', 'EDITOR']);
+const clinicalRole = roleGuard(['ADMIN', 'USER']);
 
 export const routes: Routes = [
   {
@@ -149,6 +149,12 @@ export const routes: Routes = [
   },
   {
     path: 'raas/novo/:id',
+    component: RaasComponent,
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
+  },
+  {
+    path: 'raas/importar/:correlationId',
     component: RaasComponent,
     canActivate: [authGuard, clinicalRole],
     canMatch: [authGuard, clinicalRole]
