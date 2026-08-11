@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user/user.service';
 import { UserDto } from '../services/user/user.model';
+import Swal from 'sweetalert2';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -49,17 +51,47 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+ onSubmit() {
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.value).subscribe({
+        
         next: () => {
-          alert('Usuário registrado com sucesso!');
+          Swal.fire({
+            icon: 'success',
+            title: 'Sucesso!',
+            text: 'Usuário registrado com sucesso!',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          
           this.registerForm.reset();
           this.exibirFormulario = false;
           this.carregarUsuarios();
         },
-        error: (err) => console.error('Erro ao registrar', err)
+        
+        error: (err: HttpErrorResponse) => {
+          console.error('Erro ao registrar', err);
+
+          let mensagemErro = 'Ocorreu um erro ao registrar o usuário.';
+          
+          if (err.error && err.error.message) {
+            mensagemErro = err.error.message;
+          } else if (typeof err.error === 'string') {
+            mensagemErro = err.error;
+          } else if (err.status === 400) {
+            mensagemErro = 'Verifique se a senha atende aos requisitos mínimos (maiúscula, minúscula, número e caractere especial).';
+          }
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Erro no Cadastro',
+            text: mensagemErro,
+            confirmButtonColor: '#00796b'
+          });
+        }
       });
+    } else {
+      this.registerForm.markAllAsTouched();
     }
   }
 
