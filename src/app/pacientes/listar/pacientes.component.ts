@@ -16,8 +16,8 @@ import { PacienteDto } from '../../services/paciente/paciente.model';
 export class PacientesComponent implements OnInit {
   
   pacientes: PacienteDto[] = [];
-  pacientes_s: any[] = [];         // Esta lista será a exibida na tabela
-  pacientesOriginal: any[] = []; // Esta guarda todos os dados vindos do banco
+  pacientes_s: any[] = [];
+  pacientesOriginal: any[] = [];
   pageNo = 0;
   pageSize = 10;
 
@@ -50,7 +50,7 @@ export class PacientesComponent implements OnInit {
           this.isLast = page.last;
           this.pacienteService.listarPacientes(0, this.totalElements, this.sortBy, this.direction).subscribe(dados => {
           this.pacientesOriginal = dados.content;
-          this.pacientes_s = dados.content; // Inicialmente são
+          this.pacientes_s = dados.content;
           });
         },
         error: (erro) => {
@@ -100,7 +100,7 @@ export class PacientesComponent implements OnInit {
             Swal.fire({
               icon: 'error',
               title: 'Erro ao excluir paciente',
-              text: 'Ocorreu um erro ao excluir o paciente.'
+              text: 'Ocorreu um erro ao excluir o paciente. Verifique se há agendamentos relacionados a este paciente.'
             });
           }
         });
@@ -142,24 +142,19 @@ export class PacientesComponent implements OnInit {
   onSearch(event: Event) {
     const valor = (event.target as HTMLInputElement).value.toLowerCase();
 
-    // Se o campo estiver vazio, volta a lista original completa
     if (!valor) {
       this.pacientes = [...this.pacientesOriginal];
       return;
     }
 
     this.pacientes = this.pacientesOriginal.filter(p => {
-      // 1. Verifica se bate com o nome (usando ? por segurança)
       const matchNome = p.nome?.toLowerCase().includes(valor) || false;
 
-      // 2. Limpa o CPF e o Termo
       const cpfLimpo = p.cpf?.replace(/\D/g, '') || '';
       const termoLimpo = valor.replace(/\D/g, '');
 
-      // 3. Verifica o CPF APENAS se o usuário digitou algum número
       const matchCpf = termoLimpo.length > 0 ? cpfLimpo.includes(termoLimpo) : false;
 
-      // 4. Retorna se encontrou no nome OU no CPF
       return matchNome || matchCpf;
     });
   }
