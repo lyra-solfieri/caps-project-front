@@ -116,7 +116,7 @@
         <button type="button" class="btn btn-secondary" (click)="cancelarEdicao()">
           <i class="fas fa-times"></i> Cancelar
         </button>
-        <button type="submit" class="back-button" [disabled]="evolucaoForm.invalid">
+        <button type="submit" class="back-button" [disabled]="loading">
           {{ evolucaoEmEdicao ? 'Atualizar' : 'Salvar Evolução' }}
         </button>
       </div>

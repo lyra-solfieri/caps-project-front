@@ -58,7 +58,8 @@
         <tr *ngFor="let user of usuarios">
           <td>{{ user.email }}</td>
           <td>{{ user.nome || '-' }}</td>
-          <td><span class="role-badge" [class.admin]="user.role === 'ADMIN'" [class.user]="user.role === 'USER'">{{ user.role }}</span></td>          <td>{{ user.ativo !== false ? 'Ativo' : 'Inativo' }}</td>
+          <td><span class="role-badge" [class.admin]="user.role === 'ADMIN'" [class.user]="user.role === 'USER'">{{ user.role }}</span></td>          
+          <td>{{ user.ativo !== false ? 'Ativo' : 'Inativo' }}</td>
         </tr>
       </tbody>
     </table>
