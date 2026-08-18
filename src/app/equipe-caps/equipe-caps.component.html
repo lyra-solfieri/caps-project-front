@@ -1,6 +1,7 @@
 <div class="equipe-page">
   <div class="equipe-header">
     <h2>Equipe CAPS</h2>
+    <button class="back-button" routerLink="/dashboard">Voltar ao Menu</button>
     <button *ngIf="isAdmin" class="btn-add" (click)="alternarFormulario()">
       {{ exibirFormulario ? '✕ Fechar' : '+ Novo Usuário' }}
     </button>

@@ -131,8 +131,15 @@
 }
 
 .buttons button.cancel {
-  background-color: #6c757d;
-  color: #fff;
+  height: 42px;
+  padding: 0 24px;
+  background: none;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .buttons button.cancel:hover {

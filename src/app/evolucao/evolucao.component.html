@@ -8,9 +8,9 @@
 
   <div *ngIf="!pacienteSelecionado" class="empty-state">
     <i class="fas fa-user-plus fa-3x"></i>
-    <p>Selecione um paciente para ver ou registrar evoluções</p>
+    <p style="margin-bottom: 10px;">Selecione um paciente para ver ou registrar evoluções</p>
     <button class="back-button" (click)="mostrarModal = true">
-      <i class="fas fa-search"></i> Selecionar Paciente
+      <i class="fas fa-search" style="margin: auto;"></i> Selecionar Paciente
     </button>
   </div>
 
@@ -53,7 +53,7 @@
           </div>
 
           <div class="editando-badge" *ngIf="evolucaoEmEdicao?.id === evol.id">
-            <i class="fas fa-pencil-alt"></i> Editando...
+            <i class="fas fa-pencil-alt" style="padding-right: 4px;"></i>    Editando...
           </div>
         </div>
       </div>

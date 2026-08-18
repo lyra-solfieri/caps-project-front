@@ -82,7 +82,6 @@ export class CadastroAgendamentoComponent implements OnInit {
         next: (dados) => {
           // Atribui o array que vem do backend para a variável local
           this.pacientes = dados.content.sort((a, b) => a.nome.localeCompare(b.nome));
-          console.log('Pacientes carregados com sucesso:', this.pacientes);
         },
         error: (erro) => {
           console.error('Erro ao buscar pacientes:', erro);
@@ -104,6 +103,12 @@ export class CadastroAgendamentoComponent implements OnInit {
   
   cancelar(): void {
     this.router.navigate(['/agendamentos']);
+    Swal.fire({
+          icon: 'warning',
+          title: 'Agendamento cancelado',
+          showConfirmButton: false,
+          timer: 2000
+        })
   }
 
   fecharModal() {

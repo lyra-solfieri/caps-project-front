@@ -197,17 +197,12 @@
 }
 
 .buttons button[type="submit"] {
-  background-color: #007bff;
+  background-color: #00796b;
   color: #fff;
 }
 
 .buttons button[type="submit"]:hover {
-  background-color: #0056b3;
-}
-
-.buttons button.cancel {
-  background-color: #6c757d;
-  color: #fff;
+  background-color: #02665a;
 }
 
 .buttons button.cancel:hover {
@@ -232,7 +227,7 @@
 }
 
 .buttons button.cancel:hover {
-  background: #f1f5f9;
+  background: #e4e8ec;
 }
 
 .add-paciente-button {

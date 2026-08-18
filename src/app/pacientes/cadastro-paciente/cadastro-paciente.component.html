@@ -198,7 +198,7 @@
 
       <div class="form-row filiacao-grid">
         <div class="form-group">
-          <label for="nomeMae" data-cy="input-nome-mae">Nome da Mãe<span class="required">*</span></label>
+          <label for="nomeMae" data-cy="input-nome-mae">Nome da Mãe</label>
           <input id="nomeMae" type="text" formControlName="nomeMae" />
         </div>
         <div class="form-group">
@@ -209,7 +209,7 @@
 
       <div class="form-row filiacao-grid">
         <div class="form-group">
-          <label for="nomePai" data-cy="input-nome-pai">Nome do Pai<span class="required">*</span></label>
+          <label for="nomePai" data-cy="input-nome-pai">Nome do Pai</label>
           <input id="nomePai" type="text" formControlName="nomePai" />
         </div>
         <div class="form-group">
@@ -304,7 +304,7 @@
 
     <div class="buttons">
       <button type="button" class="cancel" (click)="cancelar()">Cancelar</button>
-      <button type="submit" data-cy="btn-salvar">Salvar Paciente</button>
+      <button type="submit" data-cy="btn-salvar" [disabled]="pacienteForm.invalid">Salvar Paciente</button>
     </div>
   </form>    
 </div>
