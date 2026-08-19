@@ -46,10 +46,9 @@
   font-weight: 600;
 }
 
-/* ── Form sections ── */
 .form-section {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid  #d7ecea;
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 20px;
@@ -64,10 +63,9 @@
   letter-spacing: .05em;
   margin: 0 0 20px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 2px solid #ecf1f5;
 }
 
-/* ── Unified input styles ── */
 .form-group {
   margin-bottom: 18px;
 }

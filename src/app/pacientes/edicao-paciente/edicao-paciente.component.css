@@ -6,10 +6,13 @@
 
 .form-section {
   background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  border: 1px solid  #d7ecea;
   border-radius: 8px;
   padding: 30px;
   margin-bottom: 25px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #1f2937;
 }
 
 .pacientes-header {
@@ -22,6 +25,7 @@
 .pacientes-header h2 {
   color: #004d40;
   margin: 0;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .back-button {
@@ -39,7 +43,7 @@
   margin-top: 0;
   margin-bottom: 20px;
   color: #333;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #ecf1f5;
   padding-bottom: 10px;
 }
 
@@ -122,12 +126,12 @@
 }
 
 .buttons button[type="submit"] {
-  background-color: #007bff;
+  background-color: #00796b;
   color: #fff;
 }
 
 .buttons button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #02665a;
 }
 
 .buttons button.cancel {

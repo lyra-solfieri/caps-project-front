@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AgendamentoRequestDto } from './agendamento-request.dto';
-import { AgendamentoResponseDto } from './agendamento-response.dto';
+import { AgendamentoResponseDto, PageResponse} from './agendamento-response.dto';
 
 
 @Injectable({
@@ -20,8 +20,17 @@ export class AgendamentoService {
   }
 
 
-  listarAgendamentos(): Observable<AgendamentoResponseDto[]> {
-    return this.http.get<AgendamentoResponseDto[]>(this.apiUrl);
+  listarAgendamentos(pageNo: number,
+      pageSize: number,
+      sortBy: string,
+      direction: string
+      ): Observable<PageResponse<AgendamentoResponseDto> | AgendamentoResponseDto[]> {
+        const params = new HttpParams()
+        .set('pageNo', pageNo)
+        .set('pageSize', pageSize)
+        .set('sortBy', sortBy)
+        .set('direction', direction);
+      return this.http.get<PageResponse<AgendamentoResponseDto> | AgendamentoResponseDto[]>(this.apiUrl, { params });
   }
 
   listarAgendamentPorId(id: number): Observable<AgendamentoResponseDto> {

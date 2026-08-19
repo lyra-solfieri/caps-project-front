@@ -1,12 +1,9 @@
-/* Container */
-.pacientes-container {
+  .pacientes-container {
     padding: 32px;
     background-color: #f4f6f8;
     min-height: 100vh;
     font-family: 'Segoe UI', sans-serif;
   }
-  
- 
   
   .pacientes-header h2 {
     color: #004d40;
@@ -19,21 +16,16 @@
     align-items: center;
     width: 100%;
     margin-bottom: 24px;
-}
+  }
 
-.pacientes-actions {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  
-  /* --- REMOVA O MARGIN: AUTO --- */
-  margin: 0;                     /* Tira o alinhamento central */
-  
-  /* Opcional: força o alinhamento à direita se o space-between falhar */
-  margin-left: auto;             
-  
-  width: fit-content;
-}
+  .pacientes-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin: 0;
+    margin-left: auto;             
+    width: fit-content;
+  }
 
   .back-button {
     background-color: #00796b;
@@ -65,118 +57,120 @@
     background-color: #004d40;
   }
   
-  /* Tabela */
   .pacientes-table {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 8x;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid  #d7ecea;
+    font-family: "Segoe UI", sans-serif;
   }
   
   .pacientes-table th, .pacientes-table td {
+    background: #f9fafb;
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 600;
     padding: 14px 18px;
     text-align: left;
+    border: 1px solid  #d7ecea;
   }
   
   .pacientes-table thead {
     background-color: #00796b;
     color: white;
+    border-radius: 8px;
   }
   
   .pacientes-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background: #f9fafb;
+  }
+
+  .pacientes-table .icon-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 8px;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  .pacientes-table .icon-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .pacientes-table .edit {
+    background-color: #0288d1;
+    color: white;
+  }
+  .pacientes-table .edit:hover {
+    background-color: #34a6e4;
+  }
+
+  .pacientes-table .docs {
+    background-color: #ffa000;
+    color: white;
+  }
+  .pacientes-table .docs:hover {
+    background-color: #ff8f00;
+  }
+
+  .pacientes-table .delete {
+    background-color: #d53d3d;
+    color: white;
+  }
+  .pacientes-table .delete:hover {
+    background-color: #b71c1c;
+  }
+
+  .icon-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 10;
+    pointer-events: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .icon-btn::before {
+    content: '';
+    position: absolute;
+    bottom: 105%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .icon-btn:hover::after,
+  .icon-btn:hover::before {
+    opacity: 1;
+    visibility: visible;
   }
   
-
-.pacientes-table .icon-btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-right: 8px;
-  font-size: 16px;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.pacientes-table .icon-btn:hover {
-  transform: scale(1.05);
-}
-
-.pacientes-table .edit {
-  background-color: #0288d1;
-  color: white;
-}
-.pacientes-table .edit:hover {
-  background-color: #34a6e4;
-}
-
-.pacientes-table .docs {
-  background-color: #ffa000;
-  color: white;
-}
-.pacientes-table .docs:hover {
-  background-color: #ff8f00;
-}
-
-.pacientes-table .delete {
-  background-color: #d53d3d;
-  color: white;
-}
-.pacientes-table .delete:hover {
-  background-color: #b71c1c;
-}
-
-.icon-btn::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
-  z-index: 10;
-  pointer-events: none; /* Impede que o balão bloqueie o clique no botão */
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.icon-btn::before {
-  content: '';
-  position: absolute;
-  bottom: 105%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 6px;
-  border-style: solid;
-  border-color: #333 transparent transparent transparent;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.icon-btn:hover::after,
-.icon-btn:hover::before {
-  opacity: 1;
-  visibility: visible;
-}
-  
-  /* Mensagem vazia */
   .empty-message {
     margin-top: 20px;
     text-align: center;
@@ -208,35 +202,44 @@
     cursor: not-allowed;
   }
 
-  /* Container da busca para alinhar o ícone e o input */
-.search-box {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
+  .search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
 
-.search-icon {
-  position: absolute;
-  left: 10px;
-  color: #666;
-  font-size: 20px;
-  pointer-events: none; /* Garante que o clique passe para o input */
-}
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    color: #666;
+    font-size: 20px;
+    pointer-events: none;
+  }
 
-.search-box input {
-  padding: 10px 10px 10px 38px; /* Espaço extra na esquerda para o ícone */
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  .search-box input {
+    padding: 10px 10px 10px 38px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 250px;
+  }
+
+  .search-box input:focus {
+    border-color: #00796b;
+    box-shadow: 0 0 5px rgba(0, 121, 107, 0.2);
+  }
+ 
+  .total-badge {
+  background: #e0f2f1;
+  color: #00796b;
+  padding: 6px 14px;
+  border-radius: 20px;
   font-size: 14px;
-  outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  width: 250px; /* Tamanho fixo ou use min-width */
-}
-
-.search-box input:focus {
-  border-color: #00796b;
-  box-shadow: 0 0 5px rgba(0, 121, 107, 0.2);
-}
+  font-weight: 600;
+  margin-left: 10px;
+  }
 
 @media (max-width: 900px) {
   

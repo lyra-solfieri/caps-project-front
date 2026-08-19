@@ -2,7 +2,7 @@
   <div class="evolucao-header">
     <h2>Evoluções do Paciente</h2>
     <div class="evolucao-actions">
-      <button class="back-button" (click)="voltar()">Voltar</button>
+      <button class="back-button" (click)="voltar()">Voltar ao Menu</button>
     </div>
   </div>
 
@@ -114,7 +114,7 @@
 
       <div class="form-actions">
         <button type="button" class="btn btn-secondary" (click)="cancelarEdicao()">
-          <i class="fas fa-times"></i> Cancelar
+          Cancelar
         </button>
         <button type="submit" class="back-button" [disabled]="loading">
           {{ evolucaoEmEdicao ? 'Atualizar' : 'Salvar Evolução' }}
