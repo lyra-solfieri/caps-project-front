@@ -81,11 +81,12 @@ export class DashboardComponent implements OnInit {
         });
         break;
       case 'Agendamentos':
-        this.agendamentoService.listarAgendamentos().subscribe({
+        this.agendamentoService.listarAgendamentos(0, 1000, 'id', 'asc').subscribe({
           next: (d) => {
-            if (event.formato === 'csv') downloadCSV(d, event.relatorio);
-            else if (event.formato === 'excel') downloadExcel(d, event.relatorio);
-            else downloadPDF(d, event.relatorio);
+            const agendamentos = Array.isArray(d) ? d : d.content;
+            if (event.formato === 'csv') downloadCSV(agendamentos, event.relatorio);
+            else if (event.formato === 'excel') downloadExcel(agendamentos, event.relatorio);
+            else downloadPDF(agendamentos, event.relatorio);
           }
         });
         break;

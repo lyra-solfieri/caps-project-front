@@ -169,7 +169,7 @@ export class CadastroPacienteComponent implements OnInit {
   }
 
   cancelar() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/pacientes']);
     Swal.fire({
       icon: 'warning',
       title: 'Cadastro cancelado',

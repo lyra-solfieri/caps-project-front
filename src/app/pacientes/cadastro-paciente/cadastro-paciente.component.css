@@ -6,10 +6,14 @@
 
 .form-section {
   background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid  #d7ecea;
   padding: 30px;
   margin-bottom: 25px;
+  font-family: "Segoe UI", sans-serif;
+  color: #1f2937;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .pacientes-header {
@@ -22,6 +26,7 @@
 .pacientes-header h2 {
   color: #004d40;
   margin: 0;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .back-button {
@@ -131,8 +136,15 @@
 }
 
 .buttons button.cancel {
-  background-color: #6c757d;
-  color: #fff;
+  height: 42px;
+  padding: 0 24px;
+  background: none;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .buttons button.cancel:hover {
