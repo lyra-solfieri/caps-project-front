@@ -26,6 +26,7 @@ import { EdicaoAnamneseComponent } from './anamnese-infantil/editar/anamnese-inf
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { RaasListarComponent } from './raas/listar/listar.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { ModalExportarComponent } from './relatorios/modal-exportar/modal-exportar.component';
 
 const adminRole = roleGuard(['ADMIN']);
 const clinicalRole = roleGuard(['ADMIN', 'USER']);
@@ -166,12 +167,18 @@ export const routes: Routes = [
     canMatch: [authGuard, clinicalRole]
   },
 
-
   {
     path: 'perfil',
     component: PerfilComponent,
     canActivate: [authGuard],
     canMatch: [authGuard]
+  },
+
+  {
+    path: 'relatorios',
+    component: ModalExportarComponent,
+    canActivate: [authGuard, clinicalRole],
+    canMatch: [authGuard, clinicalRole]
   },
 
   // Wildcard → redireciona

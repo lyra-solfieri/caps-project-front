@@ -14,6 +14,7 @@
 .login-container .logo {
   width: 120px;
   margin-bottom: 20px;
+  filter: brightness(0) saturate(100%) invert(19%) sepia(19%) saturate(2828%) hue-rotate(130deg) brightness(94%) contrast(101%);
 }
 
 /* Título */

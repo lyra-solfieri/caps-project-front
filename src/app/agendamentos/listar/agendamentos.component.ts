@@ -1,88 +1,75 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { AppFooterComponent } from '../../app-footer/app-footer.component';
 import { AgendamentoService } from '../../services/agendamento/agendamento.service';
 import Swal from 'sweetalert2';
-import { PacienteService } from '../../services/paciente/paciente.service';
+import { AgendamentoResponseDto } from '../../services/agendamento/agendamento-response.dto';
+
 @Component({
-  selector: 'app-agendamentos',
-  standalone: true,
+  selector: 'app-agendamentos', standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './agendamentos.component.html',
-  styleUrls: ['./agendamentos.component.css']
+  templateUrl: './agendamentos.component.html', styleUrls: ['./agendamentos.component.css']
 })
-export class AgendamentosComponent {
-  
-  agendamentos: any[] = [];
+export class AgendamentosComponent implements OnInit {
+  agendamentos: Array<{ id: number; paciente: string; pacienteCpf: string; profissional: string; dataHoraAtendimento: string; tipoComunicacao: string }> = [];
+  pageNo = 0;
+  pageSize = 10;
+  totalPages = 0;
+  totalElements = 0;
+  isFirst = true;
+  isLast = false;
+  sortBy = 'nome';
+  direction = 'asc';
 
-  constructor(private router: Router,
-    private agendamentoService: AgendamentoService
-  ) {}
+  constructor(private router: Router, private agendamentoService: AgendamentoService) {}
 
-  ngOnInit(): void {
-    this.carregarAgendamentos();
-  }
+  ngOnInit(): void { this.carregarAgendamentos(); }
 
-carregarAgendamentos() {
-  this.agendamentoService.listarAgendamentos().subscribe({
-    next: (dados) => {
-      
-      this.agendamentos = dados.map((a: any) => ({
-        id: a.id,
-        // Mantém a busca pelo nome, mas tenta outro identificador se for null
-        paciente: a.paciente?.nome ?? 'Paciente Sem Nome',
-        pacienteCpf: a.paciente?.cpf ?? 'CPF não disponível',
-        // Se o nome vier null, mostra o email provisoriamente
-        profissional: a.user?.nome ?? a.user?.email ?? 'Profissional não identificado',
-        
-        dataHoraAtendimento: a.dataHoraAtendimento,
-        tipoComunicacao: a.tipoComunicacao,
-        statusAgendamento: a.statusAgendamento
-      }));
-    }
-  });
-}
+  carregarAgendamentos(): void {
+    this.agendamentoService.listarAgendamentos(this.pageNo, this.pageSize, this.sortBy, this.direction).subscribe({
+      next: (resposta) => {
+        const pagina = Array.isArray(resposta) ? null : resposta;
+        const itens = Array.isArray(resposta) ? resposta : resposta.content ?? [];
 
-  addAgendamento() {
-    this.router.navigate(['/agendamentos/novo']);
-  }
-
-  editarAgendamento(agendamento: any) {
-    this.router.navigate(['/agendamentos/editar', agendamento.id]);
-  }
-
-  excluirAgendamento(agendamento: any) {
-    Swal.fire({
-      title: 'Tem certeza?',
-      text: `Deseja excluir o agendamento de ${agendamento.paciente ?? '-'}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d32f2f',
-      cancelButtonColor: '#6c757d',
-      confirmButtonText: 'Sim, excluir',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.agendamentoService.deletarAgendamento(agendamento.id).subscribe({
-          next: () => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Excluído!',
-              showConfirmButton: false,
-              timer: 2000
-            });
-            this.carregarAgendamentos();
-          },
-          error: () => {
-            Swal.fire({
-              icon: 'error',
-              title: 'Erro ao excluir agendamento'
-            });
-          }
-        });
+        this.agendamentos = itens.map((agendamento: AgendamentoResponseDto) => ({
+          id: agendamento.id,
+          paciente: agendamento.paciente?.nome ?? 'Paciente sem nome',
+          pacienteCpf: agendamento.paciente?.cpf ?? 'CPF não disponível',
+          profissional: agendamento.user?.nome ?? agendamento.user?.email ?? 'Profissional não identificado',
+          dataHoraAtendimento: agendamento.dataHoraAtendimento,
+          tipoComunicacao: agendamento.tipoComunicacao
+        }));
+        this.totalPages = pagina?.totalPages ?? 1;
+        this.totalElements = pagina?.totalElements ?? itens.length;
+        this.isFirst = pagina?.first ?? true;
+        this.isLast = pagina?.last ?? true;
+      },
+      error: () => {
+        this.agendamentos = [];
+        Swal.fire({ icon: 'error', title: 'Erro ao buscar agendamentos' });
       }
     });
   }
-}
 
+  addAgendamento(): void { this.router.navigate(['/agendamentos/novo']); }
+  editarAgendamento(agendamento: { id: number }): void { this.router.navigate(['/agendamentos/editar', agendamento.id]); }
+
+  excluirAgendamento(agendamento: { id: number; paciente: string }): void {
+    Swal.fire({ title: 'Tem certeza?', text: `Deseja excluir o agendamento de ${agendamento.paciente}?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Sim, excluir', cancelButtonText: 'Cancelar' }).then((result) => {
+      if (!result.isConfirmed) return;
+      this.agendamentoService.deletarAgendamento(agendamento.id).subscribe({
+        next: () => {
+          if (this.agendamentos.length === 1 && this.pageNo > 0) this.pageNo--;
+          this.carregarAgendamentos();
+        },
+        error: () => Swal.fire({ icon: 'error', title: 'Erro ao excluir agendamento' })
+      });
+    });
+  }
+
+  proximaPagina(): void { if (!this.isLast) { this.pageNo++; this.carregarAgendamentos(); } }
+  paginaAnterior(): void { if (!this.isFirst) { this.pageNo--; this.carregarAgendamentos(); } }
+  irParaPagina(pagina: number): void {
+    if (pagina >= 0 && pagina < this.totalPages && pagina !== this.pageNo) { this.pageNo = pagina; this.carregarAgendamentos(); }
+  }
+}

@@ -157,10 +157,24 @@ export class EvolucaoComponent implements OnInit {
   }
 
   salvarEvolucao(): void {
-    if (!this.evolucaoForm.valid || !this.pacienteId) return;
+    if (this.evolucaoForm.invalid) {
+      this.evolucaoForm.markAllAsTouched();
+      this.error = 'Preencha a evolução com pelo menos 10 caracteres.';
+      return;
+    }
+
+    if (!this.pacienteId) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Selecione um paciente antes de salvar'
+      });
+      return;
+    }
+
+    const texto = this.evolucaoForm.value.texto?.trim();
 
     const data: EvolucaoDTO = {
-      texto: this.evolucaoForm.value.texto,
+      texto,
       pacienteId: this.pacienteId,
       nomeProfissional: this.authService.getUserName() || undefined
     };
