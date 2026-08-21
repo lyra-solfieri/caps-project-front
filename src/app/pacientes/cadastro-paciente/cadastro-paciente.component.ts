@@ -26,13 +26,13 @@ import { ViaCepService } from '../../services/paciente/cep.service';
 export class CadastroPacienteComponent implements OnInit {
 
   ngOnInit(): void {
-  this.pacienteForm.get('cpf')?.valueChanges.subscribe(() => {
-    if (this.pacienteForm.get('cpf')?.hasError('cpfDuplicado')) {
-      this.pacienteForm.get('cpf')?.setErrors(null);
-      this.pacienteForm.get('cpf')?.updateValueAndValidity({ onlySelf: true });
-    }
-  });
-}
+    this.pacienteForm.get('cpf')?.valueChanges.subscribe(() => {
+      if (this.pacienteForm.get('cpf')?.hasError('cpfDuplicado')) {
+        this.pacienteForm.get('cpf')?.setErrors(null);
+        this.pacienteForm.get('cpf')?.updateValueAndValidity({ onlySelf: true });
+      }
+    });
+  }
 
   generos = Object.values(Genero);
   racas = Object.values(Raca);
@@ -169,7 +169,7 @@ export class CadastroPacienteComponent implements OnInit {
   }
 
   cancelar() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/pacientes']);
     Swal.fire({
       icon: 'warning',
       title: 'Cadastro cancelado',

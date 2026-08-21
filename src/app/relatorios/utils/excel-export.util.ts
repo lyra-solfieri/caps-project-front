@@ -3,7 +3,40 @@ import * as XLSX from 'xlsx';
 export function downloadExcel(data: Record<string, any>[], filename: string): void {
   if (!data.length) return;
 
-  const worksheet = XLSX.utils.json_to_sheet(data);
+  // 1. Tratamento e formatação dos dados antes de gerar a planilha
+  const dadosFormatados = data.map(row => {
+    const newRow: Record<string, any> = {};
+    
+    for (const key in row) {
+      const val = row[key];
+      
+      if (val === null || val === undefined || val === '') {
+        newRow[key] = '-';
+      } 
+      // Extrai propriedades vitais se for um objeto aninhado (Ex: paciente.nome)
+      else if (typeof val === 'object' && !Array.isArray(val)) {
+        newRow[key] = val.nome || val.descricao || val.titulo || 'Ver detalhes';
+      } 
+      // Formata as datas ISO vindas do backend
+      else if (typeof val === 'string' && val.includes('T') && val.length >= 16) {
+        const dateObj = new Date(val);
+        if (!isNaN(dateObj.getTime())) {
+          newRow[key] = dateObj.toLocaleDateString('pt-BR') + ' ' + 
+                        dateObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        } else {
+          newRow[key] = val;
+        }
+      } 
+      // Dados primitivos seguem normalmente
+      else {
+        newRow[key] = val;
+      }
+    }
+    return newRow;
+  });
+
+  // 2. Geração da Planilha usando os dados já limpos
+  const worksheet = XLSX.utils.json_to_sheet(dadosFormatados);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Dados');
 

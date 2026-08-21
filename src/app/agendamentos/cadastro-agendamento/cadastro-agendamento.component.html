@@ -147,21 +147,12 @@
       </div>
     </div>
 
-
     <div class="buttons">
-      <button
-        type="submit"
-        [disabled]="agendamentosForm.invalid">
-        Salvar
-      </button>
-
-      <button
-        type="button"
-        class="cancel"
-        (click)="cancelar()">
-        Cancelar
+      <button type="button" class="cancel" (click)="cancelar()">Cancelar</button>
+      <button type="submit" class="save" [disabled]="agendamentosForm.invalid">
+        Salvar Agendamento
       </button>
     </div>
-
   </form>
 </div>
+

@@ -45,6 +45,7 @@ export class PacienteService {
   }
 
   buscarPacientePorId(id: number): Observable<any> {
-   return this.http.get<PacienteDto>(`${this.apiUrl}/${id}`);
+   return this.http.get<PacienteDto>(`${this.apiUrl}/${id}`).pipe(
+   );
   }
 }

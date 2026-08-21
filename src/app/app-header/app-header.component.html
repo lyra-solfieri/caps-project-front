@@ -8,7 +8,6 @@
 
   <div class="header-right">
 
-    <!-- BOTÃO PERFIL -->
     <div class="profile-container">
       <button class="profile-icon" (click)="toggleProfileMenu()">
         <span class="material-icons">account_circle</span>
@@ -22,7 +21,6 @@
       </div>
     </div>
 
-    <!-- BOTÃO HAMBURGER -->
     <button class="hamburger-btn"
             [class.active]="isMenuOpen"
             (click)="toggleMenu()">
@@ -35,19 +33,17 @@
 
   </div>
 
-  <!-- MENU -->
   <nav class="nav-menu" [class.open]="isMenuOpen">
 
     <a routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">Início</a>
-    <a *ngIf="hasClinicalAccess" routerLink="/atendimento" routerLinkActive="active" (click)="closeMenu()">Atendimento</a>
-    <a *ngIf="hasClinicalAccess" routerLink="/pacientes" routerLinkActive="active" (click)="closeMenu()">Pacientes</a>
-    <a *ngIf="hasClinicalAccess" routerLink="/agendamentos" routerLinkActive="active" (click)="closeMenu()">Agendamentos</a>
-    <a *ngIf="isAdmin" routerLink="/register" routerLinkActive="active" (click)="closeMenu()">Equipe</a>
-    <a routerLink="/auditoria" routerLinkActive="active" (click)="closeMenu()" *ngIf="isAdmin">Auditoria</a>
-    <a routerLink="/configuracoes" routerLinkActive="active" (click)="closeMenu()">Configurações</a>
-    <a *ngIf="hasClinicalAccess" routerLink="/raas" routerLinkActive="active" (click)="closeMenu()">RAAS</a>
     <a *ngIf="hasClinicalAccess" routerLink="/anamnese-infantil" routerLinkActive="active" (click)="closeMenu()">Acolhimento</a>
+    <a *ngIf="hasClinicalAccess" routerLink="/agendamentos" routerLinkActive="active" (click)="closeMenu()">Agendamentos</a>
+    <a routerLink="/auditoria" routerLinkActive="active" (click)="closeMenu()" *ngIf="isAdmin">Auditoria</a>
+    <a *ngIf="isAdmin" routerLink="/register" routerLinkActive="active" (click)="closeMenu()">Equipe</a>
     <a *ngIf="hasClinicalAccess" routerLink="/evolucao" routerLinkActive="active" (click)="closeMenu()">Evolução</a>
+    <a *ngIf="hasClinicalAccess" routerLink="/pacientes" routerLinkActive="active" (click)="closeMenu()">Pacientes</a>
+    <a *ngIf="hasClinicalAccess" routerLink="/raas" routerLinkActive="active" (click)="closeMenu()">RAAS</a>
+    <a *ngIf="hasClinicalAccess" routerLink="/relatorios" routerLinkActive="active" (click)="closeMenu()">Relatórios</a>
     <a routerLink="/login" (click)="logout()" class="logout-btn">Sair</a>
 
 

@@ -55,9 +55,8 @@
   .agendamento-table {
     width: 100%;
     border-collapse: collapse;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
+    border: 1px solid  #d7ecea;
+    font-family: "Segoe UI", sans-serif;
   }
   
   .agendamento-table .icon-btn{
@@ -80,8 +79,13 @@
   
   .agendamento-table th,
   .agendamento-table td {
+    background: #f9fafb;
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 600;
     padding: 14px 18px;
     text-align: left;
+    border: 1px solid  #d7ecea;
   }
   
   .agendamento-table thead {
@@ -126,3 +130,12 @@
     color: #666;
   }
   
+  .total-badge {
+    background: #e0f2f1;
+    color: #00796b;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 0px;
+  }

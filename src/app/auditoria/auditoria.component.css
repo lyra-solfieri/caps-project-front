@@ -31,8 +31,6 @@
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
   transition: background-color 0.3s;
 }
 
@@ -55,6 +53,7 @@
   padding: 20px;
   margin-bottom: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid  #d7ecea;
 }
 
 .filtros-grid {
@@ -119,7 +118,7 @@
   background: transparent;
   color: #666;
   border: 1px solid #ccc;
-  padding: 8px 20px;
+  padding: 7.4px 20px;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
@@ -144,22 +143,23 @@
 .auditoria-table {
   width: 100%;
   border-collapse: collapse;
+  border: 1px solid  #d7ecea;
 }
 
 .auditoria-table th {
   background: #f9fafb;
-  color: #374151;
+  color: #2f3744;;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   padding: 14px 18px;
   text-align: left;
-  border-bottom: 2px solid #e5e7eb;
+  border: 1px solid  #d7ecea;
 }
 
 .auditoria-table td {
   padding: 12px 18px;
-  border-bottom: 1px solid #f0f0f0;
+  border: 1px solid  #d7ecea;
   font-size: 14px;
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -18,7 +18,8 @@ export class AppHeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private eRef: ElementRef
   ) {}
 
   ngOnInit(): void {
@@ -26,12 +27,29 @@ export class AppHeaderComponent implements OnInit {
     this.hasClinicalAccess = this.authService.hasAnyRole(['ADMIN', 'USER']);
   }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+  @HostListener('document:click', ['$event'])
+  fecharAoClicarFora(event: Event) {
+    const profileContainer = this.eRef.nativeElement.querySelector('.profile-container');
+    
+    const clicouNoPerfil = profileContainer?.contains(event.target);
+
+    if (this.isProfileMenuOpen && !clicouNoPerfil) {
+      this.isProfileMenuOpen = false;
+    }
   }
 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+      if (this.isMenuOpen) {
+        this.isProfileMenuOpen = false;
+      }
+  }
+  
   toggleProfileMenu() {
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
+      if (this.isProfileMenuOpen) {
+        this.isMenuOpen = false;
+      }
   }
 
   closeMenu() {
