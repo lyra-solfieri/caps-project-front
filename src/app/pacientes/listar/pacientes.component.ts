@@ -19,7 +19,7 @@ export class PacientesComponent implements OnInit {
   pacientes_s: any[] = [];
   pacientesOriginal: any[] = [];
   pageNo = 0;
-  pageSize = 10;
+  pageSize = 5;
 
   totalPages = 0;
   totalElements = 0;

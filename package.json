@@ -19,7 +19,6 @@
     "@angular/platform-browser": "^19.2.14",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.14",
-    "@angular/cdk": "~19.2.19",
     "chart.js": "^4.5.1",
     "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",

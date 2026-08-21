@@ -22,7 +22,7 @@
         </button>
     </div>
   </div>
-    <div class="table-responsive">
+    <div class="table-responsive" *ngIf="totalElements > 0">
       <table class="pacientes-table" *ngIf="pacientes.length > 0">
         <thead>
           <tr>
