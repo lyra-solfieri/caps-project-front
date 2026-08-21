@@ -13,8 +13,7 @@
 }
 
 .equipe-header h2 {
-  color: #1e293b;
-  font-size: 1.6rem;
+  color: #004d40;
   margin: 0;
 }
 
@@ -157,4 +156,9 @@
 .role-badge.user {
   background: #e0f2fe;
   color: #075985;
+}
+
+.equipe-actions {
+  display: flex;
+  gap: 10px;
 }

@@ -4,11 +4,12 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user/user.service';
 import { UserDto } from '../services/user/user.model';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './equipe-caps.component.html',
   styleUrls: ['./equipe-caps.component.css']
 })

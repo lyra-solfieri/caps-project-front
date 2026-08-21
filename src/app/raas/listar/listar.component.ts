@@ -5,13 +5,15 @@ import { CommonModule } from '@angular/common';
 import { SelecionarPacienteModalComponent } from "../../modal/paciente/selecionar-paciente-modal/selecionar-paciente-modal.component";
 import { OcrService } from '../../services/raas/ocr.service';
 import Swal from 'sweetalert2';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-raas-listar',
   standalone: true,
   imports: [
     CommonModule, 
-    SelecionarPacienteModalComponent
+    SelecionarPacienteModalComponent,
+    RouterModule
   ],
   templateUrl: './listar.component.html',
   styleUrls: ['./listar.component.css']
@@ -36,23 +38,24 @@ export class RaasListarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.listarRaas();
+    this.listarRaas();
   }
 
-  // listarRaas() {
-  //   this.raasService.listarPaginado(this.pageNo, this.pageSize)
-  //     .subscribe({
-  //       next: (res) => {
-  //         this.raasList = res.content;
-  //         this.totalPages = res.totalPages;
-  //         this.isFirst = res.first;
-  //         this.isLast = res.last;
-  //       },
-  //       error: (err) => {
-  //         console.error('Erro ao listar RAAS', err);
-  //       }
-  //     });
-  // }
+  listarRaas() {
+    this.raasService.listarPaginado()
+      .subscribe({
+        next: (res) => {
+          // this.raasList = res.
+          // this.totalPages = res.totalPages;
+          // this.isFirst = res.first;
+          // this.isLast = res.last;
+          console.log("Lista de RAAS: " +res)
+        },
+        error: (err) => {
+          console.error('Erro ao listar RAAS', err);
+        }
+      });
+  }
 
   novoRaas() {
     this.mostrarModal = true;
@@ -174,24 +177,24 @@ export class RaasListarComponent implements OnInit {
 
   }
 
-  // paginaAnterior() {
-  //   if (this.pageNo > 0) {
-  //     this.pageNo--;
-  //     this.listarRaas();
-  //   }
-  // }
+  paginaAnterior() {
+    if (this.pageNo > 0) {
+      this.pageNo--;
+      this.listarRaas();
+    }
+  }
 
-  // proximaPagina() {
-  //   if (!this.isLast) {
-  //     this.pageNo++;
-  //     this.listarRaas();
-  //   }
-  // }
+  proximaPagina() {
+    if (!this.isLast) {
+      this.pageNo++;
+      this.listarRaas();
+    }
+  }
 
-  // irParaPagina(page: number) {
-  //   this.pageNo = page;
-  //   this.listarRaas();
-  // }
+  irParaPagina(page: number) {
+    this.pageNo = page;
+    this.listarRaas();
+  }
 }
 
 

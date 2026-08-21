@@ -1,9 +1,12 @@
 <div class="equipe-page">
   <div class="equipe-header">
     <h2>Equipe CAPS</h2>
-    <button *ngIf="isAdmin" class="btn-add" (click)="alternarFormulario()">
-      {{ exibirFormulario ? '✕ Fechar' : '+ Novo Usuário' }}
-    </button>
+    <div class="equipe-actions">
+      <button class="btn-add" routerLink="/dashboard">Voltar ao Menu</button>
+      <button *ngIf="isAdmin" class="btn-add" (click)="alternarFormulario()">
+        {{ exibirFormulario ? '✕ Fechar' : '+ Novo Usuário' }}
+      </button>
+    </div>
   </div>
 
   <div *ngIf="exibirFormulario" class="register-card">
