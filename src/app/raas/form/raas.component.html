@@ -29,12 +29,11 @@
   <!-- ─── CABEÇALHO ─── -->
   <div class="header-raas">
     <div class="logo-sus">
-      <span class="sus-badge">SUS</span>
+      <img src="header_raas_icones.png" alt="Ícones SUS — Ministério da Saúde">
     </div>
     <div class="titulo-central">
-      <h2>MINISTÉRIO DA SAÚDE</h2>
-      <h1>RAAS — REGISTRO DAS AÇÕES AMBULATORIAIS ESPECIALIZADAS</h1>
-      <p>(PSICOSSOCIAL E ATENÇÃO ESPECIALIZADA)</p>
+      <h1>RAAS — Registro das Ações Ambulatoriais de Saúde</h1>
+      <p>(Formulário da Atenção Psicossocial no CAPS)</p>
     </div>
   </div>
 
@@ -46,8 +45,8 @@
       <input formControlName="nomeEstabelecimento">
     </div>
     <div class="col-4">
-      <label>CNES</label>
-      <input formControlName="cnes">
+      <label>CNES *</label>
+      <input formControlName="cnes" [class.invalido]="campoInvalido('cnes')">
     </div>
   </div>
 
@@ -60,26 +59,26 @@
       <input formControlName="numeroProntuario">
     </div>
     <div class="col-9">
-      <label>NOME DO PACIENTE</label>
-      <input formControlName="nomePaciente">
+      <label>NOME DO PACIENTE *</label>
+      <input formControlName="nomePaciente" [class.invalido]="campoInvalido('nomePaciente')">
     </div>
   </div>
 
   <div class="row border-box bt-none">
     <div class="col-4 br">
-      <label>CARTÃO NACIONAL DE SAÚDE (CNS)</label>
-      <input formControlName="cartaoSus">
+      <label>CARTÃO NACIONAL DE SAÚDE (CNS) *</label>
+      <input formControlName="cartaoSus" [class.invalido]="campoInvalido('cartaoSus')">
     </div>
     <div class="col-1 br">
-      <label>SEXO</label>
-      <select formControlName="sexo">
+      <label>SEXO *</label>
+      <select formControlName="sexo" [class.invalido]="campoInvalido('sexo')">
         <option value="M">M</option>
         <option value="F">F</option>
       </select>
     </div>
     <div class="col-2 br">
-      <label>DATA NASC.</label>
-      <input type="date" formControlName="dataNascimento">
+      <label>DATA NASC. *</label>
+      <input type="date" formControlName="dataNascimento" [class.invalido]="campoInvalido('dataNascimento')">
     </div>
     <div class="col-2 br">
       <label>RAÇA/COR</label>
@@ -155,12 +154,12 @@
 
   <div class="row border-box">
     <div class="col-2 br">
-      <label>DATA DE ADMISSÃO</label>
-      <input type="date" formControlName="dataAdmissao">
+      <label>DATA DE ADMISSÃO *</label>
+      <input type="date" formControlName="dataAdmissao" [class.invalido]="campoInvalido('dataAdmissao')">
     </div>
     <div class="col-2 br">
-      <label>MÊS ATENDIMENTO</label>
-      <input formControlName="mesAtendimento">
+      <label>MÊS ATENDIMENTO *</label>
+      <input formControlName="mesAtendimento" [class.invalido]="campoInvalido('mesAtendimento')">
     </div>
     <div class="col-8">
       <label>NÚMERO DA AUTORIZAÇÃO</label>
@@ -197,8 +196,8 @@
 
   <div class="row border-box bt-none">
     <div class="col-2 br">
-      <label>CID10 PRINCIPAL</label>
-      <input formControlName="cidPrincipal">
+      <label>CID10 PRINCIPAL *</label>
+      <input formControlName="cidPrincipal" [class.invalido]="campoInvalido('cidPrincipal')">
     </div>
     <div class="col-10">
       <label>DESCRIÇÃO DO DIAGNÓSTICO PRINCIPAL</label>

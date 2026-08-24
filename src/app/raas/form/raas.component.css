@@ -129,6 +129,12 @@ select {
   cursor: pointer;
 }
 
+/* ── VALIDAÇÃO DE CAMPOS OBRIGATÓRIOS ── */
+input.invalido, select.invalido {
+  border-bottom: 1px solid #d32f2f !important;
+  background: #fdecea;
+}
+
 /* ── CAMPOS DE AÇÃO ── */
 .campo-raas {
   padding: 0;
@@ -351,5 +357,9 @@ small {
   }
   input, select {
     border-bottom: 1px solid #000;
+  }
+  input.invalido, select.invalido {
+    border-bottom: 1px solid #000 !important;
+    background: transparent;
   }
 }

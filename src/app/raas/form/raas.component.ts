@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PacienteService } from '../../services/paciente/paciente.service';
 import { PacienteDto } from '../../services/paciente/paciente.model';
 import { RaasService } from '../../services/raas/raas.service';
@@ -33,6 +33,17 @@ export class RaasComponent implements OnInit {
   camposBaixaConfianca: string[] = [];
   camposNaoReconhecidos: string[] = [];
 
+  private readonly labelsObrigatorios: Record<string, string> = {
+    cnes: 'CNES',
+    nomePaciente: 'Nome do paciente',
+    cartaoSus: 'CNS (Cartão Nacional de Saúde)',
+    sexo: 'Sexo',
+    dataNascimento: 'Data de nascimento',
+    dataAdmissao: 'Data de admissão',
+    mesAtendimento: 'Mês atendimento',
+    cidPrincipal: 'CID10 principal'
+  };
+
   constructor(
     private fb: FormBuilder,
     private pacienteService: PacienteService,
@@ -46,13 +57,13 @@ export class RaasComponent implements OnInit {
 
   this.raasForm = this.fb.group({
     nomeEstabelecimento: [''],
-    cnes: [''],
+    cnes: ['', Validators.required],
 
     numeroProntuario: [''],
-    nomePaciente: [''],
-    cartaoSus: [''],
-    sexo: [''],
-    dataNascimento: [''],
+    nomePaciente: ['', Validators.required],
+    cartaoSus: ['', Validators.required],
+    sexo: ['', Validators.required],
+    dataNascimento: ['', Validators.required],
     nomeMae: [''],
     nacionalidade: [''],
     racaCor: [''],
@@ -67,8 +78,8 @@ export class RaasComponent implements OnInit {
     telefoneCelular: [''],
     telefoneContato: [''],
 
-    dataAdmissao: [''],
-    mesAtendimento: [''],
+    dataAdmissao: ['', Validators.required],
+    mesAtendimento: ['', Validators.required],
     numeroAutorizacao: [''],
 
     usoDrogas: [''],
@@ -83,7 +94,7 @@ export class RaasComponent implements OnInit {
     origemHospital: [false],
     origemPsiquiatrico: [false],
 
-    cidPrincipal: [''],
+    cidPrincipal: ['', Validators.required],
     descricaoCidPrincipal: [''],
     cidSecundario: [''],
     descricaoCidSecundario: [''],
@@ -174,6 +185,17 @@ export class RaasComponent implements OnInit {
 
   get acoes(): FormArray {
     return this.raasForm.get('acoesRealizadas') as FormArray;
+  }
+
+  campoInvalido(nome: string): boolean {
+    const control = this.raasForm.get(nome);
+    return !!control && control.invalid && control.touched;
+  }
+
+  camposPendentes(): string[] {
+    return Object.keys(this.labelsObrigatorios)
+      .filter(nome => this.raasForm.get(nome)?.invalid)
+      .map(nome => this.labelsObrigatorios[nome]);
   }
 
   novaAcao(): FormGroup {
@@ -404,6 +426,17 @@ export class RaasComponent implements OnInit {
 
   salvarRaas() {
     if (this.salvando) return;
+
+    this.raasForm.markAllAsTouched();
+
+    if (this.raasForm.invalid) {
+      Swal.fire(
+        'Campos obrigatórios pendentes',
+        'Preencha os campos obrigatórios: ' + this.camposPendentes().join(', ') + '.',
+        'warning'
+      );
+      return;
+    }
 
     if (this.correlationId) {
       this.aceitarRaas();
