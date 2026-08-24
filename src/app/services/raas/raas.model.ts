@@ -14,10 +14,40 @@ export interface RaasAcaoDTO {
 
 export interface RaasRequestDTO {
   pacienteId: number;
-  atendimentoId: number;
+  atendimentoId?: number | null;
   nomeEstabelecimento: string;
   cnes: string;
   acoes: RaasAcaoDTO[];
+
+  dataAdmissao?: string | null;
+  dataConclusao?: string | null;
+  mesAtendimento?: string;
+  numeroAutorizacao?: number | null;
+
+  usoDrogas?: string;
+  alcool?: boolean;
+  crack?: boolean;
+  outrasDrogas?: boolean;
+
+  origemDemanda?: boolean;
+  origemAtencaoBasica?: boolean;
+  origemUrgencia?: boolean;
+  origemCaps?: boolean;
+  origemHospital?: boolean;
+  origemPsiquiatrico?: boolean;
+
+  cidPrincipal?: string;
+  descricaoCidPrincipal?: string;
+  cidSecundario?: string;
+  descricaoCidSecundario?: string;
+
+  esf?: string;
+  cnesAtendimento?: string;
+
+  encaminhamentoCaps?: boolean;
+  encaminhamentoAB?: boolean;
+  alta?: boolean;
+  obito?: boolean;
 }
 
 export interface RaasAceitarDTO {
@@ -102,4 +132,14 @@ export interface RaasResponseDTO {
   pacienteId?: number;
   atendimentoId?: number;
   acoes: RaasAcaoDTO[];
+}
+
+export interface RaasPageResponse {
+  content: RaasResponseDTO[];
+  pageNo: number;
+  pageSize: number;
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  last: boolean;
 }
