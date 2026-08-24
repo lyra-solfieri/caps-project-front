@@ -25,6 +25,7 @@ export class RaasComponent implements OnInit {
   paciente!: PacienteDto;
   raasId!: number;
   salvando = false;
+  modoEdicao = false;
 
   origemOcr = false;
   confidenceGeral = 0;
@@ -105,15 +106,69 @@ export class RaasComponent implements OnInit {
     if (this.correlationId) {
       this.carregarDadosOcr(this.correlationId);
     } else {
-      const pacienteId = this.route.snapshot.paramMap.get('id')
+      const idParam = this.route.snapshot.paramMap.get('id')
         ?? this.route.snapshot.queryParamMap.get('pacienteId');
 
-      if (pacienteId) {
-        this.buscarPaciente(+pacienteId);
+      if (this.router.url.startsWith('/raas/editar') && idParam) {
+        this.modoEdicao = true;
+        this.raasId = +idParam;
+        this.carregarRaas(this.raasId);
+      } else if (idParam) {
+        this.buscarPaciente(+idParam);
       }
     }
 
     this.adicionarAcao();
+  }
+
+  private carregarRaas(id: number): void {
+    this.raasService.buscarPorId(id).subscribe({
+      next: (raas) => {
+
+        this.raasForm.patchValue({
+          nomeEstabelecimento: raas.nomeEstabelecimento,
+          cnes: raas.cnes,
+
+          nomePaciente: raas.nomePaciente,
+          cartaoSus: raas.cartaoSus,
+          sexo: raas.sexo === 'MASCULINO' ? 'M' : raas.sexo === 'FEMININO' ? 'F' : '',
+          dataNascimento: raas.dataNascimento || '',
+          nomeMae: raas.nomeMae,
+
+          dataAdmissao: raas.dataAdmissao || '',
+          dataConclusao: raas.dataConclusao || '',
+          mesAtendimento: raas.mesAtendimento || '',
+          numeroAutorizacao: raas.numeroAutorizacao ?? ''
+        });
+
+        if (Array.isArray(raas.acoes)) {
+          this.acoes.clear();
+          for (const a of raas.acoes) {
+            this.acoes.push(this.fb.group({
+              codigoAcao: a.codigoAcao || '',
+              quantidade: a.quantidade ?? '',
+              data: a.data || '',
+              servico: a.servico || '',
+              classificacao: a.classificacao || '',
+              cboExecutor: a.cboExecutor || '',
+              cartaoProfissional: a.cartaoProfissional || '',
+              codigoEquipe: a.codigoEquipe || '',
+              cid10: a.cid10 || '',
+              caps: !!a.caps,
+              territorio: !!a.territorio
+            }));
+          }
+        }
+
+        if (raas.pacienteId) {
+          this.buscarPaciente(raas.pacienteId);
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao carregar RAAS', err);
+        Swal.fire('Erro', 'Não foi possível carregar o RAAS informado.', 'error');
+      }
+    });
   }
 
 
@@ -361,23 +416,69 @@ export class RaasComponent implements OnInit {
     }
 
     this.salvando = true;
+    const v = this.raasForm.value;
     const dto: RaasRequestDTO = {
       pacienteId: this.paciente.id!,
-      atendimentoId: 1,
-      nomeEstabelecimento: this.raasForm.value.nomeEstabelecimento,
-      cnes: this.raasForm.value.cnes,
-      acoes: this.montarAcoes()
+      nomeEstabelecimento: v.nomeEstabelecimento,
+      cnes: v.cnes,
+      acoes: this.montarAcoes(),
+
+      dataAdmissao: v.dataAdmissao || null,
+      dataConclusao: v.dataConclusao || null,
+      mesAtendimento: v.mesAtendimento,
+      numeroAutorizacao: v.numeroAutorizacao ? Number(v.numeroAutorizacao) : null,
+
+      usoDrogas: v.usoDrogas,
+      alcool: !!v.alcool,
+      crack: !!v.crack,
+      outrasDrogas: !!v.outrasDrogas,
+
+      origemDemanda: !!v.origemDemanda,
+      origemAtencaoBasica: !!v.origemAtencaoBasica,
+      origemUrgencia: !!v.origemUrgencia,
+      origemCaps: !!v.origemCaps,
+      origemHospital: !!v.origemHospital,
+      origemPsiquiatrico: !!v.origemPsiquiatrico,
+
+      cidPrincipal: v.cidPrincipal,
+      descricaoCidPrincipal: v.descricaoCidPrincipal,
+      cidSecundario: v.cidSecundario,
+      descricaoCidSecundario: v.descricaoCidSecundario,
+
+      esf: v.esf,
+      cnesAtendimento: v.cnesAtendimento,
+
+      encaminhamentoCaps: !!v.encaminhamentoCaps,
+      encaminhamentoAB: !!v.encaminhamentoAB,
+      alta: !!v.alta,
+      obito: !!v.obito
     };
 
-    this.raasService.criar(dto).subscribe({
+    const request$ = this.modoEdicao && this.raasId
+      ? this.raasService.atualizar(this.raasId, dto)
+      : this.raasService.criar(dto);
+
+    request$.subscribe({
       next: (res) => {
         this.salvando = false;
         this.raasId = res.id;
-        Swal.fire('Sucesso', 'RAAS salvo com sucesso!', 'success');
+        Swal.fire({
+          title: this.modoEdicao ? 'RAAS atualizado com sucesso!' : 'RAAS salvo com sucesso!',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2000
+        }).then(() => {
+          if (this.modoEdicao) {
+            this.router.navigate(['/raas']);
+          }
+        });
       },
-      error: () => {
+      error: (err) => {
         this.salvando = false;
-        Swal.fire('Erro', 'Falha ao salvar o RAAS.', 'error');
+        const msg = typeof err?.error === 'object' && err?.error?.message
+          ? err.error.message
+          : (typeof err?.error === 'string' && err.error ? err.error : null);
+        Swal.fire('Erro', msg ?? 'Falha ao salvar o RAAS.', 'error');
       }
     });
   }

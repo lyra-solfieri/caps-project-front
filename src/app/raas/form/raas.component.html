@@ -1,6 +1,13 @@
 <div class="raas-toolbar">
   <button class="btn-acao voltar" type="button" (click)="voltar()">← Voltar</button>
   <span class="raas-toolbar-title">Registro das Ações Ambulatoriais Especializadas</span>
+  <button
+    *ngIf="modoEdicao"
+    class="btn-acao pdf"
+    type="button"
+    (click)="exportarPDF()">
+    📄 Exportar PDF
+  </button>
 </div>
 
 <div *ngIf="origemOcr" class="ocr-banner">
@@ -22,7 +29,7 @@
   <!-- ─── CABEÇALHO ─── -->
   <div class="header-raas">
     <div class="logo-sus">
-      <img src="assets/sus.png" alt="SUS">
+      <span class="sus-badge">SUS</span>
     </div>
     <div class="titulo-central">
       <h2>MINISTÉRIO DA SAÚDE</h2>
@@ -307,11 +314,8 @@
     <button class="btn-acao outline" type="button" (click)="adicionarAcao()">+ Adicionar Ação</button>
     <button class="btn-acao danger" type="button" (click)="removerAcao(acoes.controls.length - 1)">- Remover Ação</button>
     <button class="btn-acao" type="button" (click)="salvarRaas()" [disabled]="salvando">
-      {{ salvando ? 'Salvando...' : '💾 Salvar RAAS' }}
+      {{ salvando ? 'Salvando...' : (modoEdicao ? '💾 Atualizar RAAS' : '💾 Salvar RAAS') }}
     </button>
-    <!-- <button class="btn-acao pdf" type="button" (click)="exportarPDF()" [disabled]="!raasId">
-      📄 Exportar PDF
-    </button> -->
   </div>
 
   <!-- ─── RODAPÉ ─── -->
