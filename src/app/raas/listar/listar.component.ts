@@ -21,15 +21,18 @@ import { RouterModule } from '@angular/router';
 export class RaasListarComponent implements OnInit {
 
   raasList: any[] = [];
+  raasListOriginal: any[] = [];
 
   pageNo = 0;
   pageSize = 5;
   totalPages = 0;
+  totalElements = 0;
 
   isFirst = false;
   isLast = false;
   mostrarModal = false;
   processandoOcr = false;
+  termoBusca = '';
 
   constructor(
     private raasService: RaasService,
@@ -42,19 +45,46 @@ export class RaasListarComponent implements OnInit {
   }
 
   listarRaas() {
-    this.raasService.listarPaginado()
+    this.raasService.listarPaginado(this.pageNo, this.pageSize)
       .subscribe({
         next: (res) => {
-          // this.raasList = res.
-          // this.totalPages = res.totalPages;
-          // this.isFirst = res.first;
-          // this.isLast = res.last;
-          console.log("Lista de RAAS: " +res)
+          this.raasList = res.content ?? [];
+          this.totalPages = res.totalPages;
+          this.totalElements = res.totalElements;
+          this.isFirst = res.first;
+          this.isLast = res.last;
+
+          if (this.totalElements > 0) {
+            this.raasService.listarPaginado(0, this.totalElements)
+              .subscribe(dados => {
+                this.raasListOriginal = dados.content ?? [];
+                this.aplicarFiltro();
+              });
+          } else {
+            this.raasListOriginal = [];
+          }
         },
         error: (err) => {
           console.error('Erro ao listar RAAS', err);
         }
       });
+  }
+
+  onSearch(event: Event) {
+    this.termoBusca = ((event.target as HTMLInputElement).value || '').toLowerCase().trim();
+    this.aplicarFiltro();
+  }
+
+  private aplicarFiltro() {
+    if (!this.termoBusca) {
+      this.raasList = [...this.raasListOriginal];
+      return;
+    }
+
+    this.raasList = this.raasListOriginal.filter(r =>
+      r.nomePaciente?.toLowerCase().includes(this.termoBusca) ||
+      r.nomeEstabelecimento?.toLowerCase().includes(this.termoBusca) ||
+      r.mesAtendimento?.toLowerCase().includes(this.termoBusca));
   }
 
   novoRaas() {
@@ -171,7 +201,13 @@ export class RaasListarComponent implements OnInit {
 
     if (result.isConfirmed) {
       this.raasService.deletar(id).subscribe(() => {
-        // this.listarRaas();
+        Swal.fire({
+          icon: 'success',
+          title: 'RAAS excluído com sucesso!',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        this.listarRaas();
       });
     }});
 

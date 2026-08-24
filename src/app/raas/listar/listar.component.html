@@ -2,9 +2,19 @@
 <div class="raas-container">
   <div class="raas-header">
     <h2>Lista de RAAS gerados</h2>
-
-    <div class="raas-actions">      
-      <button class="back-button" routerLink="/dashboard">Voltar ao Menu</button>
+    <span class="total-badge">{{ totalElements }} registro{{ totalElements !== 1 ? 's' : '' }}</span>
+    <div class="raas-actions">
+      <div class="search-box">
+        <span class="material-icons search-icon">search</span>
+        <input
+          type="text"
+          placeholder="Pesquisar por paciente..."
+          (input)="onSearch($event)"
+        />
+      </div>
+      <button class="back-button" routerLink="/dashboard">
+        Voltar ao Menu
+      </button>
       <button class="add-button" (click)="novoRaas()">
         + Novo RAAS
       </button>
@@ -14,60 +24,63 @@
     </div>
   </div>
 
-  <table class="raas-table" *ngIf="raasList.length > 0">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Paciente</th>
-        <th>Estabelecimento</th>
-        <th>Mês Atendimento</th>
-        <th>Data Geração</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
+  <div class="table-responsive" *ngIf="totalElements > 0">
+    <table class="raas-table" *ngIf="raasList.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Paciente</th>
+          <th>Estabelecimento</th>
+          <th>Mês Atendimento</th>
+          <th>Data Geração</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr *ngFor="let raas of raasList">
-        <td>{{ raas.id }}</td>
+      <tbody>
+        <tr *ngFor="let raas of raasList">
+          <td>{{ raas.id }}</td>
 
-        <td>{{ raas.paciente?.nome }}</td>
+          <td>{{ raas.nomePaciente }}</td>
 
-        <td>{{ raas.nomeEstabelecimento }}</td>
+          <td>{{ raas.nomeEstabelecimento }}</td>
 
-        <td>{{ raas.mesAtendimento }}</td>
+          <td>{{ raas.mesAtendimento }}</td>
 
-        <td>{{ raas.dataGeracao | date:'dd/MM/yyyy' }}</td>
+          <td>{{ raas.dataGeracao | date:'dd/MM/yyyy' }}</td>
 
-        <td class="acoes">
+          <td class="acoes">
+            <button
+              class="icon-btn edit"
+              (click)="editar(raas.id)"
+              data-tooltip="Editar">
+              ✏️
+            </button>
 
-          <button
-            class="edit"
-            (click)="editar(raas.id)">
-            Editar
-          </button>
+            <!-- <button
+              class="icon-btn docs"
+              (click)="gerarPdf(raas.id)"
+              data-tooltip="Gerar PDF">
+              📄
+            </button> -->
 
-          <button
-            class="docs"
-            (click)="gerarPdf(raas.id)">
-            PDF
-          </button>
-
-          <button
-            class="delete"
-            (click)="deletar(raas.id)">
-            Excluir
-          </button>
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            <button
+              class="icon-btn delete"
+              (click)="deletar(raas.id)"
+              data-tooltip="Excluir">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div *ngIf="raasList.length === 0" class="empty-message">
     Nenhum RAAS gerado.
   </div>
 
-  <!-- <div class="paginacao" *ngIf="totalPages > 1">
+  <div class="paginacao" *ngIf="totalPages > 1">
 
     <button
       (click)="paginaAnterior()"
@@ -88,7 +101,7 @@
       Próxima ➡
     </button>
 
-  </div> -->
+  </div>
 </div>
 
 <app-selecionar-paciente-modal
