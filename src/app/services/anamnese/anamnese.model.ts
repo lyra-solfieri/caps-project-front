@@ -33,16 +33,16 @@ export interface AnamneseDTO {
 
   altaHospitalar?: string;
 
-  sorriu?: string;
-  equilibrouPescoco?: string;
-  engatinhou?: string;
-  sentou?: string;
-  andou?: string;
+  sorriu?: boolean;
+  equilibrouPescoco?: boolean;
+  engatinhou?: boolean;
+  sentou?: boolean;
+  andou?: boolean;
   primeirasPalavras?: string;
-  falaCorreta?: string;
-  trocouLetras?: string;
-  gaguejou?: string;
-  denticao?: string;
+  falaCorreta?: boolean;
+  trocouLetras?: boolean;
+  gaguejou?: boolean;
+  denticao?: boolean;
 
   controleEsfincterAnalDiurno?: string;
   controleEsfincterVesicalDiurno?: string;
