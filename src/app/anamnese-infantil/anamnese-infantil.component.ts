@@ -21,9 +21,14 @@ export class AnamneseInfantilComponent implements OnInit {
   pageNo = 0;
   pageSize = 10;
   totalElements = 0;
+  totalPages = 0;
+  isFirst = true;
+  isLast = false;
 
   loading = false;
   mostrarModal = false;
+
+  nomesPacientes: { [id: number]: string } = {};
 
   
   constructor(
@@ -46,6 +51,12 @@ export class AnamneseInfantilComponent implements OnInit {
          
           this.anamnese = res;
           this.totalElements = res.length;
+          this.totalPages = Math.ceil(this.totalElements / this.pageSize);
+          this.isFirst = this.pageNo === 0;
+          this.isLast = (this.pageNo + 1) * this.pageSize >= this.totalElements;
+
+          this.carregarNomesPacientes();
+
           this.loading = false;
         },
         error: () => {
@@ -54,6 +65,23 @@ export class AnamneseInfantilComponent implements OnInit {
         }
       });
 
+  }
+
+  carregarNomesPacientes() {
+    const idsUnicos = [...new Set(this.anamnese.map(a => a.pacienteId).filter(id => id != null))];
+
+    idsUnicos.forEach(id => {
+      if (!this.nomesPacientes[id!]) {
+        this.pacienteService.buscarPacientePorId(id!).subscribe({
+          next: (paciente) => {
+            this.nomesPacientes[id!] = paciente.nome;
+          },
+          error: () => {
+            this.nomesPacientes[id!] = 'Paciente #' + id;
+          }
+        });
+      }
+    });
   }
 
   fecharModal() {
@@ -110,15 +138,22 @@ export class AnamneseInfantilComponent implements OnInit {
   }
 
   proximaPagina() {
-    this.pageNo++;
-    this.buscarAnamneses();
+    if (!this.isLast) {
+      this.pageNo++;
+      this.buscarAnamneses();
+    }
   }
 
   paginaAnterior() {
-    if (this.pageNo > 0) {
+    if (!this.isFirst) {
       this.pageNo--;
       this.buscarAnamneses();
     }
+  }
+
+  irParaPagina(pagina: number) {
+    this.pageNo = pagina;
+    this.buscarAnamneses();
   }
 
 }

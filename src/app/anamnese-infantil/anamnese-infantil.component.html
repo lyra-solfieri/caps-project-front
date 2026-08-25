@@ -1,12 +1,15 @@
 
-<div class="pacientes-container">
-
-  <div class="pacientes-header">
+<div class="anamnese-container">
+  <div class="anamnese-header">
     <h2>Anamneses</h2>
-
-    <div class="pacientes-actions">
-      <button class="back-button" (click)="voltar()">Voltar ao Menu</button>
-      <button class="add-button" (click)="addAnamnese()">+ Nova Anamnese</button>
+    <span class="total-badge">{{ totalElements }} registro{{ totalElements !== 1 ? 's' : '' }}</span>
+    <div class="anamnese-actions">
+      <button class="back-button" (click)="voltar()">
+        Voltar ao Menu
+      </button>
+      <button class="add-button" (click)="addAnamnese()">
+        + Nova Anamnese
+      </button>
     </div>
   </div>
 
@@ -15,38 +18,65 @@
     <p>Carregando anamneses...</p>
   </div>
 
-  <table *ngIf="!loading && anamnese.length > 0" class="pacientes-table">
-    <thead>
-      <tr>        
-        <th>Paciente</th>
-        <th>Profissional</th>
-        <th>Data</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
+  <div class="table-responsive" *ngIf="!loading && anamnese.length > 0">
+    <table class="anamnese-table">
+      <thead>
+        <tr>
+          <th>Paciente</th>
+          <th>Profissional</th>
+          <th>Data</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr *ngFor="let a of anamnese">
-        <td>{{ a.pacienteId}}</td>
-        <td>{{ a.profissionalResponsavel }}</td>
-        <td>{{ a.dataRegistro | date:'short' }}</td>
+      <tbody>
+        <tr *ngFor="let a of anamnese">
+          <td>{{ nomesPacientes[a.pacienteId] || 'Carregando...' }}</td>
+          <td>{{ a.profissionalResponsavel }}</td>
+          <td>{{ a.dataRegistro | date:'short' }}</td>
 
-        <td>
-          <button class="edit" (click)="editar(a.id!)">Editar</button>
-          <button class="delete" (click)="deletar(a.id!)">Excluir</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <td class="acoes">
+            <button
+              class="icon-btn edit"
+              (click)="editar(a.id!)"
+              data-tooltip="Editar">
+              ✏️
+            </button>
+
+            <button
+              class="icon-btn delete"
+              (click)="deletar(a.id!)"
+              data-tooltip="Excluir">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div *ngIf="!loading && anamnese.length === 0" class="empty-message">
     Nenhuma anamnese encontrada.
   </div>
 
-  <div class="paginacao" *ngIf="!loading && anamnese.length > 0">
-    <button (click)="paginaAnterior()" [disabled]="pageNo === 0">Anterior</button>
-    <button (click)="proximaPagina()" [disabled]="(pageNo + 1) * pageSize >= totalElements">
-      Próxima
+  <div class="paginacao" *ngIf="totalPages > 1">
+    <button
+      (click)="paginaAnterior()"
+      [disabled]="isFirst">
+      ⬅ Anterior
+    </button>
+
+    <button
+      *ngFor="let p of [].constructor(totalPages); let i = index"
+      (click)="irParaPagina(i)"
+      [class.ativo]="i === pageNo">
+      {{ i + 1 }}
+    </button>
+
+    <button
+      (click)="proximaPagina()"
+      [disabled]="isLast">
+      Próxima ➡
     </button>
   </div>
 
