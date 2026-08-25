@@ -1,7 +1,9 @@
 <div class="cadastro-container">
 
   <div class="pacientes-header">
-    <h2>Edição de Paciente</h2>
+    <div>
+      <h2>Edição de Paciente</h2>
+    </div>
     <div class="pacientes-actions">
       <button class="back-button" (click)="cancelar()">Voltar</button>
     </div>
@@ -17,14 +19,15 @@
       <div class="form-row info-pessoais-grid">
         <div class="form-group">
           <label for="nome">Nome Completo <span class="required">*</span></label>
-          <input id="nome" type="text" formControlName="nome" />
+          <input id="nome" type="text" formControlName="nome" [class.input-error]="f['nome'].touched && f['nome'].invalid" />
           <div class="error" *ngIf="f['nome'].touched && f['nome'].invalid">
             <small *ngIf="f['nome'].errors?.['required']">Nome é obrigatório.</small>
+            <small *ngIf="f['nome'].errors?.['minlength']">Mínimo de 3 caracteres.</small>
           </div>
         </div>
         <div class="form-group">
           <label for="cpf">CPF <span class="required">*</span></label>
-          <input id="cpf" type="text" mask="000.000.000-00" [dropSpecialCharacters]="true" formControlName="cpf"/>
+          <input id="cpf" type="text" mask="000.000.000-00" [dropSpecialCharacters]="true" formControlName="cpf" [class.input-error]="f['cpf'].touched && f['cpf'].invalid"/>
           <div class="error" *ngIf="f['cpf'].touched && f['cpf'].invalid">
             <small *ngIf="f['cpf'].errors?.['required']">CPF é obrigatório.</small>
             <small *ngIf="f['cpf'].errors?.['pattern'] || f['cpf'].errors?.['mask']">CPF inválido.</small>
@@ -39,18 +42,21 @@
       <div class="form-row quatro-colunas-grid">
         <div class="form-group">
           <label for="dataNascimento">Data de Nascimento <span class="required">*</span></label>
-          <input id="dataNascimento" type="date" formControlName="dataNascimento" />
+          <input id="dataNascimento" type="date" formControlName="dataNascimento" [class.input-error]="f['dataNascimento'].touched && f['dataNascimento'].invalid" />
+          <div class="error" *ngIf="f['dataNascimento'].touched && f['dataNascimento'].invalid">
+             <small>Data obrigatória.</small>
+          </div>
         </div>
         <div class="form-group">
           <label for="genero">Gênero <span class="required">*</span></label>
-          <select id="genero" formControlName="genero">
+          <select id="genero" formControlName="genero" [class.input-error]="f['genero'].touched && f['genero'].invalid">
             <option value="">Selecione</option>
             <option *ngFor="let g of generos" [value]="g">{{ g }}</option>
           </select>
         </div>
         <div class="form-group">
           <label for="raca">Raça <span class="required">*</span></label>
-          <select id="raca" formControlName="raca">
+          <select id="raca" formControlName="raca" [class.input-error]="f['raca'].touched && f['raca'].invalid">
             <option value="">Selecione</option>
             <option *ngFor="let r of racas" [value]="r">{{ r }}</option>
           </select>
@@ -91,11 +97,14 @@
       <div class="form-row contato-grid">
         <div class="form-group">
           <label for="telefone">Telefone <span class="required">*</span></label>
-          <input id="telefone" type="text" mask="(00) 00000-0000" [dropSpecialCharacters]="true" formControlName="telefone" />
+          <input id="telefone" type="text" mask="(00) 00000-0000" [dropSpecialCharacters]="true" formControlName="telefone" [class.input-error]="f['telefone'].touched && f['telefone'].invalid" />
+          <div class="error" *ngIf="f['telefone'].touched && f['telefone'].invalid">
+            <small>Telefone é obrigatório.</small>
+          </div>
         </div>
         <div class="form-group">
           <label for="email">E-mail <span class="required">*</span></label>
-          <input id="email" type="email" formControlName="email" />
+          <input id="email" type="email" formControlName="email" [class.input-error]="f['email'].touched && f['email'].invalid" />
         </div>
       </div>
 
@@ -103,7 +112,10 @@
         <div class="form-row cep-rua-numero-grid">
           <div class="form-group">
             <label for="cep">CEP <span class="required">*</span></label>
-            <input id="cep" type="text" mask="00000-000" [dropSpecialCharacters]="true" formControlName="cep" (blur)="buscarCep()" />
+            <input id="cep" type="text" mask="00000-000" [dropSpecialCharacters]="true" formControlName="cep" (blur)="buscarCep()" [class.input-error]="pacienteForm.get('endereco.cep')?.touched && pacienteForm.get('endereco.cep')?.invalid" />
+             <div class="error" *ngIf="pacienteForm.get('endereco.cep')?.touched && pacienteForm.get('endereco.cep')?.invalid">
+               <small>CEP inválido.</small>
+             </div>
           </div>
           <div class="form-group">
             <label for="logradouro">Rua</label>
@@ -201,7 +213,7 @@
         </div>
       </div>
 
-      <h4 style="color: #64748b; margin-top: 15px; margin-bottom: 10px;">Dados do Responsável (Para menores/incapazes)</h4>
+      <h4>Dados do Responsável (Para menores/incapazes)</h4>
       <div class="form-row tres-colunas-grid">
         <div class="form-group">
           <label for="responsavelLegal">Nome do Responsável</label>
@@ -216,7 +228,7 @@
           <input id="telefoneResponsavelLegal" type="text" mask="(00) 00000-0000" [dropSpecialCharacters]="true" formControlName="telefoneResponsavelLegal" />
         </div>
       </div>
-      <div class="form-row" style="grid-template-columns: 1fr 2fr;">
+      <div class="form-row">
         <div class="form-group">
             <label for="profissaoResponsavelLegal">Profissão do Responsável</label>
             <input id="profissaoResponsavelLegal" type="text" formControlName="profissaoResponsavelLegal" />
@@ -268,12 +280,12 @@
         </div>
       </div>
 
-      <div class="form-group" style="margin-top: 15px;">
+      <div class="form-group">
         <label for="contextoVulnerabilidadeSocioeconomica">Contexto de Vulnerabilidade Socioeconômica</label>
         <textarea id="contextoVulnerabilidadeSocioeconomica" formControlName="contextoVulnerabilidadeSocioeconomica" rows="3"></textarea>
       </div>
 
-      <div class="form-row" style="margin-top: 20px;">
+      <div class="form-row">
         <label class="checkbox-label">
           <input type="checkbox" formControlName="infantojuvenil" />
           Paciente Infantojuvenil

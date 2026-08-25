@@ -1,20 +1,12 @@
+/* Container principal */
 .cadastro-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.form-section {
-  background-color: #f9f9f9;
-  border: 1px solid  #d7ecea;
-  border-radius: 8px;
-  padding: 30px;
-  margin-bottom: 25px;
+  padding: 32px;
+  background-color: #f4f6f8;
+  min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
-  font-size: 14px;
-  color: #1f2937;
 }
 
+/* Cabeçalho */
 .pacientes-header {
   display: flex;
   justify-content: space-between;
@@ -25,7 +17,11 @@
 .pacientes-header h2 {
   color: #004d40;
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+}
+
+.pacientes-actions {
+  display: flex;
+  gap: 10px;
 }
 
 .back-button {
@@ -39,122 +35,198 @@
   transition: background-color 0.3s;
 }
 
+.back-button:hover {
+  background-color: #004d40;
+}
+
+
+/* Seções do formulário */
+.form-section {
+  background: white;
+  padding: 28px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border-left: 4px solid #00796b;
+}
+
 .form-section h3 {
   margin-top: 0;
   margin-bottom: 20px;
-  color: #333;
-  border-bottom: 2px solid #ecf1f5;
+  color: #00796b;
+  border-bottom: 2px solid #e8f5f3;
   padding-bottom: 10px;
+  font-size: 18px;
+  letter-spacing: 0.3px;
 }
 
-.form-group {
-  margin-bottom: 15px;
+.form-section h4 {
+  color: #555;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-size: 14px;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
 
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="date"],
-.form-group input[type="number"],
-.form-group select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
+/* Linhas do formulário */
 .form-row {
   display: flex;
+  gap: 12px;
   flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 15px;
 }
 
-.form-row .form-group {
+
+/* Grupo de campo */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
   flex: 1;
-  min-width: 220px;
 }
 
-.form-row .form-group.small {
+.form-group.small {
+  max-width: 120px;
   flex: 0 0 120px;
 }
 
+
+/* Labels */
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+
+/* Inputs */
 .form-group input,
+.form-group textarea,
 .form-group select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #d0d0d0;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #fafafa;
   width: 100%;
   box-sizing: border-box;
 }
 
-.error {
-  color: red;
-  font-size: 0.85rem;
-  margin-top: 4px;
+.form-group input:hover,
+.form-group textarea:hover,
+.form-group select:hover {
+  border-color: #b0b0b0;
 }
 
-@media (max-width: 600px) {
-  .form-row {
-    flex-direction: column;
-  }
-
-  .form-row .form-group,
-  .form-row .form-group.small {
-    flex: 1 1 100%;
-  }
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #00796b;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.12);
+  background-color: #fff;
 }
 
 
-.buttons {
+/* Textarea */
+textarea {
+  resize: vertical;
+}
+
+
+/* Checkbox layout */
+.form-row label.checkbox-label {
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 30px;
-}
-
-.buttons button {
-  padding: 12px 25px;
-  border: none;
-  border-radius: 4px;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.buttons button[type="submit"] {
-  background-color: #00796b;
-  color: #fff;
-}
-
-.buttons button[type="submit"]:hover {
-  background-color: #02665a;
-}
-
-.buttons button.cancel {
-  height: 42px;
-  padding: 0 24px;
-  background: none;
-  border: 1px solid #cbd5e1;
-  color: #475569;
+  padding: 8px 14px;
   border-radius: 8px;
-  font-size: 0.9rem;
+  background-color: #f0faf8;
+  border: 1px solid #d0ece8;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.form-row label.checkbox-label:hover {
+  background-color: #e0f5f0;
+  border-color: #00796b;
+}
+
+/* Esconde o checkbox nativo */
+.form-row label.checkbox-label input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #b0b0b0;
+  border-radius: 5px;
+  background-color: #fff;
   cursor: pointer;
-  transition: background 0.2s;
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
 }
 
-.buttons button.cancel:hover {
-  background: #e4e8ec;
+.form-row label.checkbox-label input[type="checkbox"]:hover {
+  border-color: #00796b;
 }
 
-.buttons button[type="submit"][disabled] {
-  background-color: #cccccc;
-  cursor: not-allowed;
+.form-row label.checkbox-label input[type="checkbox"]:checked {
+  background-color: #00796b;
+  border-color: #00796b;
 }
 
+.form-row label.checkbox-label input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 11px;
+  border: solid white;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+.form-row label.checkbox-label input[type="checkbox"]:focus-visible {
+  outline: 2px solid #00796b;
+  outline-offset: 2px;
+}
+
+.form-row label.checkbox-label:has(input[type="checkbox"]:checked) {
+  background-color: #e0f5f0;
+  border-color: #00796b;
+  color: #004d40;
+  font-weight: 600;
+}
+
+
+/* Mensagem de erro */
+.error small {
+  color: #d32f2f;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.error {
+  color: #d32f2f;
+}
+
+/* Input com erro */
+.input-error {
+  border-color: #d32f2f !important;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1) !important;
+}
+
+/* Legenda obrigatório */
 .required-legend {
   font-size: 14px;
   color: #666;
@@ -162,46 +234,135 @@
 }
 
 .required {
-  color: red;
-  margin-left: 4px;
+  color: #d32f2f;
+  margin-left: 2px;
 }
 
-.error{
-  color: red;
+
+/* Botões */
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
 }
 
+.buttons button {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.buttons button:active {
+  transform: scale(0.97);
+}
+
+
+/* Botão salvar */
+.buttons button[type="submit"] {
+  background-color: #00796b;
+  color: white;
+}
+
+.buttons button[type="submit"]:hover:not(:disabled) {
+  background-color: #004d40;
+  box-shadow: 0 4px 12px rgba(0, 77, 64, 0.3);
+}
+
+.buttons button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* Botão cancelar */
+.buttons .cancel {
+  background-color: #fff;
+  color: #d32f2f;
+  border: 1.5px solid #d32f2f;
+}
+
+.buttons .cancel:hover {
+  background-color: #d32f2f;
+  color: white;
+}
+
+
+/* Grids específicos */
 .info-pessoais-grid {
-  grid-template-columns: 2fr 1fr 1fr; /* Nome, CPF, RG */
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 12px;
 }
 
 .quatro-colunas-grid {
+  display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
 }
 
 .tres-colunas-grid {
+  display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.contato-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.cep-rua-numero-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.7fr;
+  gap: 12px;
+}
+
+.complemento-bairro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
 .cidade-estado-pais-grid {
-  grid-template-columns: 1.5fr 80px 1fr 1fr; 
+  display: grid;
+  grid-template-columns: 1.5fr 80px 1fr 1fr;
+  gap: 12px;
 }
 
-.form-group textarea {
-  width: 100%;
-  padding: 0.85rem 1rem;
-  background-color: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  color: var(--text-main);
-  font-size: 1rem;
-  font-family: inherit;
-  box-sizing: border-box;
-  transition: all 0.2s ease;
-  resize: vertical;
+.filiacao-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--caps-primary);
-  box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.15);
+
+/* Responsividade */
+@media (max-width: 768px) {
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .info-pessoais-grid,
+  .quatro-colunas-grid,
+  .tres-colunas-grid,
+  .contato-grid,
+  .cep-rua-numero-grid,
+  .complemento-bairro-grid,
+  .cidade-estado-pais-grid,
+  .filiacao-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group.small {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
 }
