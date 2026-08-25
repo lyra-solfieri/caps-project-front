@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { AnamneseService } from '../../services/anamnese/anamnese.service';
+import { PacienteService } from '../../services/paciente/paciente.service';
 
 @Component({
   selector: 'app-cadastro-anamnese',
@@ -26,9 +27,11 @@ export class CadastroAnamneseComponent implements OnInit {
 
   saving = false;
   loading = true;
+  nomePaciente = '';
 
   constructor(
     private anamneseService: AnamneseService,
+    private pacienteService: PacienteService,
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder
@@ -38,27 +41,26 @@ export class CadastroAnamneseComponent implements OnInit {
 
       pacienteId: [null, Validators.required],
 
-      profissionalResponsavel: ['', Validators.required],
-      dataRegistro: [''],
+      profissionalResponsavel: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
 
-      queixaPrincipal: ['', Validators.required],
-      historiaDoencaAtual: [''],
-      encaminhamentos: [''],
+      queixaPrincipal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(2000)]],
+      historiaDoencaAtual: ['', Validators.maxLength(2000)],
+      encaminhamentos: ['', Validators.maxLength(1000)],
 
-      antecedentesFamiliares: [''],
-      habitosDeVida: [''],
-      alergias: [''],
-      cirurgias: [''],
-      medicamentosUsados: [''],
+      antecedentesFamiliares: ['', Validators.maxLength(1000)],
+      habitosDeVida: ['', Validators.maxLength(1000)],
+      alergias: ['', Validators.maxLength(200)],
+      cirurgias: ['', Validators.maxLength(200)],
+      medicamentosUsados: ['', Validators.maxLength(1000)],
 
-      observacoesGerais: [''],
-      historicoDeInternacao: [''],
-      observacoesGestacao: [''],
+      observacoesGerais: ['', Validators.maxLength(1000)],
+      historicoDeInternacao: ['', Validators.maxLength(1000)],
+      observacoesGestacao: ['', Validators.maxLength(1000)],
 
-      localNascimento: [''],
-      tipoParto: [''],
-      posicaoNascimento: [''],
-      altaHospitalar: [''],
+      localNascimento: ['', Validators.maxLength(100)],
+      tipoParto: ['', Validators.maxLength(100)],
+      posicaoNascimento: ['', Validators.maxLength(100)],
+      altaHospitalar: ['', Validators.maxLength(100)],
 
       chorouAoNascer: [false],
       nasceuVermelho: [false],
@@ -68,22 +70,22 @@ export class CadastroAnamneseComponent implements OnInit {
       precisouOxigenio: [false],
       incubadora: [false],
 
-      sorriu: [''],
-      equilibrouPescoco: [''],
-      engatinhou: [''],
-      sentou: [''],
-      andou: [''],
-      primeirasPalavras: [''],
-      falaCorreta: [''],
-      trocouLetras: [''],
-      gaguejou: [''],
-      denticao: [''],
+      sorriu: [false],
+      engatinhou: [false],
+      sentou: [false],
+      andou: [false],
+      equilibrouPescoco: [false],
+      primeirasPalavras: ['', Validators.maxLength(50)],
+      falaCorreta: [false],
+      trocouLetras: [false],
+      gaguejou: [false],
+      denticao: [false],
 
-      controleEsfincterAnalDiurno: [''],
-      controleEsfincterVesicalDiurno: [''],
-      controleEsfincterNoturno: [''],
+      controleEsfincterAnalDiurno: ['', Validators.maxLength(100)],
+      controleEsfincterVesicalDiurno: ['', Validators.maxLength(100)],
+      controleEsfincterNoturno: ['', Validators.maxLength(100)],
 
-      cuidadosPorQuem: [''],
+      cuidadosPorQuem: ['', Validators.maxLength(200)],
 
       usouChupeta: [false],
       chupouDedo: [false],
@@ -93,7 +95,7 @@ export class CadastroAnamneseComponent implements OnInit {
       mordeLabios: [false],
       tiques: [false],
 
-      atitudeDianteHabitos: [''],
+      atitudeDianteHabitos: ['', Validators.maxLength(1000)],
 
       dormeBem: [false],
       pulaQuandoDorme: [false],
@@ -107,22 +109,22 @@ export class CadastroAnamneseComponent implements OnInit {
       pesadelos: [false],
 
       amamentadoNoPeito: [false],
-      atitudeDesmame: [''],
-      habitosAlimentares: [''],
+      atitudeDesmame: ['', Validators.maxLength(1000)],
+      habitosAlimentares: ['', Validators.maxLength(1000)],
 
-      comportamentoEscola: [''],
+      comportamentoEscola: ['', Validators.maxLength(1000)],
       gostaEstudar: [false],
       gostaEscola: [false],
       dificuldadeAprendizagem: [false],
-      historicoEscolar: [''],
-      queixasComportamento: [''],
+      historicoEscolar: ['', Validators.maxLength(1000)],
+      queixasComportamento: ['', Validators.maxLength(1000)],
 
-      prefereBrincar: [''],
-      ativoOuPassivo: [''],
-      observacoesComportamentoSocial: [''],
+      prefereBrincar: ['', Validators.maxLength(100)],
+      ativoOuPassivo: ['', Validators.maxLength(100)],
+      observacoesComportamentoSocial: ['', Validators.maxLength(1000)],
 
-      observacoesEstrategicas: [''],
-      projetoTerapeuticoSingular: ['']
+      observacoesEstrategicas: ['', Validators.maxLength(1000)],
+      projetoTerapeuticoSingular: ['', Validators.maxLength(1000)]
 
     });
 
@@ -132,22 +134,31 @@ export class CadastroAnamneseComponent implements OnInit {
 
     const pacienteId = this.route.snapshot.queryParamMap.get('pacienteId');
 
-    // if (pacienteId) {
-    //   this.anamneseForm.patchValue({
-    //     pacienteId: +pacienteId
-    //   });
-    // } else {
-    //   Swal.fire({
-    //     icon: 'info',
-    //     title: 'Selecione um paciente',
-    //     text: 'Você precisa selecionar um paciente antes de cadastrar a anamnese.'
-    //   }).then(() => {
-    //     this.router.navigate(['/pacientes']);
-    //   });
-    //   return;
-    // }
+    if (pacienteId) {
+      this.anamneseForm.patchValue({
+        pacienteId: +pacienteId
+      });
 
-    this.loading = false;
+      this.pacienteService.buscarPacientePorId(+pacienteId).subscribe({
+        next: (paciente) => {
+          this.nomePaciente = paciente.nome;
+          this.loading = false;
+        },
+        error: () => {
+          this.nomePaciente = 'Paciente #' + pacienteId;
+          this.loading = false;
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: 'info',
+        title: 'Selecione um paciente',
+        text: 'Você precisa selecionar um paciente antes de cadastrar a anamnese.'
+      }).then(() => {
+        this.router.navigate(['/anamnese-infantil']);
+      });
+    }
+
   }
 
   onSubmit() {
@@ -156,10 +167,16 @@ export class CadastroAnamneseComponent implements OnInit {
 
       this.anamneseForm.markAllAsTouched();
 
+      const campos: string[] = [];
+      const c = this.anamneseForm.controls;
+
+      if (c['profissionalResponsavel'].invalid) campos.push('Profissional Responsável');
+      if (c['queixaPrincipal'].invalid) campos.push('Queixa Principal');
+
       Swal.fire({
         icon: 'warning',
         title: 'Formulário inválido',
-        text: 'Preencha os campos obrigatórios.'
+        html: `Preencha os campos obrigatórios:<br><strong>${campos.join('</strong>, <strong>')}</strong>`
       });
 
       return;
@@ -187,14 +204,16 @@ export class CadastroAnamneseComponent implements OnInit {
 
         },
 
-        error: () => {
+        error: (err) => {
 
           this.saving = false;
+
+          const mensagem = err.error?.message || 'Não foi possível salvar a anamnese.';
 
           Swal.fire({
             icon: 'error',
             title: 'Erro ao cadastrar',
-            text: 'Não foi possível salvar a anamnese.'
+            text: mensagem
           });
 
         }
