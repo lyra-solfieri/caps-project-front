@@ -17,22 +17,6 @@
     
   <input type="hidden" formControlName="pacienteId">
 
-  <!-- IDENTIFICAÇÃO -->
-  <div class="form-section">
-    <h3>Identificação</h3>
-
-    <div class="form-group">
-      <label>Profissional Responsável</label>
-      <input type="text" formControlName="profissionalResponsavel">
-    </div>
-
-    <div class="form-group">
-      <label>Data do Registro</label>
-      <input type="datetime-local" formControlName="dataRegistro">
-    </div>
-  </div>
-
-
   <!-- QUEIXA PRINCIPAL -->
   <div class="form-section">
 
@@ -40,7 +24,12 @@
 
     <div class="form-group">
       <label>Queixa Principal</label>
-      <textarea rows="3" formControlName="queixaPrincipal"></textarea>
+      <textarea rows="3" formControlName="queixaPrincipal" [class.input-error]="f.queixaPrincipal.touched && f.queixaPrincipal.invalid"></textarea>
+      <div class="error" *ngIf="f.queixaPrincipal.touched && f.queixaPrincipal.invalid">
+        <small *ngIf="f.queixaPrincipal.errors?.['required']">Queixa principal é obrigatória.</small>
+        <small *ngIf="f.queixaPrincipal.errors?.['minlength']">Mínimo de 3 caracteres.</small>
+        <small *ngIf="f.queixaPrincipal.errors?.['maxlength']">Máximo de 2000 caracteres.</small>
+      </div>
     </div>
 
     <div class="form-group">
@@ -165,56 +154,21 @@
 
     <div class="form-row">
 
-      <div class="form-group">
-        <label>Sorriu</label>
-        <input type="text" formControlName="sorriu">
-      </div>
+      <label><input type="checkbox" formControlName="sorriu"> Sorriu</label>
+      <label><input type="checkbox" formControlName="engatinhou"> Engatinhou</label>
+      <label><input type="checkbox" formControlName="sentou"> Sentou</label>
+      <label><input type="checkbox" formControlName="andou"> Andou</label>
+      <label><input type="checkbox" formControlName="equilibrouPescoco"> Equilibrou pescoço</label>
+      <label><input type="checkbox" formControlName="falaCorreta"> Fala correta</label>
+      <label><input type="checkbox" formControlName="trocouLetras"> Trocou letras</label>
+      <label><input type="checkbox" formControlName="gaguejou"> Gaguejou</label>
+      <label><input type="checkbox" formControlName="denticao"> Dentição</label>
 
-      <div class="form-group">
-        <label>Engatinhou</label>
-        <input type="text" formControlName="engatinhou">
-      </div>
+    </div>
 
-      <div class="form-group">
-        <label>Sentou</label>
-        <input type="text" formControlName="sentou">
-      </div>
-
-      <div class="form-group">
-        <label>Andou</label>
-        <input type="text" formControlName="andou">
-      </div>
-
-        <div class="form-group">
-          <label>Equilibrou Pescoço</label>
-          <input type="text" formControlName="equilibrouPescoco">
-        </div>
-
-        <div class="form-group">
-          <label>Primeiras Palavras</label>
-          <input type="text" formControlName="primeirasPalavras">
-        </div>
-
-        <div class="form-group">
-          <label>Fala Correta</label>
-          <input type="text" formControlName="falaCorreta">
-        </div>
-
-        <div class="form-group">
-          <label>Trocou Letras</label>
-          <input type="text" formControlName="trocouLetras">
-        </div>
-
-        <div class="form-group">
-          <label>Gaguejou</label>
-          <input type="text" formControlName="gaguejou">
-        </div>
-
-        <div class="form-group">
-          <label>Dentição</label>
-          <input type="text" formControlName="denticao">
-        </div>
-
+    <div class="form-group">
+      <label>Primeiras Palavras</label>
+      <input type="text" formControlName="primeirasPalavras">
     </div>
 
   </div>
@@ -384,6 +338,23 @@
     <div class="form-group">
       <label>Projeto Terapêutico Singular</label>
       <textarea rows="4" formControlName="projetoTerapeuticoSingular"></textarea>
+    </div>
+
+  </div>
+
+
+  <!-- PROFISSIONAL RESPONSÁVEL -->
+  <div class="form-section">
+    <h3>Profissional Responsável</h3>
+
+    <div class="form-group">
+      <label>Nome do Profissional</label>
+      <input type="text" formControlName="profissionalResponsavel" [class.input-error]="f.profissionalResponsavel.touched && f.profissionalResponsavel.invalid">
+      <div class="error" *ngIf="f.profissionalResponsavel.touched && f.profissionalResponsavel.invalid">
+        <small *ngIf="f.profissionalResponsavel.errors?.['required']">Profissional responsável é obrigatório.</small>
+        <small *ngIf="f.profissionalResponsavel.errors?.['minlength']">Mínimo de 3 caracteres.</small>
+        <small *ngIf="f.profissionalResponsavel.errors?.['maxlength']">Máximo de 150 caracteres.</small>
+      </div>
     </div>
 
   </div>

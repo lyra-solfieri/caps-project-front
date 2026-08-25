@@ -43,25 +43,28 @@
 /* Seções do formulário */
 .form-section {
   background: white;
-  padding: 24px;
+  padding: 28px;
   margin-bottom: 24px;
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border-left: 4px solid #00796b;
 }
 
 .form-section h3 {
   margin-top: 0;
   margin-bottom: 20px;
   color: #00796b;
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 8px;
+  border-bottom: 2px solid #e8f5f3;
+  padding-bottom: 10px;
+  font-size: 18px;
+  letter-spacing: 0.3px;
 }
 
 
 /* Linhas do formulário */
 .form-row {
   display: flex;
-  gap: 20px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -84,6 +87,9 @@
   font-weight: 600;
   margin-bottom: 6px;
   color: #333;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
 
@@ -91,11 +97,19 @@
 .form-group input,
 .form-group textarea,
 .form-group select {
-  padding: 10px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #d0d0d0;
   font-size: 14px;
-  transition: border-color 0.2s;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #fafafa;
+}
+
+.form-group input:hover,
+.form-group textarea:hover,
+.form-group select:hover {
+  border-color: #b0b0b0;
 }
 
 .form-group input:focus,
@@ -103,6 +117,8 @@
 .form-group select:focus {
   border-color: #00796b;
   outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.12);
+  background-color: #fff;
 }
 
 
@@ -116,8 +132,74 @@ textarea {
 .form-row label {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-weight: 500;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background-color: #f0faf8;
+  border: 1px solid #d0ece8;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.form-row label:hover {
+  background-color: #e0f5f0;
+  border-color: #00796b;
+}
+
+/* Esconde o checkbox nativo */
+.form-row label input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #b0b0b0;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+/* Hover no checkbox */
+.form-row label input[type="checkbox"]:hover {
+  border-color: #00796b;
+}
+
+/* Checkbox marcado */
+.form-row label input[type="checkbox"]:checked {
+  background-color: #00796b;
+  border-color: #00796b;
+}
+
+/* Checkmark (símbolo ✓) */
+.form-row label input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 11px;
+  border: solid white;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+/* Focus no checkbox (acessibilidade) */
+.form-row label input[type="checkbox"]:focus-visible {
+  outline: 2px solid #00796b;
+  outline-offset: 2px;
+}
+
+/* Label do checkbox marcado */
+.form-row label:has(input[type="checkbox"]:checked) {
+  background-color: #e0f5f0;
+  border-color: #00796b;
+  color: #004d40;
+  font-weight: 600;
 }
 
 
@@ -125,6 +207,22 @@ textarea {
 .error small {
   color: #d32f2f;
   font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Input com erro */
+.input-error {
+  border-color: #d32f2f !important;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1) !important;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  font-size: 16px;
 }
 
 
@@ -132,16 +230,23 @@ textarea {
 .buttons {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 12px;
   margin-top: 24px;
 }
 
 .buttons button {
-  padding: 10px 18px;
+  padding: 12px 24px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.buttons button:active {
+  transform: scale(0.97);
 }
 
 
@@ -151,19 +256,27 @@ textarea {
   color: white;
 }
 
-.buttons button[type="submit"]:hover {
+.buttons button[type="submit"]:hover:not(:disabled) {
   background-color: #004d40;
+  box-shadow: 0 4px 12px rgba(0, 77, 64, 0.3);
+}
+
+.buttons button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 
 /* Botão cancelar */
 .buttons .cancel {
-  background-color: #d32f2f;
-  color: white;
+  background-color: #fff;
+  color: #d32f2f;
+  border: 1.5px solid #d32f2f;
 }
 
 .buttons .cancel:hover {
-  background-color: #b71c1c;
+  background-color: #d32f2f;
+  color: white;
 }
 
 
