@@ -17,6 +17,12 @@
     margin: 0;
   }
 
+  .agendamento-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
   .agendamento-actions {
     display: flex;
     gap: 10px;
@@ -137,5 +143,4 @@
     border-radius: 20px;
     font-size: 14px;
     font-weight: 600;
-    margin-left: 0px;
   }

@@ -8,6 +8,10 @@ import { ModalExportarComponent } from '../relatorios/modal-exportar/modal-expor
 import { HttpClient } from '@angular/common/http';
 import { PacienteService } from '../services/paciente/paciente.service';
 import { AgendamentoService } from '../services/agendamento/agendamento.service';
+import { forkJoin } from 'rxjs';
+import { RelatoriosService } from '../services/relatorios/relatorios.service';
+import { RaasService } from '../services/raas/raas.service';
+import { UserService } from '../services/user/user.service';
 import { downloadCSV } from '../relatorios/utils/csv-export.util';
 import { downloadExcel } from '../relatorios/utils/excel-export.util';
 import { downloadPDF } from '../relatorios/utils/pdf-export.util';
@@ -24,21 +28,17 @@ export class DashboardComponent implements OnInit {
   isAdmin = false;
   hasClinicalAccess = false;
   mostrarModalExportar = false;
+  carregando = true;
 
-  // KPIs Mockados
-  stats = {
-    taxaComparecimento: '84%',
-    totalConsultasMes: 1240,
-    cancelamentosMes: 42,
-    satisfacaoMedia: 4.8
-  };
+  totalPacientes = 0;
+  totalRaasGeradas = 0;
+  totalRaasExportadas = 0;
+  totalUsuariosAtivos = 0;
 
-  // Configuração do Gráfico de Barras (Comparecimento Semanal)
   public barChartData: ChartData<'bar'> = {
-    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
+    labels: [],
     datasets: [
-      { data: [45, 52, 48, 60, 38], label: 'Presentes', backgroundColor: '#00796b' },
-      { data: [10, 5, 8, 2, 12], label: 'Faltas', backgroundColor: '#ff8a65' }
+      { data: [], label: 'Atendimentos', backgroundColor: '#00796b' }
     ]
   };
 
@@ -52,12 +52,53 @@ export class DashboardComponent implements OnInit {
     private authService: AuthService,
     private http: HttpClient,
     private pacienteService: PacienteService,
-    private agendamentoService: AgendamentoService
+    private agendamentoService: AgendamentoService,
+    private relatoriosService: RelatoriosService,
+    private raasService: RaasService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isAdmin();
     this.hasClinicalAccess = this.authService.hasAnyRole(['ADMIN', 'USER']);
+    this.carregarIndicadores();
+  }
+
+  private carregarIndicadores(): void {
+    this.carregando = true;
+
+    forkJoin({
+      indicadores: this.relatoriosService.obterIndicadores(),
+      raas: this.raasService.listarPaginado(0, 1),
+      atendimentos: this.relatoriosService.obterAtendimentosPorProfissional()
+    }).subscribe({
+      next: ({ indicadores, raas, atendimentos }) => {
+        this.totalPacientes = indicadores.totalPacientes;
+        this.totalRaasGeradas = raas.totalElements;
+        this.barChartData = {
+          labels: atendimentos.map((a) => a.mes),
+          datasets: [
+            { data: atendimentos.map((a) => a.quantidade), label: 'Atendimentos', backgroundColor: '#00796b' }
+          ]
+        };
+        this.carregando = false;
+      },
+      error: () => this.carregando = false
+    });
+
+    if (this.isAdmin) {
+      this.userService.listarUsuarios().subscribe({
+        next: (users) => {
+          this.totalUsuariosAtivos = users.length;
+        }
+      });
+
+      this.raasService.listarPaginado(0, 1000).subscribe({
+        next: (page) => {
+          this.totalRaasExportadas = page.content.filter((r) => r.enviadoSUS).length;
+        }
+      });
+    }
   }
 
   abrirModalExportar(): void {
