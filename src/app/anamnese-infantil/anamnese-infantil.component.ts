@@ -74,10 +74,10 @@ export class AnamneseInfantilComponent implements OnInit {
       if (!this.nomesPacientes[id!]) {
         this.pacienteService.buscarPacientePorId(id!).subscribe({
           next: (paciente) => {
-            this.nomesPacientes[id!] = paciente.nome;
+            this.nomesPacientes = { ...this.nomesPacientes, [id!]: paciente?.nome || ('Paciente #' + id) };
           },
           error: () => {
-            this.nomesPacientes[id!] = 'Paciente #' + id;
+            this.nomesPacientes = { ...this.nomesPacientes, [id!]: 'Paciente #' + id };
           }
         });
       }
