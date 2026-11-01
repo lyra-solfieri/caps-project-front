@@ -19,7 +19,7 @@ import { downloadPDF } from '../relatorios/utils/pdf-export.util';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, BaseChartDirective, ModalExportarComponent],
+  imports: [CommonModule, RouterLink, ModalExportarComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
