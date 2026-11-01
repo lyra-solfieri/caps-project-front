@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AgendamentoRequestDto } from './agendamento-request.dto';
 import { AgendamentoResponseDto, PageResponse} from './agendamento-response.dto';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ import { AgendamentoResponseDto, PageResponse} from './agendamento-response.dto'
 })
 export class AgendamentoService {
 
-  private readonly apiUrl = 'http://localhost:8080/api/agendamentos';
+  private readonly apiUrl = `${environment.apiUrl}/api/agendamentos`;
 
   constructor(private http: HttpClient) {}
 

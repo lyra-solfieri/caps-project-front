@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AnamneseDTO } from './anamnese.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnamneseService {
 
-  private API = "http://localhost:8080/api/anamneses";
+  private API = `${environment.apiUrl}/api/anamneses`;
 
   constructor(private http: HttpClient) {}
 

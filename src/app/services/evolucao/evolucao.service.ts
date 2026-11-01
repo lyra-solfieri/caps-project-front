@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EvolucaoDTO } from './evolucao-dto.model';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { EvolucaoDTO } from './evolucao-dto.model';
 })
 export class EvolucaoService {
 
-  private API = "http://localhost:8080/api/evolucao";
+  private API = `${environment.apiUrl}/api/evolucao`;
 
   constructor(private http: HttpClient) {}
 

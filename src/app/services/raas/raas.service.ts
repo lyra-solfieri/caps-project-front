@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RaasPageResponse, RaasRequestDTO, RaasResponseDTO } from './raas.model';
+import { environment } from '../../../environments/environment';
 
 
 
@@ -10,7 +11,7 @@ import { RaasPageResponse, RaasRequestDTO, RaasResponseDTO } from './raas.model'
 })
 export class RaasService {
 
-  private readonly apiUrl = 'http://localhost:8080/api/raas';
+  private readonly apiUrl = `${environment.apiUrl}/api/raas`;
 
   constructor(private http: HttpClient) {}
 

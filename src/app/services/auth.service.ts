@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../environments/environment';
 
 
 interface RegisterData {
@@ -22,8 +23,8 @@ interface LoginRequest {
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8080/auth/login';
-  private apiUrlRegister = 'http://localhost:8080/auth/register';
+  private apiUrl = `${environment.apiUrl}/auth/login`;
+  private apiUrlRegister = `${environment.apiUrl}/auth/register`;
   API: any;
 
   constructor(private http: HttpClient) {}

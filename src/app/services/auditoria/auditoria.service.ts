@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuditoriaFiltros, AuditoriaPage } from './auditoria.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuditoriaService {
-  private apiUrl = 'http://localhost:8080/api/auditoria';
+  private apiUrl = `${environment.apiUrl}/api/auditoria`;
 
   constructor(private http: HttpClient) {}
 
